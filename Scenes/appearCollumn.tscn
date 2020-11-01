@@ -1,0 +1,53 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Scripts/appearCollumn.gd" type="Script" id=1]
+[ext_resource path="res://Sounds/appear.wav" type="AudioStream" id=2]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.497006, 1 )
+colors = PoolColorArray( 1, 1, 1, 0.509804, 1, 1, 1, 0.196078, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+width = 32
+
+[sub_resource type="Gradient" id=3]
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0.196078 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
+
+[node name="appearCollumn" type="Node2D"]
+z_index = -1
+script = ExtResource( 1 )
+
+[node name="middle" type="Sprite" parent="."]
+position = Vector2( 9.09495e-013, 240 )
+rotation = 1.5708
+scale = Vector2( 15, 32 )
+texture = SubResource( 2 )
+
+[node name="left" type="Sprite" parent="."]
+position = Vector2( -14.6279, 240 )
+rotation = 1.5708
+scale = Vector2( 0.234375, 2.48092 )
+texture = SubResource( 4 )
+
+[node name="right" type="Sprite" parent="."]
+position = Vector2( 16, 240 )
+rotation = 1.5708
+scale = Vector2( 0.234375, 2.48092 )
+texture = SubResource( 4 )
+
+[node name="visibleTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true
+
+[node name="appearSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 2 )
+volume_db = -12.0
+autoplay = true
+bus = "SFX"
+
+[connection signal="timeout" from="visibleTimer" to="." method="_on_Timer_timeout"]

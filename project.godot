@@ -1,0 +1,42 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[  ]
+_global_script_class_icons={
+
+}
+
+[application]
+
+config/name="Blocks"
+run/main_scene="res://Scenes/Menu.tscn"
+config/icon="res://icon.png"
+
+[autoload]
+
+Global="*res://Scenes/Global.tscn"
+
+[display]
+
+window/size/width=640
+window/size/height=480
+window/size/resizable=false
+window/size/borderless=true
+window/size/fullscreen=true
+window/dpi/allow_hidpi=true
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
+
+[rendering]
+
+quality/voxel_cone_tracing/high_quality=false
+environment/default_clear_color=Color( 0, 0, 0, 1 )
+quality/depth/hdr=false
+environment/default_environment="res://default_env.tres"
