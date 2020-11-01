@@ -54,13 +54,14 @@ func _process(delta):
 		if currnode.name == "MainItems":
 			match curr:
 				0:
-					prevnode = $MainItems;
-					currnode = $PlayItems;
-					currnode.position.y = 240
-					options = currnode.get_node("Control/VBoxContainer").get_child_count();
-					curr = 0;
-					flyOutTweenStart();
-					flyInTweenStart();
+					if $FlyInTween.get_runtime() == 0 and $FlyOutTween.get_runtime() == 0:
+						prevnode = $MainItems;
+						currnode = $PlayItems;
+						currnode.position.y = 240
+						options = currnode.get_node("Control/VBoxContainer").get_child_count();
+						curr = 0;
+						flyOutTweenStart();
+						flyInTweenStart();
 				1:
 					pass #Change the current menu to the options.
 				2:
@@ -78,15 +79,16 @@ func _process(delta):
 	
 	if Input.is_key_pressed(KEY_ESCAPE) and esc == false:
 		esc = true;
-		if currnode.name == "PlayItems":
-			prevnode = $PlayItems;
-			currnode = $MainItems;
-			currnode.position.y = 240;
-			options = currnode.get_node("Control/VBoxContainer").get_child_count();
-			curr = 0;
-			flyOutTweenStart();
-			flyInTweenStart();
-		elif currnode.name == "MainItems":
-			get_tree().quit();
+		if $FlyInTween.get_runtime() == 0 and $FlyOutTween.get_runtime() == 0:
+			if currnode.name == "PlayItems":
+				prevnode = $PlayItems;
+				currnode = $MainItems;
+				currnode.position.y = 240;
+				options = currnode.get_node("Control/VBoxContainer").get_child_count();
+				curr = 0;
+				flyOutTweenStart();
+				flyInTweenStart();
+			elif currnode.name == "MainItems":
+				get_tree().quit();
 	elif not Input.is_key_pressed(KEY_ESCAPE):
 		esc = false;

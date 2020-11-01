@@ -88,8 +88,6 @@ explosionScene = ExtResource( 10 )
 pause_mode = 2
 anchor_mode = 0
 current = true
-drag_margin_h_enabled = false
-drag_margin_v_enabled = false
 smoothing_enabled = true
 smoothing_speed = 10.0
 script = ExtResource( 11 )
@@ -132,7 +130,7 @@ __meta__ = {
 
 [node name="Sprite" type="Sprite" parent="lava"]
 material = SubResource( 2 )
-position = Vector2( -1.47239e-005, 608.843 )
+position = Vector2( -1.47239e-05, 608.843 )
 rotation = 1.5708
 scale = Vector2( 1.69253, 702 )
 texture = SubResource( 4 )
@@ -151,7 +149,6 @@ shape = SubResource( 5 )
 [node name="pausemanager" type="Node2D" parent="."]
 pause_mode = 2
 script = ExtResource( 18 )
-
 [connection signal="timeout" from="block_spawner/timer" to="block_spawner" method="_on_Timer_timeout"]
 [connection signal="item_rect_changed" from="lava/Sprite" to="lava/Sprite" method="calculate_aspect_ratio"]
 [connection signal="body_entered" from="lava/Area2D" to="lava" method="_on_Area2D_body_entered"]

@@ -31,7 +31,8 @@ func checkCollisions(delta):
 		var collision = get_slide_collision(i)
 		if collision.get_collider():
 			if collision.collider.position.y < position.y - 17 and collision.collider.position.x < position.x + 30 and collision.collider.position.x > position.x - 30:
-				explode();
+				if not collision.collider == null and not collision.collider.name.match("?yellow_block*"):
+					explode();
 			if collision.collider.position.y < position.y - 16:
 				if motion.y > 0:
 					motion.y = 0;

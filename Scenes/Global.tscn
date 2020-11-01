@@ -4,9 +4,3 @@
 
 [node name="Global" type="Node2D"]
 script = ExtResource( 1 )
-lavaEnabled = true
-lavaAcceleration = 0.1
-maxSpawnRate = 10.0
-initialSpawnRate = 1.5
-secondsToMax = 240.0
-

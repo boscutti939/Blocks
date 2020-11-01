@@ -39,6 +39,9 @@ margin_bottom = 65.0
 custom_fonts/font = SubResource( 3 )
 text = "BLOCKS"
 align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Items" type="Node2D" parent="."]
 script = ExtResource( 3 )
@@ -50,14 +53,18 @@ __meta__ = {
 [node name="uibeep" type="AudioStreamPlayer" parent="Items"]
 stream = ExtResource( 4 )
 volume_db = -10.0
-pitch_scale = 1.5
+pitch_scale = 2.0
 bus = "SFX"
 
 [node name="NavTween" type="Tween" parent="Items"]
 
 [node name="FlyOutTween" type="Tween" parent="Items"]
+playback_speed = 1.5
+playback/speed = 1.5
 
 [node name="FlyInTween" type="Tween" parent="Items"]
+playback_speed = 1.5
+playback/speed = 1.5
 
 [node name="MainItems" type="Node2D" parent="Items"]
 __meta__ = {
@@ -165,4 +172,3 @@ align = 0
 stream = ExtResource( 6 )
 autoplay = true
 bus = "Music"
-
