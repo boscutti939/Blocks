@@ -14,6 +14,7 @@ export var maxSpawnRate = 6.0;
 export var initialSpawnRate = 1.0;
 export var secondsToMax = 120.0;
 var gameOver = false;
+var paused = false;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

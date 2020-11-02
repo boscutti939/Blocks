@@ -1,14 +1,16 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/grey_block/grey_block.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/grey_block/blockcolor.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/exploding_block/RayCast2D.gd" type="Script" id=3]
-[ext_resource path="res://Sprites/blockoutline.png" type="Texture" id=4]
-[ext_resource path="res://Scripts/grey_block/outline.gd" type="Script" id=5]
+[ext_resource path="res://Sounds/drop.wav" type="AudioStream" id=4]
+[ext_resource path="res://Scripts/grey_block/dropsound.gd" type="Script" id=5]
+[ext_resource path="res://Sprites/blockoutline.png" type="Texture" id=6]
+[ext_resource path="res://Scripts/grey_block/outline.gd" type="Script" id=7]
 
 [sub_resource type="Gradient" id=1]
-offsets = PoolRealArray( 0.413174 )
-colors = PoolColorArray( 1, 1, 0, 1 )
+offsets = PoolRealArray( 0.48503 )
+colors = PoolColorArray( 0, 0.607843, 1, 1 )
 
 [sub_resource type="GradientTexture" id=2]
 gradient = SubResource( 1 )
@@ -17,19 +19,17 @@ width = 32
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 16, 16 )
 
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 16, 16 )
-
-[node name="yellow_block" type="RigidBody2D"]
+[node name="grey_block" type="RigidBody2D"]
 collision_layer = 17
 mode = 3
-gravity_scale = 4.0
+gravity_scale = 16.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="blockcolor" type="Sprite" parent="."]
+position = Vector2( -1.90735e-06, 1.90735e-06 )
 scale = Vector2( 1, 32 )
 texture = SubResource( 2 )
 script = ExtResource( 2 )
@@ -44,41 +44,33 @@ enabled = true
 cast_to = Vector2( 0, 16 )
 script = ExtResource( 3 )
 
-[node name="Area2D" type="Area2D" parent="."]
-visible = false
-monitorable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-visible = false
-scale = Vector2( 1.2, 1.2 )
-shape = SubResource( 4 )
-
-[node name="outline" type="Sprite" parent="."]
-texture = ExtResource( 4 )
-hframes = 15
+[node name="dropsound" type="AudioStreamPlayer2D" parent="."]
+pause_mode = 2
+stream = ExtResource( 4 )
+bus = "Drops"
 script = ExtResource( 5 )
 
-[node name="up" type="RayCast2D" parent="."]
-visible = false
-enabled = true
-cast_to = Vector2( 0, -32 )
-collision_mask = 16
+[node name="outline" type="Sprite" parent="."]
+texture = ExtResource( 6 )
+hframes = 15
+script = ExtResource( 7 )
 
 [node name="down" type="RayCast2D" parent="."]
-visible = false
 enabled = true
 cast_to = Vector2( 0, 32 )
 collision_mask = 16
 
-[node name="right" type="RayCast2D" parent="."]
-visible = false
+[node name="up" type="RayCast2D" parent="."]
 enabled = true
-cast_to = Vector2( 32, 0 )
+cast_to = Vector2( 0, -32 )
 collision_mask = 16
 
 [node name="left" type="RayCast2D" parent="."]
-visible = false
 enabled = true
 cast_to = Vector2( -32, 0 )
 collision_mask = 16
-[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+
+[node name="right" type="RayCast2D" parent="."]
+enabled = true
+cast_to = Vector2( 32, 0 )
+collision_mask = 16

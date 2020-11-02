@@ -13,13 +13,15 @@ func _ready():
 func _process(delta):
 	if global.gameOver == false:
 		if Input.is_key_pressed(KEY_ESCAPE):
-			if paused == false and get_tree().paused == false:
+			if global.paused == false and paused == false and get_tree().is_paused() == false:
 				AudioServer.set_bus_effect_enabled(2, 0, true);
-				get_tree().paused = true;
+				get_tree().set_pause(true);
 				paused = true;
-			if paused == false and get_tree().paused == true:
+				global.paused = true;
+			if global.paused == true and paused == false and get_tree().is_paused() == true:
 				AudioServer.set_bus_effect_enabled(2, 0, false);
-				get_tree().paused = false;
+				get_tree().set_pause(false);
+				global.paused = false;
 				paused = true;
 		if not Input.is_key_pressed(KEY_ESCAPE) and paused == true:
 			paused = false;

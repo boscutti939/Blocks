@@ -4,9 +4,9 @@
 [ext_resource path="res://Scenes/player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Sprites/grey_block.png" type="Texture" id=3]
 [ext_resource path="res://Scripts/block_spawner/block_spawner.gd" type="Script" id=4]
-[ext_resource path="res://Scenes/grey_block.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scenes/exploding_block.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/yellow_block.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Blocks/grey_block.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Blocks/exploding_block.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Blocks/yellow_block.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/appearCollumn.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scripts/explosion_manager/explosion_manager.gd" type="Script" id=9]
 [ext_resource path="res://Scenes/explosion.tscn" type="PackedScene" id=10]
@@ -88,7 +88,6 @@ explosionScene = ExtResource( 10 )
 pause_mode = 2
 anchor_mode = 0
 current = true
-smoothing_enabled = true
 smoothing_speed = 10.0
 script = ExtResource( 11 )
 __meta__ = {
@@ -102,6 +101,8 @@ one_shot = true
 [node name="smallShakeTime" type="Timer" parent="sceneCamera"]
 wait_time = 0.5
 one_shot = true
+
+[node name="smoothTween" type="Tween" parent="sceneCamera"]
 
 [node name="music" type="AudioStreamPlayer" parent="."]
 pause_mode = 2
