@@ -25,20 +25,17 @@ func _process(delta):
 		get_tree().set_pause(false);
 	offset = Vector2(0,0);
 	if global.gameOver == true:
-		position.x -= 640 / 2 * delta;
-		position.y -= 480 / 2 * delta;
-		zoom.x += 1 * delta;
-		zoom.y += 1 * delta
+		pass;
 	else:
 		get_parent().get_node("TileMap").position.y = position.y
 		if get_parent().has_node("player") and get_parent().get_node("player").position.y < newdest.y + 480-192+16 and get_parent().get_node("player").is_on_floor():
 			olddest = newdest;
-			newdest.y -= 96;
+			newdest.y -= olddest.y + 480 - $"../player".position.y - 16 - 32;
 			updatePosition();
 #			position.y -= 96;
-		elif get_parent().has_node("player") and get_parent().get_node("player").position.y > newdest.y + 480-64 and newdest.y < 0:
+		elif get_parent().has_node("player") and get_parent().get_node("player").position.y > newdest.y + 480 and newdest.y < 0:
 			olddest = newdest;
-			newdest.y += 96;
+			newdest.y += 128;
 			updatePosition();
 #			position.y += 96;
 		if not $shakeTime.is_stopped() and get_parent().has_node("player"):
@@ -49,3 +46,10 @@ func _process(delta):
 			var smallshakeratio = $smallShakeTime.time_left / $smallShakeTime.wait_time;
 			offset.x += rand_range(-smallshakeratio, smallshakeratio);
 			offset.y += rand_range(-smallshakeratio, smallshakeratio);
+
+func _on_blockCheckArea_body_exited(body):
+	body.leftScene();
+
+
+func _on_blockCheckArea_body_entered(body):
+	body.enteredScene();

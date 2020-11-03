@@ -40,7 +40,7 @@ script = ExtResource( 2 )
 visible = false
 shape = SubResource( 3 )
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
+[node name="blockunder" type="RayCast2D" parent="."]
 visible = false
 enabled = true
 cast_to = Vector2( 0, 16 )

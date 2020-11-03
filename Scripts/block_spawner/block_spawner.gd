@@ -36,7 +36,7 @@ func _on_Timer_timeout():
 		var choice = round(rand_range(0, 100));
 		if choice in range(0, 90):
 			block = blockToSpawn.instance();
-		elif choice in range(90, 91):
+		elif choice in range(80, 97):
 			block = explodingBlockToSpawn.instance();
 		else:
 			block = yellowBlock.instance();
