@@ -30,7 +30,7 @@ func _process(delta):
 		get_parent().get_node("TileMap").position.y = position.y
 		if get_parent().has_node("player") and get_parent().get_node("player").position.y < newdest.y + 480-192+16 and get_parent().get_node("player").is_on_floor():
 			olddest = newdest;
-			newdest.y -= olddest.y + 480 - $"../player".position.y - 16 - 32;
+			newdest.y -= olddest.y + 480 - round($"../player".position.y) - 16 - 32;
 			updatePosition();
 #			position.y -= 96;
 		elif get_parent().has_node("player") and get_parent().get_node("player").position.y > newdest.y + 480 and newdest.y < 0:

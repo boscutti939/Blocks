@@ -40,8 +40,8 @@ func _physics_process(delta):
 			col = true;
 		if col == false:
 			velocity.y += global.blockGravity * delta;
-		velocity.y = clamp(velocity.y, 0.0, global.maxBlockFallSpeed);
-		position.y += velocity.y * delta;
+			velocity.y = clamp(velocity.y, 0.0, global.maxBlockFallSpeed);
+			position.y += velocity.y * delta;
 	col = false;
 
 func explode():
