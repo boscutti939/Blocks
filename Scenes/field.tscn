@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Scripts/field.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/player.tscn" type="PackedScene" id=2]
@@ -23,7 +23,10 @@
 extents = Vector2( 32, 32 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 320, 240 )
+extents = Vector2( 320, 256 )
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 320, 352 )
 
 [sub_resource type="ShaderMaterial" id=3]
 shader = ExtResource( 16 )
@@ -116,8 +119,24 @@ collision_layer = 0
 collision_mask = 16
 
 [node name="collisionShape" type="CollisionShape2D" parent="sceneCamera/blockCheckArea"]
-position = Vector2( 320, 240 )
+position = Vector2( 320, 224 )
 shape = SubResource( 2 )
+
+[node name="blockDestroyArea" type="Area2D" parent="sceneCamera"]
+gravity_vec = Vector2( 0, 0 )
+gravity = 0.0
+linear_damp = 0.0
+monitorable = false
+collision_layer = 0
+collision_mask = 16
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="collisionShape" type="CollisionShape2D" parent="sceneCamera/blockDestroyArea"]
+position = Vector2( 320, 352 )
+shape = SubResource( 7 )
 
 [node name="music" type="AudioStreamPlayer" parent="."]
 pause_mode = 2
@@ -137,6 +156,7 @@ __meta__ = {
 }
 
 [node name="lava" type="Node2D" parent="."]
+visible = false
 position = Vector2( 320, 480 )
 z_index = 10
 script = ExtResource( 15 )
@@ -168,5 +188,6 @@ script = ExtResource( 18 )
 [connection signal="timeout" from="block_spawner/timer" to="block_spawner" method="_on_Timer_timeout"]
 [connection signal="body_entered" from="sceneCamera/blockCheckArea" to="sceneCamera" method="_on_blockCheckArea_body_entered"]
 [connection signal="body_exited" from="sceneCamera/blockCheckArea" to="sceneCamera" method="_on_blockCheckArea_body_exited"]
+[connection signal="body_exited" from="sceneCamera/blockDestroyArea" to="sceneCamera" method="_on_blockDestroyArea_body_exited"]
 [connection signal="item_rect_changed" from="lava/Sprite" to="lava/Sprite" method="calculate_aspect_ratio"]
 [connection signal="body_entered" from="lava/Area2D" to="lava" method="_on_Area2D_body_entered"]

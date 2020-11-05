@@ -53,3 +53,6 @@ func _on_blockCheckArea_body_exited(body):
 
 func _on_blockCheckArea_body_entered(body):
 	body.enteredScene();
+
+func _on_blockDestroyArea_body_exited(body):
+	body.queue_free();

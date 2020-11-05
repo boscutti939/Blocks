@@ -12,11 +12,3 @@ func _ready():
 func _physics_process(delta):
 	cast_to = Vector2(0, get_parent().velocity.y * delta + 16);
 
-
-
-func _on_cameraVisible_area_entered(area):
-	enabled = true;
-
-
-func _on_cameraVisible_area_exited(area):
-	enabled = false;
