@@ -10,13 +10,10 @@ var drop = false;
 func enteredScene():
 	for i in ["down", "up", "left", "right", "blockunder"]:
 		get_node(i).enabled = true;
-		$collision_shape.disabled = false;
-		velocity.y = 0;
 
 func leftScene():
 	for i in ["down", "up", "left", "right", "blockunder"]:
 		get_node(i).enabled = false;
-		$collision_shape.disabled = true;
 
 
 # Called when the node enters the scene tree for the first time.

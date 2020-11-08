@@ -47,7 +47,7 @@ func _on_Timer_timeout():
 			emptyLocations += BLOCK_LOCATIONS;
 		var spawnLocation = emptyLocations[randi() % emptyLocations.size()];
 		emptyLocations.erase(spawnLocation);
-		var blockpos = Vector2(spawnLocation*32 - 16, get_parent().get_node("sceneCamera").position.y - 16);
+		var blockpos = Vector2(spawnLocation*32 - 16, get_parent().get_node("sceneCamera").position.y + 16);
 		
 		block.position = blockpos
 		blockappear.position = blockpos

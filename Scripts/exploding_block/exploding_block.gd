@@ -40,8 +40,8 @@ func _physics_process(delta):
 			col = true;
 		if col == false:
 			velocity.y += global.blockGravity * delta;
-		velocity.y = clamp(velocity.y, 0.0, global.maxBlockFallSpeed);
-		position.y += velocity.y * delta;
+			velocity.y = clamp(velocity.y, 0.0, global.maxBlockFallSpeed);
+			position.y += velocity.y * delta;
 	col = false;
 
 
@@ -82,26 +82,3 @@ func _on_delay_time_timeout():
 		$rayDownRight.get_collider().explode();
 	get_node("/root/field/explosion_manager").explode(position);
 	queue_free();
-
-
-func _on_cameraVisible_area_entered(area):
-	$RayCast2D.enabled = true;
-	$rayDown.enabled = true;
-	$rayDownLeft.enabled = true;
-	$rayDownRight.enabled = true;
-	$rayLeft.enabled = true;
-	$rayRight.enabled = true;
-	$rayUp.enabled = true;
-	$rayUpLeft.enabled = true;
-	$rayUpRight.enabled = true;
-
-func _on_cameraVisible_area_exited(area):
-	$RayCast2D.enabled = false;
-	$rayDown.enabled = false;
-	$rayDownLeft.enabled = false;
-	$rayDownRight.enabled = false;
-	$rayLeft.enabled = false;
-	$rayRight.enabled = false;
-	$rayUp.enabled = false;
-	$rayUpLeft.enabled = false;
-	$rayUpRight.enabled = false;

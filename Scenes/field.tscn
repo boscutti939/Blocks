@@ -23,24 +23,24 @@
 extents = Vector2( 32, 32 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 320, 256 )
+extents = Vector2( 320, 240 )
 
-[sub_resource type="RectangleShape2D" id=7]
-extents = Vector2( 320, 352 )
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 320, 384 )
 
-[sub_resource type="ShaderMaterial" id=3]
+[sub_resource type="ShaderMaterial" id=4]
 shader = ExtResource( 16 )
 shader_param/tiled_factor = Vector2( 5, 5 )
 shader_param/aspect_ratio = 0.5
 
-[sub_resource type="Gradient" id=4]
+[sub_resource type="Gradient" id=5]
 colors = PoolColorArray( 1, 0.305882, 0, 1, 1, 0.305882, 0, 1 )
 
-[sub_resource type="GradientTexture" id=5]
-gradient = SubResource( 4 )
+[sub_resource type="GradientTexture" id=6]
+gradient = SubResource( 5 )
 width = 720
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 320, 240 )
 
 [node name="field" type="Node2D"]
@@ -111,6 +111,7 @@ one_shot = true
 [node name="smoothTween" type="Tween" parent="sceneCamera"]
 
 [node name="blockCheckArea" type="Area2D" parent="sceneCamera"]
+pause_mode = 2
 gravity_vec = Vector2( 0, 0 )
 gravity = 0.0
 linear_damp = 0.0
@@ -119,24 +120,21 @@ collision_layer = 0
 collision_mask = 16
 
 [node name="collisionShape" type="CollisionShape2D" parent="sceneCamera/blockCheckArea"]
-position = Vector2( 320, 224 )
+position = Vector2( 320, 240 )
 shape = SubResource( 2 )
 
 [node name="blockDestroyArea" type="Area2D" parent="sceneCamera"]
+pause_mode = 2
 gravity_vec = Vector2( 0, 0 )
 gravity = 0.0
 linear_damp = 0.0
 monitorable = false
 collision_layer = 0
 collision_mask = 16
-__meta__ = {
-"_edit_group_": true,
-"_edit_lock_": true
-}
 
 [node name="collisionShape" type="CollisionShape2D" parent="sceneCamera/blockDestroyArea"]
-position = Vector2( 320, 352 )
-shape = SubResource( 7 )
+position = Vector2( 320, 384 )
+shape = SubResource( 3 )
 
 [node name="music" type="AudioStreamPlayer" parent="."]
 pause_mode = 2
@@ -165,11 +163,11 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="lava"]
-material = SubResource( 3 )
+material = SubResource( 4 )
 position = Vector2( -1.47239e-05, 608.843 )
 rotation = 1.5708
 scale = Vector2( 1.69253, 702 )
-texture = SubResource( 5 )
+texture = SubResource( 6 )
 script = ExtResource( 17 )
 
 [node name="Area2D" type="Area2D" parent="lava"]
@@ -180,7 +178,7 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="lava/Area2D"]
 position = Vector2( 0, 272 )
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 
 [node name="pausemanager" type="Node2D" parent="."]
 pause_mode = 2

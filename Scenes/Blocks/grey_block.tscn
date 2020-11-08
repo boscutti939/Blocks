@@ -39,7 +39,6 @@ visible = false
 shape = SubResource( 3 )
 
 [node name="blockunder" type="RayCast2D" parent="."]
-pause_mode = 2
 visible = false
 enabled = true
 cast_to = Vector2( 0, 16 )
@@ -52,31 +51,26 @@ bus = "Drops"
 script = ExtResource( 5 )
 
 [node name="outline" type="Sprite" parent="."]
-pause_mode = 2
 texture = ExtResource( 6 )
 hframes = 15
 script = ExtResource( 7 )
 
 [node name="down" type="RayCast2D" parent="."]
-pause_mode = 2
 enabled = true
 cast_to = Vector2( 0, 32 )
 collision_mask = 16
 
 [node name="up" type="RayCast2D" parent="."]
-pause_mode = 2
 enabled = true
 cast_to = Vector2( 0, -32 )
 collision_mask = 16
 
 [node name="left" type="RayCast2D" parent="."]
-pause_mode = 2
 enabled = true
 cast_to = Vector2( -32, 0 )
 collision_mask = 16
 
 [node name="right" type="RayCast2D" parent="."]
-pause_mode = 2
 enabled = true
 cast_to = Vector2( 32, 0 )
 collision_mask = 16
