@@ -1,4 +1,0 @@
-- name: godot-ci
-  # You may pin to the exact commit or the version.
-  # uses: aBARICHELLO/godot-ci@f7535c9ae654664e5cb2cadfbf20e98b935a335b
-  uses: aBARICHELLO/godot-ci@3.2.3
