@@ -4,7 +4,7 @@ var velocity = Vector2(0, 0);
 onready var global = get_node("/root/Global");
 var col = false;
 var drop = false;
-
+var justentered = false;
 #make variables here.
 
 func enteredScene():
