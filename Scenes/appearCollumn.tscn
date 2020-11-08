@@ -22,7 +22,7 @@ z_index = -1
 script = ExtResource( 1 )
 
 [node name="middle" type="Sprite" parent="."]
-position = Vector2( 9.09495e-013, 240 )
+position = Vector2( 9.09495e-13, 240 )
 rotation = 1.5708
 scale = Vector2( 15, 32 )
 texture = SubResource( 2 )
@@ -49,5 +49,4 @@ stream = ExtResource( 2 )
 volume_db = -12.0
 autoplay = true
 bus = "SFX"
-
 [connection signal="timeout" from="visibleTimer" to="." method="_on_Timer_timeout"]

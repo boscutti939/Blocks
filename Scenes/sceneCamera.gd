@@ -7,6 +7,13 @@ extends Camera2D
 onready var global = get_node("/root/Global");
 
 export var intensity = 8
+var olddest = position;
+var newdest = position;
+
+func updatePosition():
+	$smoothTween.interpolate_property(self, "position", olddest, newdest, 0.35, Tween.TRANS_SINE, Tween.EASE_OUT, 0);
+	$smoothTween.start();
+	get_tree().set_pause(true);
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -14,18 +21,23 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	offset = Vector2(0,0);	
+	if position == newdest and global.paused == false:
+		get_tree().set_pause(false);
+	offset = Vector2(0,0);
 	if global.gameOver == true:
-		position.x -= 640 / 2 * delta;
-		position.y -= 480 / 2 * delta;
-		zoom.x += 1 * delta;
-		zoom.y += 1 * delta
+		pass;
 	else:
 		get_parent().get_node("TileMap").position.y = position.y
-		if get_parent().has_node("player") and get_parent().get_node("player").position.y < position.y + 480-192+16 and get_parent().get_node("player").is_on_floor():
-			position.y -= 96;
-		elif get_parent().has_node("player") and get_parent().get_node("player").position.y > position.y + 480-64 and position.y < 0:
-			position.y += 96;
+		if get_parent().has_node("player") and get_parent().get_node("player").position.y < newdest.y + 480-192+16 and get_parent().get_node("player").is_on_floor():
+			olddest = newdest;
+			newdest.y -= olddest.y + 480 - round($"../player".position.y) - 16 - 32;
+			updatePosition();
+#			position.y -= 96;
+		elif get_parent().has_node("player") and get_parent().get_node("player").position.y > newdest.y + 480 and newdest.y < 0:
+			olddest = newdest;
+			newdest.y += 128;
+			updatePosition();
+#			position.y += 96;
 		if not $shakeTime.is_stopped() and get_parent().has_node("player"):
 			var shakeratio = $shakeTime.time_left / $shakeTime.wait_time;
 			offset.x += rand_range(-(intensity)*shakeratio, intensity*shakeratio);
@@ -34,3 +46,13 @@ func _process(delta):
 			var smallshakeratio = $smallShakeTime.time_left / $smallShakeTime.wait_time;
 			offset.x += rand_range(-smallshakeratio, smallshakeratio);
 			offset.y += rand_range(-smallshakeratio, smallshakeratio);
+
+func _on_blockCheckArea_body_exited(body):
+	body.leftScene();
+
+
+func _on_blockCheckArea_body_entered(body):
+	body.enteredScene();
+
+func _on_blockDestroyArea_body_exited(body):
+	body.queue_free();

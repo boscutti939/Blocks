@@ -7,6 +7,15 @@ var drop = false;
 var exploding = false;
 
 #make variables here.
+
+func enteredScene():
+	for i in ["down", "up", "left", "right", "blockunder"]:
+		get_node(i).enabled = true;
+
+func leftScene():
+	for i in ["down", "up", "left", "right", "blockunder"]:
+		get_node(i).enabled = false;
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -16,16 +25,23 @@ func _process(delta):
 	pass;
 
 func _physics_process(delta):
-	if get_node("RayCast2D").is_colliding():
-		if velocity.y >= global.maxBlockFallSpeed:
-			drop = true;
-		col = true;
-		position.y = get_node("RayCast2D").get_collision_point().y - 16;
-		velocity.y = 0;
-	if col == false:
-		velocity.y += global.blockGravity * delta;
-	velocity.y = clamp(velocity.y, 0.0, global.maxBlockFallSpeed);
-	position.y += velocity.y * delta;
+	if $blockunder.enabled == true:
+		if get_node("blockunder").is_colliding():
+			if velocity.y >= global.maxBlockFallSpeed:
+				drop = true;
+			col = true;
+			position.y = get_node("blockunder").get_collision_point().y - 16;
+			velocity.y = 0;
+		elif (position.y + (velocity.y * delta)) >= ($"/root/field/sceneCamera".position.y + 480-16):
+			if velocity.y >= global.maxBlockFallSpeed:
+				drop = true;
+			position.y = $"/root/field/sceneCamera".position.y + 480-16;
+			velocity.y = 0;
+			col = true;
+		if col == false:
+			velocity.y += global.blockGravity * delta;
+			velocity.y = clamp(velocity.y, 0.0, global.maxBlockFallSpeed);
+			position.y += velocity.y * delta;
 	col = false;
 
 
@@ -66,26 +82,3 @@ func _on_delay_time_timeout():
 		$rayDownRight.get_collider().explode();
 	get_node("/root/field/explosion_manager").explode(position);
 	queue_free();
-
-
-func _on_cameraVisible_area_entered(area):
-	$RayCast2D.enabled = true;
-	$rayDown.enabled = true;
-	$rayDownLeft.enabled = true;
-	$rayDownRight.enabled = true;
-	$rayLeft.enabled = true;
-	$rayRight.enabled = true;
-	$rayUp.enabled = true;
-	$rayUpLeft.enabled = true;
-	$rayUpRight.enabled = true;
-
-func _on_cameraVisible_area_exited(area):
-	$RayCast2D.enabled = false;
-	$rayDown.enabled = false;
-	$rayDownLeft.enabled = false;
-	$rayDownRight.enabled = false;
-	$rayLeft.enabled = false;
-	$rayRight.enabled = false;
-	$rayUp.enabled = false;
-	$rayUpLeft.enabled = false;
-	$rayUpRight.enabled = false;

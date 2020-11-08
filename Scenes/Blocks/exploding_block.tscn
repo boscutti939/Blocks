@@ -57,7 +57,7 @@ script = ExtResource( 3 )
 [node name="collision_shape" type="CollisionShape2D" parent="."]
 shape = SubResource( 3 )
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
+[node name="blockunder" type="RayCast2D" parent="."]
 enabled = true
 cast_to = Vector2( 0, 16 )
 script = ExtResource( 4 )
@@ -69,10 +69,6 @@ script = ExtResource( 5 )
 [node name="collision_shape2" type="CollisionShape2D" parent="Area2D"]
 scale = Vector2( 1.2, 1.2 )
 shape = SubResource( 3 )
-
-[node name="rayUp" type="RayCast2D" parent="."]
-enabled = true
-cast_to = Vector2( 0, -32 )
 
 [node name="down" type="RayCast2D" parent="."]
 enabled = true
@@ -93,6 +89,10 @@ collision_mask = 16
 enabled = true
 cast_to = Vector2( 32, 0 )
 collision_mask = 16
+
+[node name="rayUp" type="RayCast2D" parent="."]
+enabled = true
+cast_to = Vector2( 0, -32 )
 
 [node name="rayUpRight" type="RayCast2D" parent="."]
 position = Vector2( 32, -32 )
@@ -128,7 +128,7 @@ cast_to = Vector2( 32, 0 )
 
 [node name="fuse_audio" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 6 )
-volume_db = -15.0
+volume_db = -20.0
 bus = "SFX"
 script = ExtResource( 7 )
 
@@ -140,12 +140,12 @@ hframes = 15
 script = ExtResource( 9 )
 
 [node name="dropsound" type="AudioStreamPlayer2D" parent="."]
+pause_mode = 2
 stream = ExtResource( 10 )
 bus = "Drops"
 script = ExtResource( 11 )
-
 [connection signal="timeout" from="fuse_time" to="." method="_on_fuse_time_timeout"]
-[connection signal="timeout" from="delay_time" to="." method="_on_delay_time_timeout"]
 [connection signal="timeout" from="delay_time" to="." method="_on_fuse_time_timeout"]
+[connection signal="timeout" from="delay_time" to="." method="_on_delay_time_timeout"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
 [connection signal="timeout" from="fuse_audio/beep_timer" to="fuse_audio" method="_on_beep_timer_timeout"]

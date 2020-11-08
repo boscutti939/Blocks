@@ -1,12 +1,12 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Scripts/field.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Sprites/grey_block.png" type="Texture" id=3]
 [ext_resource path="res://Scripts/block_spawner/block_spawner.gd" type="Script" id=4]
-[ext_resource path="res://Scenes/grey_block.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scenes/exploding_block.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/yellow_block.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Blocks/grey_block.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Blocks/exploding_block.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Blocks/yellow_block.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/appearCollumn.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scripts/explosion_manager/explosion_manager.gd" type="Script" id=9]
 [ext_resource path="res://Scenes/explosion.tscn" type="PackedScene" id=10]
@@ -22,19 +22,25 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 32 )
 
-[sub_resource type="ShaderMaterial" id=2]
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 320, 224 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 320, 384 )
+
+[sub_resource type="ShaderMaterial" id=4]
 shader = ExtResource( 16 )
 shader_param/tiled_factor = Vector2( 5, 5 )
 shader_param/aspect_ratio = 0.5
 
-[sub_resource type="Gradient" id=3]
+[sub_resource type="Gradient" id=5]
 colors = PoolColorArray( 1, 0.305882, 0, 1, 1, 0.305882, 0, 1 )
 
-[sub_resource type="GradientTexture" id=4]
-gradient = SubResource( 3 )
+[sub_resource type="GradientTexture" id=6]
+gradient = SubResource( 5 )
 width = 720
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 320, 240 )
 
 [node name="field" type="Node2D"]
@@ -88,7 +94,6 @@ explosionScene = ExtResource( 10 )
 pause_mode = 2
 anchor_mode = 0
 current = true
-smoothing_enabled = true
 smoothing_speed = 10.0
 script = ExtResource( 11 )
 __meta__ = {
@@ -102,6 +107,34 @@ one_shot = true
 [node name="smallShakeTime" type="Timer" parent="sceneCamera"]
 wait_time = 0.5
 one_shot = true
+
+[node name="smoothTween" type="Tween" parent="sceneCamera"]
+
+[node name="blockCheckArea" type="Area2D" parent="sceneCamera"]
+pause_mode = 2
+gravity_vec = Vector2( 0, 0 )
+gravity = 0.0
+linear_damp = 0.0
+monitorable = false
+collision_layer = 0
+collision_mask = 16
+
+[node name="collisionShape" type="CollisionShape2D" parent="sceneCamera/blockCheckArea"]
+position = Vector2( 320, 240 )
+shape = SubResource( 2 )
+
+[node name="blockDestroyArea" type="Area2D" parent="sceneCamera"]
+pause_mode = 2
+gravity_vec = Vector2( 0, 0 )
+gravity = 0.0
+linear_damp = 0.0
+monitorable = false
+collision_layer = 0
+collision_mask = 16
+
+[node name="collisionShape" type="CollisionShape2D" parent="sceneCamera/blockDestroyArea"]
+position = Vector2( 320, 384 )
+shape = SubResource( 3 )
 
 [node name="music" type="AudioStreamPlayer" parent="."]
 pause_mode = 2
@@ -121,6 +154,7 @@ __meta__ = {
 }
 
 [node name="lava" type="Node2D" parent="."]
+visible = false
 position = Vector2( 320, 480 )
 z_index = 10
 script = ExtResource( 15 )
@@ -129,11 +163,11 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="lava"]
-material = SubResource( 2 )
+material = SubResource( 4 )
 position = Vector2( -1.47239e-05, 608.843 )
 rotation = 1.5708
 scale = Vector2( 1.69253, 702 )
-texture = SubResource( 4 )
+texture = SubResource( 6 )
 script = ExtResource( 17 )
 
 [node name="Area2D" type="Area2D" parent="lava"]
@@ -144,11 +178,14 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="lava/Area2D"]
 position = Vector2( 0, 272 )
-shape = SubResource( 5 )
+shape = SubResource( 7 )
 
 [node name="pausemanager" type="Node2D" parent="."]
 pause_mode = 2
 script = ExtResource( 18 )
 [connection signal="timeout" from="block_spawner/timer" to="block_spawner" method="_on_Timer_timeout"]
+[connection signal="body_entered" from="sceneCamera/blockCheckArea" to="sceneCamera" method="_on_blockCheckArea_body_entered"]
+[connection signal="body_exited" from="sceneCamera/blockCheckArea" to="sceneCamera" method="_on_blockCheckArea_body_exited"]
+[connection signal="body_exited" from="sceneCamera/blockDestroyArea" to="sceneCamera" method="_on_blockDestroyArea_body_exited"]
 [connection signal="item_rect_changed" from="lava/Sprite" to="lava/Sprite" method="calculate_aspect_ratio"]
 [connection signal="body_entered" from="lava/Area2D" to="lava" method="_on_Area2D_body_entered"]

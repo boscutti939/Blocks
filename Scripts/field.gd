@@ -12,7 +12,7 @@ func _ready():
 func _process(delta):
 	if not has_node("player"):
 		global.gameOver = true;
-		get_tree().paused = true;
+		get_tree().set_pause(true);
 	
 	if Input.is_key_pressed(KEY_R):
 		get_tree().reload_current_scene();
