@@ -32,6 +32,7 @@ func checkCollisions(delta):
 		if collision.get_collider():
 			if collision.collider.position.y < position.y - 17 and collision.collider.position.x < position.x + 30 and collision.collider.position.x > position.x - 30:
 				if not collision.collider == null and not collision.collider.name.match("?yellow_block*"):
+					print_debug("I was killed by ", collision.collider.name, " at position", position, " where the collider position was ", collision.collider.position);
 					explode();
 			if collision.collider.position.y < position.y - 16:
 				if motion.y > 0:
@@ -62,6 +63,7 @@ func _physics_process(delta):
 	position.x = clamp(position.x, 16, 640-16);
 
 func explode():
+	print_debug("I died.");
 	queue_free();
 
 func _on_jumptimer_timeout():
