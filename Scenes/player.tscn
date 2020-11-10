@@ -117,12 +117,12 @@ script = ExtResource( 9 )
 
 [node name="jumpsound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 10 )
-volume_db = -15.0
+volume_db = -10.0
 bus = "SFX"
 
 [node name="powerupsound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 11 )
-volume_db = -7.0
+volume_db = -10.0
 bus = "SFX"
 [connection signal="timeout" from="jumpmeter/jumptimer" to="." method="_on_jumptimer_timeout"]
 [connection signal="timeout" from="jumpmeter/jumptimer" to="jumpmeter" method="_on_jumptimer_timeout"]

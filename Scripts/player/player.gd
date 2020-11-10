@@ -31,7 +31,7 @@ func checkCollisions(delta):
 		var collision = get_slide_collision(i)
 		if collision.get_collider():
 			if collision.collider.position.y < position.y - 17 and collision.collider.position.x < position.x + 30 and collision.collider.position.x > position.x - 30:
-				if not collision.collider == null and not collision.collider.name.match("?yellow_block*"):
+				if not collision.collider == null and not collision.collider.name.match("*yellow_block*"):
 					print_debug("I was killed by ", collision.collider.name, " at position", position, " where the collider position was ", collision.collider.position);
 					explode();
 			if collision.collider.position.y < position.y - 16:
