@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/Menu/Menu.gd" type="Script" id=1]
 [ext_resource path="res://Fonts/slkscreb.ttf" type="DynamicFontData" id=2]
@@ -7,36 +7,47 @@
 [ext_resource path="res://Fonts/slkscr.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://Sounds/meanbean.wav" type="AudioStream" id=6]
 
-[sub_resource type="Gradient" id=1]
-offsets = PoolRealArray( 0.389222 )
-colors = PoolColorArray( 1, 0, 0, 0.286275 )
-
-[sub_resource type="GradientTexture" id=2]
-gradient = SubResource( 1 )
-width = 640
-
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=1]
 size = 64
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0.509677 )
+colors = PoolColorArray( 1, 0, 0, 0.72549 )
+
+[sub_resource type="GradientTexture" id=3]
+gradient = SubResource( 2 )
+width = 640
+
+[sub_resource type="Animation" id=4]
+resource_name = "Flash Animation"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:texture:gradient:colors")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ PoolColorArray( 1, 0, 0, 0.439216 ), PoolColorArray( 1, 0, 0, 0.72549 ), PoolColorArray( 1, 0, 0, 0.439216 ), PoolColorArray( 1, 0, 0, 0.72549 ), PoolColorArray( 1, 0, 0, 0.439216 ) ]
+}
+
+[sub_resource type="DynamicFont" id=5]
 size = 24
 font_data = ExtResource( 5 )
 
 [node name="Menu" type="Node2D"]
 script = ExtResource( 1 )
 
-[node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 320, 256 )
-scale = Vector2( 1, 32 )
-texture = SubResource( 2 )
-
 [node name="Title" type="Node2D" parent="."]
 
 [node name="Label" type="Label" parent="Title"]
 margin_right = 640.0
 margin_bottom = 65.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 1 )
 text = "BLOCKS"
 align = 1
 __meta__ = {
@@ -49,6 +60,14 @@ __meta__ = {
 "_edit_group_": true,
 "_edit_lock_": true
 }
+
+[node name="Sprite" type="Sprite" parent="Items"]
+position = Vector2( 320, 256 )
+scale = Vector2( 1, 32 )
+texture = SubResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Items/Sprite"]
+"anims/Flash Animation" = SubResource( 4 )
 
 [node name="uibeep" type="AudioStreamPlayer" parent="Items"]
 stream = ExtResource( 4 )
@@ -87,7 +106,7 @@ custom_constants/separation = 2
 margin_right = 640.0
 margin_bottom = 31.0
 focus_mode = 0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 shortcut_in_tooltip = false
 enabled_focus_mode = 0
 text = "Play"
@@ -99,7 +118,7 @@ margin_top = 33.0
 margin_right = 640.0
 margin_bottom = 64.0
 focus_mode = 0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 shortcut_in_tooltip = false
 enabled_focus_mode = 0
 text = "Options"
@@ -111,7 +130,7 @@ margin_top = 66.0
 margin_right = 640.0
 margin_bottom = 97.0
 focus_mode = 0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 shortcut_in_tooltip = false
 enabled_focus_mode = 0
 text = "Quit"
@@ -137,7 +156,7 @@ custom_constants/separation = 2
 margin_right = 640.0
 margin_bottom = 31.0
 focus_mode = 0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 shortcut_in_tooltip = false
 enabled_focus_mode = 0
 text = "Classic"
@@ -149,7 +168,7 @@ margin_top = 33.0
 margin_right = 640.0
 margin_bottom = 64.0
 focus_mode = 0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 shortcut_in_tooltip = false
 enabled_focus_mode = 0
 text = "Survival"
@@ -161,7 +180,7 @@ margin_top = 66.0
 margin_right = 640.0
 margin_bottom = 97.0
 focus_mode = 0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 shortcut_in_tooltip = false
 enabled_focus_mode = 0
 text = "Extreme"
