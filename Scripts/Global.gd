@@ -16,10 +16,15 @@ export var secondsToMax = 120.0;
 var gameOver = false;
 var paused = false;
 
+var playerMaxBlockHeight = 0;
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
 
+func updateBlockHeight(x):
+	playerMaxBlockHeight = x;
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
-#	pass
+#	pass;

@@ -100,15 +100,19 @@ margin_right = 40.0
 margin_bottom = -21.0
 
 [node name="jumpmeter" type="ProgressBar" parent="."]
-margin_left = -30.0
-margin_top = -34.0
-margin_right = 30.0
-margin_bottom = -27.0
+margin_left = -15.0
+margin_top = -15.0
+margin_right = 15.0
+margin_bottom = 15.0
 custom_styles/fg = SubResource( 4 )
 custom_styles/bg = SubResource( 5 )
 max_value = 1.0
+step = 0.0
 percent_visible = false
 script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="jumptimer" type="Timer" parent="jumpmeter"]
 wait_time = 10.0

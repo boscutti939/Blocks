@@ -5,6 +5,9 @@ var motion = Vector2(0, 0);
 const speed = 250;
 const JUMPHEIGHT = 2.5;
 var jumpheight = JUMPHEIGHT;
+var maxBlockHeight = 0;
+
+onready var global = get_node("/root/Global");
 
 func getInput(delta):
 	if Input.is_key_pressed(KEY_A) and (not $rayLeft.is_colliding()):
@@ -54,6 +57,10 @@ func _process(delta):
 	pass;
 
 func _physics_process(delta):
+	if is_on_floor():
+		var blockHeight = ceil((480 - 16 - round(position.y)) / 32);
+		maxBlockHeight = max(blockHeight, maxBlockHeight);
+		global.updateBlockHeight(maxBlockHeight);
 	getInput(delta);
 	motion.y += 1600 * delta;
 	#position += (Vector2(motion.x, clamp(motion.y, -600, 600))) * delta;
