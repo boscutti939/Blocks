@@ -121,7 +121,7 @@ script = ExtResource( 9 )
 
 [node name="jumpsound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 10 )
-volume_db = -10.0
+volume_db = -5.0
 bus = "SFX"
 
 [node name="powerupsound" type="AudioStreamPlayer" parent="."]
