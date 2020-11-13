@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://Scripts/field.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/player.tscn" type="PackedScene" id=2]
@@ -18,12 +18,50 @@
 [ext_resource path="res://Shaders/lava.shader" type="Shader" id=16]
 [ext_resource path="res://Scripts/field/Sprite.gd" type="Script" id=17]
 [ext_resource path="res://Scripts/pausemanager.gd" type="Script" id=18]
+[ext_resource path="res://Fonts/slkscr.ttf" type="DynamicFontData" id=19]
+[ext_resource path="res://Fonts/slkscrb.ttf" type="DynamicFontData" id=20]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 32 )
 
+[sub_resource type="DynamicFont" id=10]
+size = 48
+font_data = ExtResource( 20 )
+
+[sub_resource type="DynamicFont" id=8]
+font_data = ExtResource( 19 )
+
+[sub_resource type="Animation" id=9]
+resource_name = "gameoverappearanimation"
+length = 2.0
+step = 1.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("maxheightlabel:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 320, 232 )
+extents = Vector2( 320, 224 )
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 320, 384 )
@@ -96,18 +134,51 @@ anchor_mode = 0
 current = true
 smoothing_speed = 10.0
 script = ExtResource( 11 )
-__meta__ = {
-"_edit_lock_": true
-}
 
-[node name="hud" type="Node2D" parent="sceneCamera"]
+[node name="gameOverSplash" type="Node2D" parent="sceneCamera"]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 320, 240 )
 
-[node name="maxheightlabel" type="Label" parent="sceneCamera/hud"]
-margin_right = 40.0
-margin_bottom = 14.0
+[node name="gameoverlabel" type="Label" parent="sceneCamera/gameOverSplash"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -174.5
+margin_top = -201.028
+margin_right = 174.5
+margin_bottom = -152.028
+grow_horizontal = 2
+grow_vertical = 2
+custom_fonts/font = SubResource( 10 )
+text = "Game Over"
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="maxheightlabel" type="Label" parent="sceneCamera/gameOverSplash"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -21.5
+margin_top = -10.0
+margin_right = 21.5
+margin_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_fonts/font = SubResource( 8 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="sceneCamera/gameOverSplash"]
+anims/gameoverappearanimation = SubResource( 9 )
 
 [node name="shakeTime" type="Timer" parent="sceneCamera"]
 wait_time = 0.5

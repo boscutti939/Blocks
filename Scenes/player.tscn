@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Scripts/player/player.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/blockoutline.png" type="Texture" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Scripts/player/jumptimer.gd" type="Script" id=9]
 [ext_resource path="res://Sounds/jump.wav" type="AudioStream" id=10]
 [ext_resource path="res://Sounds/powerup.wav" type="AudioStream" id=11]
+[ext_resource path="res://Sounds/death.wav" type="AudioStream" id=12]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 1 )
@@ -84,6 +85,20 @@ tracks/2/keys = {
 "transitions": PoolRealArray( 0.55, 1.8, 1 ),
 "update": 0,
 "values": [ Vector2( 0, 0 ), Vector2( 0, -64 ), Vector2( 0, 480 ) ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("deathsound")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "play"
+} ]
 }
 
 [node name="KinematicBody2D" type="KinematicBody2D"]
@@ -171,6 +186,10 @@ bus = "SFX"
 stream = ExtResource( 11 )
 volume_db = -10.0
 bus = "SFX"
+
+[node name="deathsound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 12 )
+volume_db = -5.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/deathanimation = SubResource( 6 )

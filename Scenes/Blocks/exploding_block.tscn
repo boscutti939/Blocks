@@ -127,6 +127,7 @@ enabled = true
 cast_to = Vector2( 32, 0 )
 
 [node name="fuse_audio" type="AudioStreamPlayer2D" parent="."]
+pause_mode = 2
 stream = ExtResource( 6 )
 volume_db = -20.0
 bus = "SFX"

@@ -76,9 +76,10 @@ func _physics_process(delta):
 		position.y = oldposition.y + relativeposition.y;
 
 func explode():
+	motion = Vector2(0,0);
 	oldposition = position;
-	$AnimationPlayer.play("deathanimation");
 	died = true;
+	$AnimationPlayer.play("deathanimation");
 	print_debug("I died.");
 
 func _on_jumptimer_timeout():

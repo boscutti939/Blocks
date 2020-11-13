@@ -55,13 +55,11 @@ func explode():
 func _on_fuse_time_timeout(): #If the fuse expires, blow up the block.
 	explode();
 
-
 func _on_Area2D_body_entered(body):
 	if body.name == "player" and $fuse_time.is_stopped():
 		$fuse_time.start();
 		$fuse_audio/beep_timer.start();
 		$fuse_audio.play();
-
 
 func _on_delay_time_timeout():
 	if $rayUp.is_colliding():
