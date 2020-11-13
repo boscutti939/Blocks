@@ -19,5 +19,5 @@ func _process(delta):
 		get_tree().paused = true;
 	maxheightlabel.text = "Maximum height climbed: " + str(global.playerMaxBlockHeight) + " blocks";
 	
-	if Input.is_key_pressed(KEY_R):
+	if Input.is_key_pressed(KEY_F5):
 		get_tree().reload_current_scene();

@@ -27,17 +27,18 @@ func _process(delta):
 	if global.gameOver == true:
 		pass;
 	else:
-		get_parent().get_node("TileMap").position.y = position.y
-		if get_parent().has_node("player") and get_node("../player").died == false and get_parent().get_node("player").position.y < newdest.y + 480-192+16 and get_parent().get_node("player").is_on_floor():
-			olddest = newdest;
-			newdest.y -= olddest.y + 480 - round($"../player".position.y) - 16 - 32;
-			updatePosition();
-#			position.y -= 96;
-		elif get_parent().has_node("player") and get_parent().get_node("player").position.y > newdest.y + 480 and newdest.y < 0:
-			olddest = newdest;
-			newdest.y += 128;
-			updatePosition();
-#			position.y += 96;
+		get_parent().get_node("TileMap").position.y = position.y;
+		if get_parent().has_node("player") and get_node("../player").died == false:
+			if get_parent().get_node("player").position.y < newdest.y + 480-192+16 and get_parent().get_node("player").onfloor and get_parent().get_node("player").is_on_floor():
+				olddest = newdest;
+				newdest.y -= olddest.y + 480 - round($"../player".position.y) - 16 - 32;
+				updatePosition();
+	#			position.y -= 96;
+			elif get_parent().get_node("player").position.y > newdest.y + 480 and newdest.y < 0:
+				olddest = newdest;
+				newdest.y += 128;
+				updatePosition();
+	#			position.y += 96;
 		if not $shakeTime.is_stopped() and get_parent().has_node("player"):
 			var shakeratio = $shakeTime.time_left / $shakeTime.wait_time;
 			offset.x += rand_range(-(intensity)*shakeratio, intensity*shakeratio);

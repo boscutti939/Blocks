@@ -9,7 +9,8 @@ var maxBlockHeight = 0;
 var died = false;
 var oldposition = Vector2(0,0);
 export var relativeposition = Vector2(0,0);
-
+var onfloor = false;
+onready var label = $label;
 onready var global = get_node("/root/Global");
 
 func getInput(delta):
@@ -33,16 +34,20 @@ func getInput(delta):
 		$jumpingtimer.time_left = 0;
 
 func checkCollisions(delta):
+	onfloor = false;
 	for i in get_slide_count():
 		var collision = get_slide_collision(i)
 		if collision.get_collider():
-			if collision.collider.position.y < position.y - 17 and collision.collider.position.x < position.x + 30 and collision.collider.position.x > position.x - 30:
+			if collision.collider.position.y < position.y - 1 and collision.collider.position.x < position.x + 30 and collision.collider.position.x > position.x - 30:
 				if not collision.collider == null and not collision.collider.name.match("*yellow_block*"):
 					print_debug("I was killed by ", collision.collider.name, " at position", position, " where the collider position was ", collision.collider.position);
 					explode();
 			if collision.collider.position.y < position.y - 16:
 				if motion.y > 0:
 					motion.y = 0;
+			if collision.collider.position.y == round(position.y) + 32 and collision.collider.position.x < position.x + 30 and collision.collider.position.x > position.x - 30:
+				if collision.collider.get("velocity") != null and collision.collider.velocity.y == 0:
+					onfloor = true;
 #	if $rayDown.is_colliding():
 #		position.y = $rayDown.get_collider().position.y - 32;
 #		if motion.y > 0:
@@ -58,6 +63,7 @@ func checkCollisions(delta):
 
 func _process(delta):
 	pass;
+#	label.text = str(position.y);
 
 func _physics_process(delta):
 	if died == false:
@@ -74,6 +80,7 @@ func _physics_process(delta):
 		position.x = clamp(position.x, 16, 640-16);
 	else:
 		position.y = oldposition.y + relativeposition.y;
+		position.x = oldposition.x + relativeposition.x;
 
 func explode():
 	motion = Vector2(0,0);

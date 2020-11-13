@@ -156,6 +156,9 @@ margin_left = -35.0
 margin_top = -42.0
 margin_right = 40.0
 margin_bottom = -21.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="jumpmeter" type="ProgressBar" parent="."]
 margin_left = -15.0
