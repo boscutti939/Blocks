@@ -129,7 +129,7 @@ collision_layer = 0
 collision_mask = 16
 
 [node name="collisionShape" type="CollisionShape2D" parent="sceneCamera/blockCheckArea"]
-position = Vector2( 320, 232 )
+position = Vector2( 320, 240 )
 shape = SubResource( 2 )
 
 [node name="blockDestroyArea" type="Area2D" parent="sceneCamera"]

@@ -6,6 +6,9 @@ const speed = 250;
 const JUMPHEIGHT = 2.5;
 var jumpheight = JUMPHEIGHT;
 var maxBlockHeight = 0;
+var died = false;
+var oldposition = Vector2(0,0);
+export var relativeposition = Vector2(0,0);
 
 onready var global = get_node("/root/Global");
 
@@ -57,21 +60,26 @@ func _process(delta):
 	pass;
 
 func _physics_process(delta):
-	if is_on_floor():
-		var blockHeight = ceil((480 - 16 - round(position.y)) / 32);
-		maxBlockHeight = max(blockHeight, maxBlockHeight);
-		global.updateBlockHeight(maxBlockHeight);
-	getInput(delta);
-	motion.y += 1600 * delta;
-	#position += (Vector2(motion.x, clamp(motion.y, -600, 600))) * delta;
-	checkCollisions(delta);
-	if move_and_slide(motion, Vector2(0, -1)).y == 0:
-		motion.y = 0
-	position.x = clamp(position.x, 16, 640-16);
+	if died == false:
+		if is_on_floor():
+			var blockHeight = ceil((480 - 16 - round(position.y)) / 32);
+			maxBlockHeight = max(blockHeight, maxBlockHeight);
+			global.updateBlockHeight(maxBlockHeight);
+		getInput(delta);
+		motion.y += 1600 * delta;
+		#position += (Vector2(motion.x, clamp(motion.y, -600, 600))) * delta;
+		checkCollisions(delta);
+		if move_and_slide(motion, Vector2(0, -1)).y == 0:
+			motion.y = 0
+		position.x = clamp(position.x, 16, 640-16);
+	else:
+		position.y = oldposition.y + relativeposition.y;
 
 func explode():
+	oldposition = position;
+	$AnimationPlayer.play("deathanimation");
+	died = true;
 	print_debug("I died.");
-	queue_free();
 
 func _on_jumptimer_timeout():
 	jumpheight = JUMPHEIGHT;

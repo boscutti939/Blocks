@@ -26,7 +26,7 @@ func _process(delta):
 
 func _physics_process(delta):
 	if $blockunder.enabled == true:
-		if get_node("blockunder").is_colliding():
+		if get_node("blockunder").is_colliding() and $blockunder.get_collider().name != "player":
 			if velocity.y >= global.maxBlockFallSpeed:
 				drop = true;
 			col = true;

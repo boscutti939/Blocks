@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Scripts/player/player.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/blockoutline.png" type="Texture" id=2]
@@ -44,7 +44,50 @@ expand_margin_right = 2.0
 expand_margin_top = 2.0
 expand_margin_bottom = 2.0
 
+[sub_resource type="Animation" id=6]
+resource_name = "deathanimation"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.7 ),
+"transitions": PoolRealArray( 0.482967, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0.607843, 0.607843, 1 ), Color( 1, 0, 0, 0 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.7 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:relativeposition")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2, 0.7 ),
+"transitions": PoolRealArray( 0.55, 1.8, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -64 ), Vector2( 0, 480 ) ]
+}
+
 [node name="KinematicBody2D" type="KinematicBody2D"]
+position = Vector2( 0, -64 )
 z_index = 2
 collision_layer = 5
 collision_mask = 17
@@ -128,5 +171,8 @@ bus = "SFX"
 stream = ExtResource( 11 )
 volume_db = -10.0
 bus = "SFX"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/deathanimation = SubResource( 6 )
 [connection signal="timeout" from="jumpmeter/jumptimer" to="." method="_on_jumptimer_timeout"]
 [connection signal="timeout" from="jumpmeter/jumptimer" to="jumpmeter" method="_on_jumptimer_timeout"]
