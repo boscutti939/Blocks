@@ -25,6 +25,7 @@ extents = Vector2( 16, 16 )
 
 [node name="exploding_block" type="RigidBody2D"]
 collision_layer = 17
+collision_mask = 16
 mode = 3
 gravity_scale = 4.0
 script = ExtResource( 1 )
@@ -134,6 +135,7 @@ bus = "SFX"
 script = ExtResource( 7 )
 
 [node name="beep_timer" type="Timer" parent="fuse_audio"]
+pause_mode = 1
 
 [node name="outline" type="Sprite" parent="."]
 texture = ExtResource( 8 )

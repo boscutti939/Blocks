@@ -63,11 +63,12 @@ func checkCollisions(delta):
 
 func _process(delta):
 	pass;
+#	label.text = str(onfloor);
 #	label.text = str(position.y);
 
 func _physics_process(delta):
 	if died == false:
-		if is_on_floor():
+		if is_on_floor() and onfloor:
 			var blockHeight = ceil((480 - 16 - round(position.y)) / 32);
 			maxBlockHeight = max(blockHeight, maxBlockHeight);
 			global.updateBlockHeight(maxBlockHeight);

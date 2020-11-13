@@ -34,7 +34,7 @@ func _on_Timer_timeout():
 	if get_parent().has_node("player"):
 		$timer.wait_time = rand_range(1.0/maxSpawnRate, time);
 		var choice = round(rand_range(0, 100));
-		if choice in range(0, 90):
+		if choice in range(0, 80):
 			block = blockToSpawn.instance();
 		elif choice in range(80, 98):
 			block = explodingBlockToSpawn.instance();
