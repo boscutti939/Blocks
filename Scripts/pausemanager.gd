@@ -12,7 +12,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if global.gameOver == false:
-		if Input.is_key_pressed(KEY_ESCAPE):
+		if Input.is_key_pressed(global.keys["BACKKEY"]):
 			if global.paused == false and paused == false and get_tree().is_paused() == false:
 				AudioServer.set_bus_effect_enabled(2, 0, true);
 				get_tree().set_pause(true);
@@ -23,5 +23,5 @@ func _process(delta):
 				get_tree().set_pause(false);
 				global.paused = false;
 				paused = true;
-		if not Input.is_key_pressed(KEY_ESCAPE) and paused == true:
+		if not Input.is_key_pressed(global.keys["BACKKEY"]) and paused == true:
 			paused = false;

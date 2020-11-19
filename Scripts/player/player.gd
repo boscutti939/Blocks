@@ -14,20 +14,18 @@ onready var label = $label;
 onready var global = get_node("/root/Global");
 
 func getInput(delta):
-	if Input.is_key_pressed(KEY_A) and (not $rayLeft.is_colliding()):
+	if Input.is_key_pressed(global.keys["LEFTKEY"]) and (not $rayLeft.is_colliding()):
 		motion.x = -speed
-	elif Input.is_key_pressed(KEY_D) and (not $rayRight.is_colliding()):
+	elif Input.is_key_pressed(global.keys["RIGHTKEY"]) and (not $rayRight.is_colliding()):
 		motion.x = speed
 	else:
 		motion.x = 0
-	if Input.is_key_pressed(KEY_SPACE):
-		motion.y = -100
-	if Input.is_key_pressed(KEY_W):
+	if Input.is_key_pressed(global.keys["UPKEY"]):
 		if is_on_floor():
 			if not $jumpsound.is_playing():
 				$jumpsound.play()
 			$jumpingtimer.start();
-	if Input.is_key_pressed(KEY_S):
+	elif Input.is_key_pressed(global.keys["DOWNKEY"]):
 		if not is_on_floor() and motion.y < 200:
 			$jumpingtimer.stop();
 			motion.y = 400;
