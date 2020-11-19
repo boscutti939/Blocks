@@ -27,6 +27,10 @@ func getInput(delta):
 			if not $jumpsound.is_playing():
 				$jumpsound.play()
 			$jumpingtimer.start();
+	if Input.is_key_pressed(KEY_S):
+		if not is_on_floor() and motion.y < 200:
+			$jumpingtimer.stop();
+			motion.y = 400;
 	if not $jumpingtimer.is_stopped():
 			motion.y = (-100 * jumpheight) * ($jumpingtimer.time_left * 2 / $jumpingtimer.wait_time);
 	elif $jumpingtimer.time_left > 0:
