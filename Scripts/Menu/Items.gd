@@ -18,11 +18,11 @@ func _ready():
 	currnode.position.y = 240
 
 func flyInTweenStart():
-	$FlyInTween.interpolate_property(currnode.get_node("Control"), "rect_position", Vector2(640, 0), Vector2(0, 0), 0.5, Tween.TRANS_QUAD, Tween.EASE_IN_OUT, 1)
+	$FlyInTween.interpolate_property(currnode.get_node("Control"), "rect_position", Vector2(640, 0), Vector2(0, 0), 0.5, Tween.TRANS_QUAD, Tween.EASE_IN_OUT, 0)
 	$FlyInTween.start()
 
 func flyOutTweenStart():
-	$FlyOutTween.interpolate_property(prevnode.get_node("Control"), "rect_position", prevnode.get_node("Control").rect_position, Vector2(-640, prevnode.get_node("Control").rect_position.y), 0.4, Tween.TRANS_BACK, Tween.EASE_IN, 0.5)
+	$FlyOutTween.interpolate_property(prevnode.get_node("Control"), "rect_position", prevnode.get_node("Control").rect_position, Vector2(-640, prevnode.get_node("Control").rect_position.y), 0.4, Tween.TRANS_BACK, Tween.EASE_IN, 0)
 	$FlyOutTween.start()
 
 func navTweenStart():
