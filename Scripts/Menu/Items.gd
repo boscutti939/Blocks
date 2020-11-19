@@ -10,6 +10,8 @@ onready var currnode = $MainItems;
 onready var options = currnode.get_node("Control/VBoxContainer").get_child_count()
 var up = false;
 var down = false;
+var left = false;
+var right = false;
 var enter = false;
 var esc = false;
 
@@ -31,6 +33,32 @@ func navTweenStart():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if Input.is_key_pressed(KEY_A):
+		if currnode.name == "OptionsItems" and left == false:
+			if curr == 0:
+				if AudioServer.get_bus_volume_db(1) > -64:
+					AudioServer.set_bus_volume_db(1, AudioServer.get_bus_volume_db(1) - 8);
+				else:
+					AudioServer.set_bus_mute(1, true);
+			elif curr == 1:
+				if AudioServer.get_bus_volume_db(2) > -64:
+					AudioServer.set_bus_volume_db(2, AudioServer.get_bus_volume_db(2) - 8);
+				else:
+					AudioServer.set_bus_mute(2, true);
+		left = true;
+	else:
+		left = false;
+	if Input.is_key_pressed(KEY_D):
+		if currnode.name == "OptionsItems" and right == false:
+			if curr == 0 and AudioServer.get_bus_volume_db(1) < 0:
+				AudioServer.set_bus_mute(1, false);
+				AudioServer.set_bus_volume_db(1, AudioServer.get_bus_volume_db(1) + 8);
+			elif curr == 1 and AudioServer.get_bus_volume_db(2) < 0:
+				AudioServer.set_bus_mute(2, false);
+				AudioServer.set_bus_volume_db(2, AudioServer.get_bus_volume_db(2) + 8);
+		right = true;
+	else:
+		right = false;
 	if Input.is_key_pressed(KEY_W):
 		if curr > 0 and up == false:
 			curr -= 1;
@@ -64,7 +92,13 @@ func _process(delta):
 						flyOutTweenStart();
 						flyInTweenStart();
 				1:
-					pass #Change the current menu to the options.
+					prevnode = $MainItems;
+					currnode = $OptionsItems;
+					currnode.position.y = 240;
+					options = currnode.get_node("Control/VBoxContainer").get_child_count();
+					curr = 0;
+					flyOutTweenStart();
+					flyInTweenStart();
 				2:
 					get_tree().quit();
 		elif currnode.name == "PlayItems":
@@ -89,7 +123,17 @@ func _process(delta):
 				curr = 0;
 				flyOutTweenStart();
 				flyInTweenStart();
+			elif currnode.name == "OptionsItems":
+				prevnode = $OptionsItems;
+				currnode = $MainItems;
+				currnode.position.y = 240;
+				options = currnode.get_node("Control/VBoxContainer").get_child_count();
+				curr = 0;
+				flyOutTweenStart();
+				flyInTweenStart();
 			elif currnode.name == "MainItems":
 				get_tree().quit();
 	elif not Input.is_key_pressed(KEY_ESCAPE):
 		esc = false;
+	$OptionsItems/Control/VBoxContainer/sfxvolume/MarginContainer/ProgressBar.value = AudioServer.get_bus_volume_db(1);
+	$OptionsItems/Control/VBoxContainer/musicvolume/MarginContainer/ProgressBar.value = AudioServer.get_bus_volume_db(2);
