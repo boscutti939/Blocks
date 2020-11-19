@@ -131,12 +131,15 @@ margin_right = 640.0
 margin_bottom = 384.0
 mouse_filter = 2
 custom_constants/separation = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="playbutton" type="Button" parent="Items/MainItems/Control/VBoxContainer"]
 margin_right = 640.0
 margin_bottom = 31.0
 focus_mode = 0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = ExtResource( 7 )
 shortcut_in_tooltip = false
 enabled_focus_mode = 0
 text = "Play"

@@ -50,10 +50,8 @@ func checkCollisions(delta):
 			if collision.collider.position.y == round(position.y) + 32 and collision.collider.position.x < position.x + 30 and collision.collider.position.x > position.x - 30:
 				if collision.collider.get("velocity") != null and collision.collider.velocity.y == 0:
 					onfloor = true;
-#	if $rayDown.is_colliding():
-#		position.y = $rayDown.get_collider().position.y - 32;
-#		if motion.y > 0:
-#			motion.y = 0;
+	if $rayDown.is_colliding() and $rayUp.is_colliding():
+		explode();
 	if $rayLeft.is_colliding():
 		position.x = $rayLeft.get_collider().position.x + 32;
 		if motion.x < 0:
