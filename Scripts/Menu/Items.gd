@@ -55,132 +55,125 @@ func switchItems(previous, current):
 		flyInTweenStart();
 
 func optionsSubtract():
-	if curr == 0:
-		if AudioServer.get_bus_volume_db(0) > -32:
-			AudioServer.set_bus_volume_db(0, AudioServer.get_bus_volume_db(0) - 4);
+	if curr in [0, 1, 2]:
+		if AudioServer.get_bus_volume_db(curr) > -32:
+			AudioServer.set_bus_volume_db(curr, AudioServer.get_bus_volume_db(curr) - 4);
 		else:
-			AudioServer.set_bus_mute(0, true);
-	elif curr == 1:
-		if AudioServer.get_bus_volume_db(1) > -32:
-			AudioServer.set_bus_volume_db(1, AudioServer.get_bus_volume_db(1) - 4);
-		else:
-			AudioServer.set_bus_mute(1, true);
-	elif curr == 2:
-		if AudioServer.get_bus_volume_db(2) > -32:
-			AudioServer.set_bus_volume_db(2, AudioServer.get_bus_volume_db(2) - 4);
-		else:
-			AudioServer.set_bus_mute(2, true);
+			AudioServer.set_bus_mute(curr, true);
 
 func optionsAdd():
-	if curr == 0 and AudioServer.get_bus_volume_db(0) < 0:
-		AudioServer.set_bus_mute(0, false);
-		AudioServer.set_bus_volume_db(0, AudioServer.get_bus_volume_db(0) + 4);
-	elif curr == 1 and AudioServer.get_bus_volume_db(1) < 0:
-		AudioServer.set_bus_mute(1, false);
-		AudioServer.set_bus_volume_db(1, AudioServer.get_bus_volume_db(1) + 4);
-	elif curr == 2 and AudioServer.get_bus_volume_db(1) < 0:
-		AudioServer.set_bus_mute(2, false);
-		AudioServer.set_bus_volume_db(2, AudioServer.get_bus_volume_db(2) + 4);
+	if curr in [0, 1, 2] and AudioServer.get_bus_volume_db(curr) < 0:
+		AudioServer.set_bus_mute(curr, false);
+		AudioServer.set_bus_volume_db(curr, AudioServer.get_bus_volume_db(curr) + 4);
 
 func setKey(key):
-	$KeysItems/Control/VBoxContainer.get_child(curr).get_node("keylabel").text = OS.get_scancode_string(key);
-	match curr:
-		0:
-			global.keys["LEFTKEY"] = key;
-		1:
-			global.keys["RIGHTKEY"] = key;
-		2:
-			global.keys["UPKEY"] = key;
-		3:
-			global.keys["DOWNKEY"] = key;
-		4:
-			global.keys["BACKKEY"] = key;
-		5:
-			global.keys["SELECTKEY"] = key;
-		6:
-			global.keys["RESTARTKEY"] = key;
-	settingkey = false;
+	if key == KEY_ESCAPE:
+		settingkey = false;
+		esc = true;
+		resetKeys();
+	elif not key in global.keys.values():
+		settingkey = false;
+		if key != KEY_ESCAPE:
+			$KeysItems/Control/VBoxContainer.get_child(curr).get_node("keylabel").text = OS.get_scancode_string(key);
+			match curr:
+				0:
+					global.keys["LEFTKEY"] = key;
+					left = true;
+				1:
+					global.keys["RIGHTKEY"] = key;
+					right = true;
+				2:
+					global.keys["UPKEY"] = key;
+					up = true;
+				3:
+					global.keys["DOWNKEY"] = key;
+					down = true;
+				4:
+					global.keys["BACKKEY"] = key;
+					esc = true;
+				5:
+					global.keys["SELECTKEY"] = key;
+					enter = true;
+				6:
+					global.keys["RESTARTKEY"] = key;
 
 func _input(event):
 	if event is InputEventKey and event.pressed and settingkey == true:
 		setKey(event.scancode);
 
 func _process(delta):
-	if Input.is_key_pressed(global.keys["LEFTKEY"]) and settingkey == false:
-		if currnode.name == "OptionsItems" and left == false:
-			optionsSubtract();
-		left = true;
-	else:
-		left = false;
-	if Input.is_key_pressed(global.keys["RIGHTKEY"]) and settingkey == false:
-		if currnode.name == "OptionsItems" and right == false:
-			optionsAdd();
-		right = true;
-	else:
-		right = false;
-	if Input.is_key_pressed(global.keys["UPKEY"]) and settingkey == false:
-		if curr > 0 and up == false:
-			curr -= 1;
-			navTweenStart();
+	if settingkey == false:
+		if Input.is_key_pressed(global.keys["LEFTKEY"]):
+			if currnode.name == "OptionsItems" and left == false:
+				optionsSubtract();
+			left = true;
+		else:
+			left = false;
+		if Input.is_key_pressed(global.keys["RIGHTKEY"]):
+			if currnode.name == "OptionsItems" and right == false:
+				optionsAdd();
+			right = true;
+		else:
+			right = false;
+		if Input.is_key_pressed(global.keys["UPKEY"]):
+			if curr > 0 and up == false:
+				curr -= 1;
+				navTweenStart();
+				$uibeep.play()
+			up = true;
+		else:
+			up = false;
+		if Input.is_key_pressed(global.keys["DOWNKEY"]):
+			if curr < options - 1 and down == false:
+				curr += 1;
+				navTweenStart();
+				$uibeep.play()
+			down = true;
+		else:
+			down = false;
+		if Input.is_key_pressed(global.keys["SELECTKEY"]) and enter == false:
 			$uibeep.play()
-		up = true;
-	else:
-		up = false;
-	if Input.is_key_pressed(global.keys["DOWNKEY"]) and settingkey == false:
-		if curr < options - 1 and down == false:
-			curr += 1;
-			navTweenStart();
-			$uibeep.play()
-		down = true;
-	else:
-		down = false;
+			enter = true;
+			$Sprite/AnimationPlayer.play("Flash Animation");
+			if currnode.name == "MainItems":
+				match curr:
+					0:
+						switchItems($MainItems, $PlayItems);
+					1:
+						switchItems($MainItems, $OptionsItems);
+					2:
+						get_tree().quit();
+			elif currnode.name == "PlayItems":
+				match curr:
+					0:
+						get_tree().change_scene("res://Scenes/field.tscn")
+					1:
+						pass #Survival
+					2:
+						pass #Extreme
+			elif currnode.name == "OptionsItems":
+				if curr == 3:
+					switchItems($OptionsItems, $KeysItems);
+			elif currnode.name == "KeysItems":
+				settingkey = true;
+		elif not Input.is_key_pressed(global.keys["SELECTKEY"]):
+			enter = false;
+		
+		if Input.is_key_pressed(global.keys["BACKKEY"]) and esc == false:
+			esc = true;
+			if currnode.name == "PlayItems":
+				switchItems($PlayItems, $MainItems);
+			elif currnode.name == "OptionsItems":
+				switchItems($OptionsItems, $MainItems);
+			elif currnode.name == "KeysItems":
+					switchItems($KeysItems, $OptionsItems);
+			elif currnode.name == "MainItems":
+				get_tree().quit();
+		elif not Input.is_key_pressed(global.keys["BACKKEY"]):
+			esc = false;
+		if currnode.name == "KeysItems" and settingkey == true:
+			$KeysItems/Control/VBoxContainer.get_child(curr).get_node("keylabel").text = "Press a key!";
 	
-	if Input.is_key_pressed(global.keys["SELECTKEY"]) and enter == false and settingkey == false:
-		$uibeep.play()
-		enter = true;
-		$Sprite/AnimationPlayer.play("Flash Animation");
-		if currnode.name == "MainItems":
-			match curr:
-				0:
-					switchItems($MainItems, $PlayItems);
-				1:
-					switchItems($MainItems, $OptionsItems);
-				2:
-					get_tree().quit();
-		elif currnode.name == "PlayItems":
-			match curr:
-				0:
-					get_tree().change_scene("res://Scenes/field.tscn")
-				1:
-					pass #Survival
-				2:
-					pass #Extreme
-		elif currnode.name == "OptionsItems":
-			if curr == 3:
-				switchItems($OptionsItems, $KeysItems);
-		elif currnode.name == "KeysItems":
-			settingkey = true;
-	elif not Input.is_key_pressed(global.keys["SELECTKEY"]):
-		enter = false;
-	
-	if Input.is_key_pressed(global.keys["BACKKEY"]) and esc == false:
-		esc = true;
-		if currnode.name == "PlayItems":
-			switchItems($PlayItems, $MainItems);
-		elif currnode.name == "OptionsItems":
-			switchItems($OptionsItems, $MainItems);
-		elif currnode.name == "KeysItems":
-			if settingkey == false:
-				switchItems($KeysItems, $OptionsItems);
-			else:
-				settingkey = false;
-				resetKeys();
-		elif currnode.name == "MainItems":
-			get_tree().quit();
-	elif not Input.is_key_pressed(global.keys["BACKKEY"]):
-		esc = false;
-	if currnode.name == "KeysItems" and settingkey == true:
-		$KeysItems/Control/VBoxContainer.get_child(curr).get_node("keylabel").text = "Press a key!";
 	$OptionsItems/Control/VBoxContainer/mastervolume/MarginContainer/ProgressBar.value = AudioServer.get_bus_volume_db(0);
 	$OptionsItems/Control/VBoxContainer/sfxvolume/MarginContainer/ProgressBar.value = AudioServer.get_bus_volume_db(1);
 	$OptionsItems/Control/VBoxContainer/musicvolume/MarginContainer/ProgressBar.value = AudioServer.get_bus_volume_db(2);
