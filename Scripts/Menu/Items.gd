@@ -10,12 +10,12 @@ var curr = 0
 var prevnode = null;
 onready var currnode = $MainItems;
 onready var options = currnode.get_node("Control/VBoxContainer").get_child_count()
-var up = false;
-var down = false;
-var left = false;
-var right = false;
-var enter = false;
-var esc = false;
+var up = true;
+var down = true;
+var left = true;
+var right = true;
+var enter = true;
+var esc = true;
 var settingkey = false;
 
 # Called when the node enters the scene tree for the first time.
@@ -33,7 +33,7 @@ func resetKeys():
 	$KeysItems/Control/VBoxContainer/restart/keylabel.text = OS.get_scancode_string(global.keys["RESTARTKEY"]);
 
 func flyInTweenStart():
-	$FlyInTween.interpolate_property(currnode.get_node("Control"), "rect_position", Vector2(640, 0), Vector2(0, 0), 0.5, Tween.TRANS_QUAD, Tween.EASE_IN_OUT, 0)
+	$FlyInTween.interpolate_property(currnode.get_node("Control"), "rect_position", Vector2(640, 0), Vector2(0, 0), 0.5, Tween.TRANS_QUAD, Tween.EASE_IN_OUT, 0.5)
 	$FlyInTween.start()
 
 func flyOutTweenStart():
@@ -58,8 +58,8 @@ func optionsSubtract():
 	if curr in [0, 1, 2]:
 		if AudioServer.get_bus_volume_db(curr) > -32:
 			AudioServer.set_bus_volume_db(curr, AudioServer.get_bus_volume_db(curr) - 4);
-		else:
-			AudioServer.set_bus_mute(curr, true);
+			if AudioServer.get_bus_volume_db(curr) == -32:
+				AudioServer.set_bus_mute(curr, true);
 
 func optionsAdd():
 	if curr in [0, 1, 2] and AudioServer.get_bus_volume_db(curr) < 0:
@@ -164,6 +164,7 @@ func _process(delta):
 			if currnode.name == "PlayItems":
 				switchItems($PlayItems, $MainItems);
 			elif currnode.name == "OptionsItems":
+				global.saveConfig();
 				switchItems($OptionsItems, $MainItems);
 			elif currnode.name == "KeysItems":
 					switchItems($KeysItems, $OptionsItems);

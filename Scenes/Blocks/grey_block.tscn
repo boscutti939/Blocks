@@ -48,7 +48,8 @@ script = ExtResource( 3 )
 [node name="dropsound" type="AudioStreamPlayer2D" parent="."]
 pause_mode = 2
 stream = ExtResource( 4 )
-bus = "Drops"
+volume_db = -10.0
+bus = "SFX"
 script = ExtResource( 5 )
 
 [node name="outline" type="Sprite" parent="."]
