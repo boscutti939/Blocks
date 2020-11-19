@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://Scripts/field.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/player.tscn" type="PackedScene" id=2]
@@ -20,6 +20,8 @@
 [ext_resource path="res://Scripts/pausemanager.gd" type="Script" id=18]
 [ext_resource path="res://Fonts/slkscr.ttf" type="DynamicFontData" id=19]
 [ext_resource path="res://Fonts/slkscrb.ttf" type="DynamicFontData" id=20]
+[ext_resource path="res://Scenes/restartlabel.gd" type="Script" id=21]
+[ext_resource path="res://Scenes/exitlabel.gd" type="Script" id=22]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 32 )
@@ -51,7 +53,7 @@ font_data = ExtResource( 19 )
 
 [sub_resource type="Animation" id=9]
 resource_name = "gameoverappearanimation"
-length = 3.0
+length = 4.0
 step = 1.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -78,13 +80,25 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("pressf5label:modulate")
+tracks/2/path = NodePath("restartlabel:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
 "times": PoolRealArray( 0, 2, 3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("exitlabel:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 3, 4 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
@@ -236,7 +250,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="pressf5label" type="Label" parent="sceneCamera/gameOverSplash"]
+[node name="restartlabel" type="Label" parent="sceneCamera/gameOverSplash"]
 modulate = Color( 1, 1, 1, 0 )
 anchor_left = 0.5
 anchor_top = 0.5
@@ -252,6 +266,28 @@ custom_fonts/font = SubResource( 8 )
 text = "Press F5 to restart"
 align = 1
 valign = 1
+script = ExtResource( 21 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="exitlabel" type="Label" parent="sceneCamera/gameOverSplash"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -103.0
+margin_top = 145.953
+margin_right = 103.0
+margin_bottom = 162.953
+grow_horizontal = 2
+grow_vertical = 2
+custom_fonts/font = SubResource( 8 )
+text = "Or press KEY to exit."
+align = 1
+valign = 1
+script = ExtResource( 22 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
