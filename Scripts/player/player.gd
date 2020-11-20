@@ -25,14 +25,18 @@ func getInput(delta):
 			if not $jumpsound.is_playing():
 				$jumpsound.play()
 			$jumpingtimer.start();
-	elif Input.is_key_pressed(global.keys["DOWNKEY"]):
+	elif not $jumpingtimer.is_stopped():
+		$jumpingtimer.stop();
+		if motion.y < 0:
+			motion.y /= 2;
+	if Input.is_key_pressed(global.keys["DOWNKEY"]):
 		if not is_on_floor() and motion.y < 400:
 			$jumpingtimer.stop();
 			motion.y = 400;
 	if not $jumpingtimer.is_stopped():
 			motion.y = (-100 * jumpheight) * ($jumpingtimer.time_left * 2 / $jumpingtimer.wait_time);
 	elif $jumpingtimer.time_left > 0:
-		$jumpingtimer.stop()
+		$jumpingtimer.stop();
 		$jumpingtimer.time_left = 0;
 
 func checkCollisions(delta):
