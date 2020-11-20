@@ -130,7 +130,7 @@ cast_to = Vector2( 47, 0 )
 [node name="fuse_audio" type="AudioStreamPlayer2D" parent="."]
 pause_mode = 2
 stream = ExtResource( 6 )
-volume_db = -20.0
+volume_db = -15.0
 bus = "SFX"
 script = ExtResource( 7 )
 
@@ -149,7 +149,7 @@ volume_db = -10.0
 bus = "SFX"
 script = ExtResource( 11 )
 [connection signal="timeout" from="fuse_time" to="." method="_on_fuse_time_timeout"]
-[connection signal="timeout" from="delay_time" to="." method="_on_fuse_time_timeout"]
 [connection signal="timeout" from="delay_time" to="." method="_on_delay_time_timeout"]
+[connection signal="timeout" from="delay_time" to="." method="_on_fuse_time_timeout"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
 [connection signal="timeout" from="fuse_audio/beep_timer" to="fuse_audio" method="_on_beep_timer_timeout"]
