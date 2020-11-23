@@ -11,8 +11,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if visible:
-		value = $jumptimer.time_left / $jumptimer.wait_time
+		value = $timer.time_left / $timer.wait_time
 
-
-func _on_jumptimer_timeout():
-	visible = false
+func _on_timer_timeout():
+	visible = false;

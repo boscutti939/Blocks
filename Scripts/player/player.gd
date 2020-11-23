@@ -20,7 +20,7 @@ func getInput(delta):
 		motion.x = speed
 	else:
 		motion.x = 0
-	if Input.is_key_pressed(global.keys["UPKEY"]):
+	if Input.is_key_pressed(global.keys["JUMPKEY"]):
 		if is_on_floor():
 			if not $jumpsound.is_playing():
 				$jumpsound.play()
@@ -45,7 +45,7 @@ func checkCollisions(delta):
 		var collision = get_slide_collision(i)
 		if collision.get_collider():
 			if collision.collider.position.y < position.y - 1 and collision.collider.position.x < position.x + 30 and collision.collider.position.x > position.x - 30:
-				if not collision.collider == null and not collision.collider.name.match("*yellow_block*"):
+				if not collision.collider == null and collision.collider.blocktype != 1:
 					print_debug("I was killed by ", collision.collider.name, " at position", position, " where the collider position was ", collision.collider.position);
 					explode();
 			if collision.collider.position.y < position.y - 16:
@@ -55,7 +55,8 @@ func checkCollisions(delta):
 				if collision.collider.get("velocity") != null and collision.collider.velocity.y == 0:
 					onfloor = true;
 	if $rayDown.is_colliding() and $rayUp.is_colliding():
-		explode();
+		if $rayUp.get_collider().blocktype != 1:
+			explode();
 	if $rayLeft.is_colliding():
 		position.x = $rayLeft.get_collider().position.x + 32;
 		if motion.x < 0:
@@ -91,9 +92,13 @@ func explode():
 	motion = Vector2(0,0);
 	oldposition = position;
 	died = true;
+	if global.timescale != 1 and global.get_node("timescaletween").get_runtime() <= 0:
+		global.resumetime();
 	$AnimationPlayer.play("deathanimation");
 	print_debug("I died.");
 
 func _on_jumptimer_timeout():
 	jumpheight = JUMPHEIGHT;
 
+func _on_timetimer_timeout():
+	global.resumetime();

@@ -16,12 +16,15 @@ export var lavaAcceleration = 0.2;
 export var maxSpawnRate = 10.0;
 export var initialSpawnRate = 1.0;
 export var secondsToMax = 120.0;
+export var normalTimescale = 1.0;
+export var slowTimescale = 0.25;
 var gameOver = false;
 var paused = false;
 var playerMaxBlockHeight = 0;
+var timescale = 1;
 
 var keys = {"LEFTKEY" : KEY_A, "RIGHTKEY" : KEY_D, "UPKEY" : KEY_W,
-			"DOWNKEY" : KEY_S, "BACKKEY" : KEY_ESCAPE, "SELECTKEY" : KEY_ENTER,
+			"DOWNKEY" : KEY_S, "JUMPKEY" : KEY_SPACE, "BACKKEY" : KEY_ESCAPE, "SELECTKEY" : KEY_ENTER,
 			"RESTARTKEY" : KEY_F5}
 
 func saveConfig():
@@ -32,6 +35,14 @@ func saveConfig():
 	config.set_value("audio", "music", AudioServer.get_bus_volume_db(2));
 	config.save("user://settings.cfg");
 
+func slowtime():
+	$timescaletween.interpolate_property(self, "timescale", timescale, 0.25, 1, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0);
+	$timescaletween.start();
+
+func resumetime():
+	$timescaletween.interpolate_property(self, "timescale", timescale, 1.0, 1, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0);
+	$timescaletween.start();
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var err = config.load("user://settings.cfg");
@@ -40,6 +51,7 @@ func _ready():
 					"RIGHTKEY" : config.get_value("keys", "RIGHTKEY", KEY_D),
 					"UPKEY" : config.get_value("keys", "UPKEY", KEY_W),
 					"DOWNKEY" : config.get_value("keys", "DOWNKEY", KEY_S),
+					"JUMPKEY" : config.get_value("keys", "JUMPKEY", KEY_SPACE),
 					"BACKKEY" : config.get_value("keys", "BACKKEY", KEY_ESCAPE),
 					"SELECTKEY" : config.get_value("keys", "SELECTKEY", KEY_ENTER),
 					"RESTARTKEY" : config.get_value("keys", "RESTARTKEY", KEY_F5)}

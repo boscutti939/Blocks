@@ -8,6 +8,7 @@ onready var blockLocationsSize = 20 - (global.flatteningPercentage * 20)
 export (PackedScene) var blockToSpawn;
 export (PackedScene) var explodingBlockToSpawn;
 export (PackedScene) var yellowBlock;
+export (PackedScene) var timeBlock;
 export (PackedScene) var appearAnimation;
 onready var maxSpawnRate = global.maxSpawnRate;
 onready var initialSpawnRate = global.initialSpawnRate;
@@ -32,14 +33,18 @@ func _process(delta):
 func _on_Timer_timeout():
 	var block = null;
 	if get_parent().has_node("player"):
-		$timer.wait_time = rand_range(1.0/maxSpawnRate, time);
+		$timer.wait_time = rand_range(1.0/maxSpawnRate, time) / global.timescale;
 		var choice = round(rand_range(0, 100));
-		if choice in range(0, 80):
+		if choice in range(0, 89):
 			block = blockToSpawn.instance();
-		elif choice in range(80, 98):
+		elif choice in range(90, 99):
 			block = explodingBlockToSpawn.instance();
 		else:
-			block = yellowBlock.instance();
+			choice = round(rand_range(0, 1));
+			if choice == 0:
+				block = yellowBlock.instance();
+			else:
+				block = timeBlock.instance();
 
 		var blockappear = appearAnimation.instance();
 		if emptyLocations.size() <= blockLocationsSize:
@@ -49,8 +54,8 @@ func _on_Timer_timeout():
 		emptyLocations.erase(spawnLocation);
 		var blockpos = Vector2(spawnLocation*32 - 16, get_parent().get_node("sceneCamera").position.y + 16);
 		
-		block.position = blockpos
-		blockappear.position = blockpos
+		block.position = blockpos;
+		blockappear.position = blockpos;
 		blockappear.position.y += 16
 		add_child(blockappear)
 		add_child(block);

@@ -1,45 +1,49 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://Scripts/grey_block/grey_block.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/time_block/time_block.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/grey_block/blockcolor.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/exploding_block/RayCast2D.gd" type="Script" id=3]
 [ext_resource path="res://Sprites/blockoutline.png" type="Texture" id=4]
 [ext_resource path="res://Scripts/grey_block/outline.gd" type="Script" id=5]
 [ext_resource path="res://Sounds/drop.wav" type="AudioStream" id=6]
 [ext_resource path="res://Scripts/grey_block/dropsound.gd" type="Script" id=7]
+[ext_resource path="res://Scripts/base_block.gd" type="Script" id=8]
 
-[sub_resource type="Gradient" id=1]
-offsets = PoolRealArray( 0.413174 )
-colors = PoolColorArray( 1, 1, 0, 1 )
-
-[sub_resource type="GradientTexture" id=2]
-gradient = SubResource( 1 )
-width = 32
-
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 16 )
+
+[sub_resource type="Gradient" id=5]
+offsets = PoolRealArray( 0.458065 )
+colors = PoolColorArray( 0, 0, 1, 1 )
+
+[sub_resource type="GradientTexture" id=3]
+gradient = SubResource( 5 )
+width = 32
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 16, 16 )
 
-[node name="yellow_block" type="RigidBody2D"]
+[node name="base" type="RigidBody2D"]
 collision_layer = 17
 collision_mask = 16
 mode = 3
-gravity_scale = 4.0
+custom_integrator = true
+script = ExtResource( 8 )
+
+[node name="time_block" type="Node2D" parent="."]
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="blockcolor" type="Sprite" parent="."]
-scale = Vector2( 1, 32 )
-texture = SubResource( 2 )
-script = ExtResource( 2 )
-
 [node name="collision_shape" type="CollisionShape2D" parent="."]
 visible = false
-shape = SubResource( 3 )
+shape = SubResource( 1 )
+
+[node name="blockcolor" type="Sprite" parent="."]
+scale = Vector2( 1, 32 )
+texture = SubResource( 3 )
+script = ExtResource( 2 )
 
 [node name="blockunder" type="RayCast2D" parent="."]
 visible = false
@@ -88,6 +92,6 @@ collision_mask = 16
 [node name="dropsound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 6 )
 volume_db = -10.0
-bus = "Music"
+bus = "Drops"
 script = ExtResource( 7 )
-[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_entered" from="Area2D" to="time_block" method="_on_Area2D_body_entered"]

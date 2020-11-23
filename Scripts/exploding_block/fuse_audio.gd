@@ -10,11 +10,11 @@ onready var global = $"/root/Global";
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	pitch_scale = global.timescale;
 	if get_tree().paused == true and global.gameOver == true:
 		stop();
-		$beep_timer.stop();
 		$"../fuse_time".stop();
 		$"../delay_time".stop();
 
-func _on_beep_timer_timeout():
+func _on_Timer_timeout():
 	play();

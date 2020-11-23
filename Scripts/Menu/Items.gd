@@ -28,6 +28,7 @@ func resetKeys():
 	$KeysItems/Control/VBoxContainer/menuright/keylabel.text = OS.get_scancode_string(global.keys["RIGHTKEY"]);
 	$KeysItems/Control/VBoxContainer/menuup/keylabel.text = OS.get_scancode_string(global.keys["UPKEY"]);
 	$KeysItems/Control/VBoxContainer/menudown/keylabel.text = OS.get_scancode_string(global.keys["DOWNKEY"]);
+	$KeysItems/Control/VBoxContainer/jump/keylabel.text = OS.get_scancode_string(global.keys["JUMPKEY"]);
 	$KeysItems/Control/VBoxContainer/backpause/keylabel.text = OS.get_scancode_string(global.keys["BACKKEY"]);
 	$KeysItems/Control/VBoxContainer/select/keylabel.text = OS.get_scancode_string(global.keys["SELECTKEY"]);
 	$KeysItems/Control/VBoxContainer/restart/keylabel.text = OS.get_scancode_string(global.keys["RESTARTKEY"]);
@@ -89,12 +90,14 @@ func setKey(key):
 					global.keys["DOWNKEY"] = key;
 					down = true;
 				4:
+					global.keys["JUMPKEY"] = key;
+				5:
 					global.keys["BACKKEY"] = key;
 					esc = true;
-				5:
+				6:
 					global.keys["SELECTKEY"] = key;
 					enter = true;
-				6:
+				7:
 					global.keys["RESTARTKEY"] = key;
 
 func _input(event):

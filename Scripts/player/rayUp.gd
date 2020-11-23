@@ -10,8 +10,4 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	if get_parent().motion.y < 0:
-		enabled = true;
-		cast_to = Vector2(0, get_parent().motion.y * delta - 16);
-	else:
-		enabled = false;
+	cast_to = Vector2(0, get_parent().motion.y * delta - 16);

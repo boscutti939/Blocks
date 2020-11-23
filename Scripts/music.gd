@@ -10,7 +10,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	pitch_scale = global.timescale;
 
 
 #func _player_in_lava(body):

@@ -8,3 +8,5 @@ flatteningPercentage = 0.2
 lavaSpeed = 0.5
 lavaAcceleration = 0.1
 secondsToMax = 300.0
+
+[node name="timescaletween" type="Tween" parent="."]

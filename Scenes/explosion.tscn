@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/explosion/Particles2D.gd" type="Script" id=1]
 [ext_resource path="res://Sounds/explosion.wav" type="AudioStream" id=2]
+[ext_resource path="res://Scripts/explosion/explosion_sound.gd" type="Script" id=3]
 
 [sub_resource type="Gradient" id=1]
 colors = PoolColorArray( 1, 0, 0, 1, 0, 0, 0, 0 )
@@ -55,5 +56,5 @@ process_material = SubResource( 5 )
 [node name="explosion_sound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 2 )
 volume_db = -5.0
-autoplay = true
 bus = "SFX"
+script = ExtResource( 3 )

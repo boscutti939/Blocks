@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://Scripts/field.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/player.tscn" type="PackedScene" id=2]
@@ -6,7 +6,7 @@
 [ext_resource path="res://Scripts/block_spawner/block_spawner.gd" type="Script" id=4]
 [ext_resource path="res://Scenes/Blocks/grey_block.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Blocks/exploding_block.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/Blocks/yellow_block.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Blocks/jump_block.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/appearCollumn.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scripts/explosion_manager/explosion_manager.gd" type="Script" id=9]
 [ext_resource path="res://Scenes/explosion.tscn" type="PackedScene" id=10]
@@ -22,6 +22,7 @@
 [ext_resource path="res://Fonts/slkscrb.ttf" type="DynamicFontData" id=20]
 [ext_resource path="res://Scenes/restartlabel.gd" type="Script" id=21]
 [ext_resource path="res://Scenes/exitlabel.gd" type="Script" id=22]
+[ext_resource path="res://Scenes/Blocks/time_block.tscn" type="PackedScene" id=23]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 32 )
@@ -141,6 +142,7 @@ __meta__ = {
 blockToSpawn = ExtResource( 5 )
 explodingBlockToSpawn = ExtResource( 6 )
 yellowBlock = ExtResource( 7 )
+timeBlock = ExtResource( 23 )
 appearAnimation = ExtResource( 8 )
 
 [node name="timer" type="Timer" parent="block_spawner"]

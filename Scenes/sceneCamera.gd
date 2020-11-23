@@ -50,7 +50,6 @@ func _process(delta):
 func _on_blockCheckArea_body_exited(body):
 	body.leftScene();
 
-
 func _on_blockCheckArea_body_entered(body):
 	body.enteredScene();
 

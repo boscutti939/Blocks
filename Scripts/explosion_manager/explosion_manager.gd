@@ -15,8 +15,9 @@ onready var shakeTime = get_node("../sceneCamera/shakeTime");
 #func _process(delta):
 #	pass;
 
-func explode(pos):
+func explode(pos, snd):
 	shakeTime.start();
 	var explosion = explosionScene.instance();
 	add_child(explosion);
 	explosion.position = pos;
+	explosion.muted = not snd;

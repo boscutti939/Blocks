@@ -35,10 +35,6 @@ margin_bottom = 1.0
 [sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.278431, 0.278431, 0.278431, 1 )
 draw_center = false
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
 border_color = Color( 0, 0, 0, 1 )
 expand_margin_left = 2.0
 expand_margin_right = 2.0
@@ -55,10 +51,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.7 ),
-"transitions": PoolRealArray( 0.482967, 1, 1 ),
+"times": PoolRealArray( 0, 0.7 ),
+"transitions": PoolRealArray( 1.5, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0.607843, 0.607843, 1 ), Color( 1, 0, 0, 0 ) ]
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 0 ) ]
 }
 tracks/1/type = "method"
 tracks/1/path = NodePath(".")
@@ -175,7 +171,28 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="jumptimer" type="Timer" parent="jumpmeter"]
+[node name="timer" type="Timer" parent="jumpmeter"]
+wait_time = 10.0
+one_shot = true
+script = ExtResource( 9 )
+
+[node name="timemeter" type="ProgressBar" parent="."]
+modulate = Color( 0, 0, 1, 1 )
+margin_left = -15.0
+margin_top = -15.0
+margin_right = 15.0
+margin_bottom = 15.0
+custom_styles/fg = SubResource( 4 )
+custom_styles/bg = SubResource( 5 )
+max_value = 1.0
+step = 0.0
+percent_visible = false
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="timer" type="Timer" parent="timemeter"]
 wait_time = 10.0
 one_shot = true
 script = ExtResource( 9 )
@@ -196,5 +213,7 @@ volume_db = -5.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/deathanimation = SubResource( 6 )
-[connection signal="timeout" from="jumpmeter/jumptimer" to="." method="_on_jumptimer_timeout"]
-[connection signal="timeout" from="jumpmeter/jumptimer" to="jumpmeter" method="_on_jumptimer_timeout"]
+[connection signal="timeout" from="jumpmeter/timer" to="." method="_on_jumptimer_timeout"]
+[connection signal="timeout" from="jumpmeter/timer" to="jumpmeter" method="_on_jumptimer_timeout"]
+[connection signal="timeout" from="timemeter/timer" to="." method="_on_timetimer_timeout"]
+[connection signal="timeout" from="timemeter/timer" to="timemeter" method="_on_timer_timeout"]
