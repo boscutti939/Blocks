@@ -23,6 +23,7 @@ func _ready():
 	$timer.wait_time = 1.0/initialSpawnRate;
 	$tween.interpolate_property(self, "time", 1.0/initialSpawnRate, 1.0/maxSpawnRate, secondsToMax,Tween.TRANS_CUBIC, Tween.EASE_OUT);
 	$tween.start();
+	$tween.playback_speed = global.timescale;
 	randomize();
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

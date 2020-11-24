@@ -9,6 +9,7 @@ onready var maxheightlabel = $sceneCamera/gameOverSplash/maxheightlabel;
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	global.gameOver = false;
+	global.timescale = global.normalTimescale;
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

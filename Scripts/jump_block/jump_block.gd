@@ -5,7 +5,7 @@ func _ready():
 	get_parent().blocktype = 1;
 
 func _on_Area2D_body_entered(body):
-	if body.name == "player":
+	if body.name == "player" and body.died == false:
 		get_node("/root/field/player").jumpheight = 3;
 		get_node("/root/field/player/powerupsound").play();
 		get_node("/root/field/player/jumpmeter/timer").starttimer();

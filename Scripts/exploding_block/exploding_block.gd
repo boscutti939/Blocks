@@ -24,9 +24,13 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if ceil(fusetime.time_left * global.timescale) < prevtime and not fusetime.is_stopped():
-		prevtime = ceil(fusetime.time_left * global.timescale);
-		fuseaudio.play();
+	if not fusetime.is_stopped():
+		if slowed == true and ceil(fusetime.time_left * global.slowTimescale) < prevtime:
+			prevtime = ceil(fusetime.time_left * global.slowTimescale);
+			fuseaudio.play();
+		elif slowed == false and ceil(fusetime.time_left * global.normalTimescale) < prevtime:
+			prevtime = ceil(fusetime.time_left * global.normalTimescale);
+			fuseaudio.play();
 	if global.timescale != global.normalTimescale and not fusetime.is_stopped() and slowed == false:
 		slowed = true;
 		fusetime.wait_time = fusetime.time_left / global.slowTimescale;
@@ -53,7 +57,7 @@ func _on_fuse_time_timeout(): #If the fuse expires, blow up the block.
 	get_parent().explode();
 
 func _on_Area2D_body_entered(body):
-	if body.name == "player" and fusetime.is_stopped() and global.timescale == global.normalTimescale:
+	if body.name == "player" and fusetime.is_stopped():
 		fusetime.start();
 		fuseaudio.play();
 

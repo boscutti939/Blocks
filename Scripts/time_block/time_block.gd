@@ -13,7 +13,7 @@ func _physics_process(delta):
 	pass;
 
 func _on_Area2D_body_entered(body):
-	if body.name == "player":
+	if body.name == "player" and body.died == false:
 		global.slowtime();
 		get_node("/root/field/player/powerupsound").play();
 		get_node("/root/field/player/timemeter/timer").starttimer();

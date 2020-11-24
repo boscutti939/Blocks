@@ -12,12 +12,12 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 16 )
 
-[sub_resource type="Gradient" id=5]
+[sub_resource type="Gradient" id=2]
 offsets = PoolRealArray( 0.458065 )
 colors = PoolColorArray( 0, 0, 1, 1 )
 
 [sub_resource type="GradientTexture" id=3]
-gradient = SubResource( 5 )
+gradient = SubResource( 2 )
 width = 32
 
 [sub_resource type="RectangleShape2D" id=4]

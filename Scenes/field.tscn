@@ -106,7 +106,7 @@ tracks/3/keys = {
 }
 
 [sub_resource type="RectangleShape2D" id=10]
-extents = Vector2( 320, 224 )
+extents = Vector2( 320, 232 )
 
 [sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 320, 384 )
@@ -153,6 +153,7 @@ autostart = true
 [node name="start_blocks" type="Node2D" parent="block_spawner"]
 
 [node name="explosion_manager" type="Node2D" parent="."]
+z_index = 5
 script = ExtResource( 9 )
 __meta__ = {
 "_edit_lock_": true
