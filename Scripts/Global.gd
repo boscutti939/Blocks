@@ -33,14 +33,17 @@ func saveConfig():
 	config.set_value("audio", "master", AudioServer.get_bus_volume_db(0));
 	config.set_value("audio", "sfx", AudioServer.get_bus_volume_db(1));
 	config.set_value("audio", "music", AudioServer.get_bus_volume_db(2));
+	config.set_value("audio", "mastermuted", AudioServer.is_bus_mute(0));
+	config.set_value("audio", "sfxmuted", AudioServer.is_bus_mute(1));
+	config.set_value("audio", "musicmuted", AudioServer.is_bus_mute(2));
 	config.save("user://settings.cfg");
 
 func slowtime():
-	$timescaletween.interpolate_property(self, "timescale", timescale, 0.25, 1, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0);
+	$timescaletween.interpolate_property(self, "timescale", timescale, slowTimescale, 1, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0);
 	$timescaletween.start();
 
 func resumetime():
-	$timescaletween.interpolate_property(self, "timescale", timescale, 1.0, 1, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0);
+	$timescaletween.interpolate_property(self, "timescale", timescale, normalTimescale, 1, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 0);
 	$timescaletween.start();
 
 # Called when the node enters the scene tree for the first time.
@@ -58,6 +61,9 @@ func _ready():
 		AudioServer.set_bus_volume_db(0, config.get_value("audio", "master", 0));
 		AudioServer.set_bus_volume_db(1, config.get_value("audio", "sfx", 0));
 		AudioServer.set_bus_volume_db(2, config.get_value("audio", "music", 0));
+		AudioServer.set_bus_mute(0, config.get_value("audio", "mastermuted", 0));
+		AudioServer.set_bus_mute(1, config.get_value("audio", "sfxmuted", 1));
+		AudioServer.set_bus_mute(2, config.get_value("audio", "musicmuted", 2));
 
 func updateBlockHeight(x):
 	playerMaxBlockHeight = x;

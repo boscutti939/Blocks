@@ -16,25 +16,28 @@ onready var secondsToMax = global.secondsToMax;
 var time = initialSpawnRate;
 const BLOCK_LOCATIONS = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 var emptyLocations = [];
-
+var spawntimer = 0.0;
+var slowed = false;
+var maxtime = 1.0;
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	emptyLocations += BLOCK_LOCATIONS;
-	$timer.wait_time = 1.0/initialSpawnRate;
-	$tween.interpolate_property(self, "time", 1.0/initialSpawnRate, 1.0/maxSpawnRate, secondsToMax,Tween.TRANS_CUBIC, Tween.EASE_OUT);
+	maxtime = 1.0/initialSpawnRate;
+	$tween.interpolate_property(self, "maxtime", 1.0/initialSpawnRate, 1.0/maxSpawnRate, secondsToMax,Tween.TRANS_CUBIC, Tween.EASE_OUT);
 	$tween.start();
-	$tween.playback_speed = global.timescale;
 	randomize();
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	$tween.playback_speed = global.timescale;
+	spawntimer += 1.0 * delta * global.timescale;
+	if spawntimer >= maxtime:
+		timeout();
 
-
-func _on_Timer_timeout():
+func timeout():
 	var block = null;
 	if get_parent().has_node("player"):
-		$timer.wait_time = rand_range(1.0/maxSpawnRate, time) / global.timescale;
+		spawntimer = rand_range(0.0, maxtime);
 		var choice = round(rand_range(0, 100));
 		if choice in range(0, 89):
 			block = blockToSpawn.instance();

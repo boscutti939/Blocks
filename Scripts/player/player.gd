@@ -92,7 +92,7 @@ func explode():
 	motion = Vector2(0,0);
 	oldposition = position;
 	died = true;
-	if global.timescale != 1 and global.get_node("timescaletween").get_runtime() <= 0:
+	if global.timescale != 1:
 		global.resumetime();
 	$AnimationPlayer.play("deathanimation");
 	print_debug("I died.");

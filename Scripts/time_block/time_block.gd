@@ -18,4 +18,4 @@ func _on_Area2D_body_entered(body):
 		get_node("/root/field/player/powerupsound").play();
 		get_node("/root/field/player/timemeter/timer").starttimer();
 		get_parent().queue_free();
-	
+		get_node("/root/field/player/timeexplosionsprite/AnimationPlayer").play("explosionanimation");

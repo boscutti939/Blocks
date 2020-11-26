@@ -145,9 +145,6 @@ yellowBlock = ExtResource( 7 )
 timeBlock = ExtResource( 23 )
 appearAnimation = ExtResource( 8 )
 
-[node name="timer" type="Timer" parent="block_spawner"]
-autostart = true
-
 [node name="tween" type="Tween" parent="block_spawner"]
 
 [node name="start_blocks" type="Node2D" parent="block_spawner"]
@@ -338,7 +335,6 @@ shape = SubResource( 11 )
 [node name="pausemanager" type="Node2D" parent="."]
 pause_mode = 2
 script = ExtResource( 18 )
-[connection signal="timeout" from="block_spawner/timer" to="block_spawner" method="_on_Timer_timeout"]
 [connection signal="item_rect_changed" from="lava/Sprite" to="lava/Sprite" method="calculate_aspect_ratio"]
 [connection signal="body_entered" from="lava/Area2D" to="lava" method="_on_Area2D_body_entered"]
 [connection signal="body_entered" from="sceneCamera/blockCheckArea" to="sceneCamera" method="_on_blockCheckArea_body_entered"]
