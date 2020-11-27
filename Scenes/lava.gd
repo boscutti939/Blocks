@@ -22,4 +22,7 @@ func _process(delta):
 		visible = false;
 
 func _on_Area2D_body_entered(body):
-	body.explode();
+	body.inlava = true;
+
+func _on_Area2D_body_exited(body):
+	body.inlava = false;

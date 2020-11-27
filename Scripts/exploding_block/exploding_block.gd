@@ -57,25 +57,14 @@ func _on_fuse_time_timeout(): #If the fuse expires, blow up the block.
 	get_parent().explode();
 
 func _on_Area2D_body_entered(body):
-	if body.name == "player" and fusetime.is_stopped():
+	if body.name == "player" and body.died == false and fusetime.is_stopped():
 		fusetime.start();
 		fuseaudio.play();
 
 func _on_delay_time_timeout():
-	if rayUp.is_colliding():
-		rayUp.get_collider().explode();
-	if rayDown.is_colliding() and rayDown.get_collider().name != "floor":
-		rayDown.get_collider().explode();
-	if rayLeft.is_colliding():
-		rayLeft.get_collider().explode();
-	if rayRight.is_colliding():
-		rayRight.get_collider().explode();
-	if rayUpLeft.is_colliding():
-		rayUpLeft.get_collider().explode();
-	if rayDownLeft.is_colliding() and rayDownLeft.get_collider().name != "floor":
-		rayDownLeft.get_collider().explode();
-	if rayUpRight.is_colliding():
-		rayUpRight.get_collider().explode();
-	if rayDownRight.is_colliding() and rayDownRight.get_collider().name != "floor":
-		rayDownRight.get_collider().explode();
+	for r in [rayUp, rayDown, rayLeft, rayRight, rayUpLeft, rayUpRight, rayDownLeft, rayDownRight]:
+		if r.is_colliding() and r.get_collider().name != "floor":
+			var collision = r.get_collider();
+			if collision != null:
+				collision.explode();
 	get_parent().justexplode();

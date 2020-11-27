@@ -149,7 +149,8 @@ func _process(delta):
 			elif currnode.name == "PlayItems":
 				match curr:
 					0:
-						get_tree().change_scene("res://Scenes/field.tscn")
+						global.changeMusic(global.gameMusic);
+						get_tree().change_scene("res://Scenes/field.tscn");
 					1:
 						pass #Survival
 					2:

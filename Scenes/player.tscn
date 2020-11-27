@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://Scripts/player/player.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/blockoutline.png" type="Texture" id=2]
@@ -6,11 +6,13 @@
 [ext_resource path="res://Scripts/player/rayUp.gd" type="Script" id=4]
 [ext_resource path="res://Scripts/player/rayLeft.gd" type="Script" id=5]
 [ext_resource path="res://Scripts/player/rayRight.gd" type="Script" id=6]
-[ext_resource path="res://Scenes/ProgressBar.gd" type="Script" id=8]
+[ext_resource path="res://Scripts/player/timemeter.gd" type="Script" id=7]
+[ext_resource path="res://Scripts/player/ProgressBar.gd" type="Script" id=8]
 [ext_resource path="res://Scripts/player/jumptimer.gd" type="Script" id=9]
 [ext_resource path="res://Sounds/jump.wav" type="AudioStream" id=10]
 [ext_resource path="res://Sounds/powerup.wav" type="AudioStream" id=11]
 [ext_resource path="res://Sounds/death.wav" type="AudioStream" id=12]
+[ext_resource path="res://Scripts/player/supermeter.gd" type="Script" id=13]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0.516129 )
@@ -48,7 +50,7 @@ expand_margin_top = 2.0
 expand_margin_bottom = 2.0
 
 [sub_resource type="Gradient" id=8]
-offsets = PoolRealArray( 0.503497 )
+offsets = PoolRealArray( 0.307692 )
 colors = PoolColorArray( 0, 0, 1, 1 )
 
 [sub_resource type="GradientTexture" id=9]
@@ -59,7 +61,19 @@ width = 32
 texture = SubResource( 9 )
 region_rect = Rect2( 0, 0, 2048, 1 )
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Gradient" id=11]
+offsets = PoolRealArray( 0.643357 )
+colors = PoolColorArray( 1, 0.498039, 0, 1 )
+
+[sub_resource type="GradientTexture" id=12]
+gradient = SubResource( 11 )
+width = 32
+
+[sub_resource type="StyleBoxTexture" id=13]
+texture = SubResource( 12 )
+region_rect = Rect2( 0, 0, 2048, 1 )
+
+[sub_resource type="Animation" id=14]
 length = 0.7
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -138,16 +152,15 @@ tracks/5/keys = {
 "values": [ 0.0, 5.0 ]
 }
 
-[sub_resource type="Gradient" id=12]
+[sub_resource type="Gradient" id=15]
 offsets = PoolRealArray( 0 )
 colors = PoolColorArray( 0, 0, 1, 1 )
 
-[sub_resource type="GradientTexture" id=13]
-gradient = SubResource( 12 )
+[sub_resource type="GradientTexture" id=16]
+gradient = SubResource( 15 )
 width = 32
 
-[sub_resource type="Animation" id=14]
-resource_name = "explosionanimation"
+[sub_resource type="Animation" id=17]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:visible")
 tracks/0/interp = 1
@@ -274,7 +287,7 @@ custom_styles/bg = SubResource( 7 )
 max_value = 1.0
 step = 0.0
 percent_visible = false
-script = ExtResource( 8 )
+script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -284,30 +297,52 @@ wait_time = 10.0
 one_shot = true
 script = ExtResource( 9 )
 
+[node name="supermeter" type="ProgressBar" parent="."]
+margin_left = -15.0
+margin_top = -15.0
+margin_right = 15.0
+margin_bottom = 15.0
+custom_styles/fg = SubResource( 13 )
+custom_styles/bg = SubResource( 7 )
+max_value = 1.0
+step = 0.0
+percent_visible = false
+script = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="timer" type="Timer" parent="supermeter"]
+wait_time = 10.0
+one_shot = true
+script = ExtResource( 9 )
+
 [node name="jumpsound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 10 )
-volume_db = -5.0
+volume_db = -7.0
 bus = "SFX"
 
 [node name="powerupsound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 11 )
-volume_db = -10.0
+volume_db = -12.0
 bus = "SFX"
 
 [node name="deathsound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 12 )
-volume_db = -5.0
+bus = "SFX"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/deathanimation = SubResource( 11 )
+anims/deathanimation = SubResource( 14 )
 
 [node name="timeexplosionsprite" type="Sprite" parent="."]
 scale = Vector2( 1e-05, 1 )
-texture = SubResource( 13 )
+texture = SubResource( 16 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="timeexplosionsprite"]
-anims/explosionanimation = SubResource( 14 )
-[connection signal="timeout" from="jumpmeter/timer" to="." method="_on_jumptimer_timeout"]
-[connection signal="timeout" from="jumpmeter/timer" to="jumpmeter" method="_on_jumptimer_timeout"]
+anims/explosionanimation = SubResource( 17 )
+[connection signal="timeout" from="jumpmeter/timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="jumpmeter/timer" to="jumpmeter" method="_on_timer_timeout"]
 [connection signal="timeout" from="timemeter/timer" to="." method="_on_timetimer_timeout"]
 [connection signal="timeout" from="timemeter/timer" to="timemeter" method="_on_timer_timeout"]
+[connection signal="timeout" from="supermeter/timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="supermeter/timer" to="." method="_on_supertimer_timeout"]

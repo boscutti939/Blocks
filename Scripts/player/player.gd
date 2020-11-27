@@ -3,11 +3,13 @@ extends KinematicBody2D
 var motion = Vector2(0, 0);
 
 const speed = 250;
-const JUMPHEIGHT = 2.5;
+const JUMPHEIGHT = 2.25;
 var jumpheight = JUMPHEIGHT;
 var maxBlockHeight = 0;
 var died = false;
+var invincible = false;
 var oldposition = Vector2(0,0);
+var inlava = false;
 export var relativeposition = Vector2(0,0);
 var onfloor = false;
 onready var label = $label;
@@ -46,28 +48,42 @@ func checkCollisions(delta):
 		if collision.get_collider():
 			if collision.collider.position.y < position.y - 1 and collision.collider.position.x < position.x + 30 and collision.collider.position.x > position.x - 30:
 				if not collision.collider == null and collision.collider.blocktype != 1:
-					print_debug("I was killed by ", collision.collider.name, " at position", position, " where the collider position was ", collision.collider.position);
-					explode();
-			if collision.collider.position.y < position.y - 16:
+					if invincible == false:
+						print_debug("I was killed by ", collision.collider.name, " at position", position, " where the collider position was ", collision.collider.position);
+						explode();
+					else:
+						if collision.collider.blocktype != 1:
+							collision.collider.justexplode();
+			if collision.collider.position.y < position.y - 32:
 				if motion.y > 0:
 					motion.y = 0;
 			if collision.collider.position.y == round(position.y) + 32 and collision.collider.position.x < position.x + 30 and collision.collider.position.x > position.x - 30:
 				if collision.collider.get("velocity") != null and collision.collider.velocity.y == 0:
 					onfloor = true;
-	if $rayDown.is_colliding() and $rayUp.is_colliding():
-		if $rayUp.get_collider().blocktype != 1:
-			explode();
+	if $rayUp.is_colliding():
+		var collision = $rayUp.get_collider();
+		if invincible and collision.blocktype != 1:
+			collision.justexplode();
+		if $rayDown.is_colliding():
+			if collision.blocktype != 1:
+				print_debug("I was killed by ", collision.name, " at position", position, " where the collider position was ", collision.position);
+				explode();
 	if $rayLeft.is_colliding():
-		position.x = $rayLeft.get_collider().position.x + 32;
-		if motion.x < 0:
-			motion.x = 0;
+		var collision = $rayLeft.get_collider();
+		if collision.position.y == round(position.y):
+			position.x = collision.position.x + 32;
+			if motion.x < 0:
+				motion.x = 0;
 	if $rayRight.is_colliding():
-		position.x = $rayRight.get_collider().position.x - 32;
-		if motion.x > 0:
-			motion.x = 0;
+		var collision = $rayRight.get_collider();
+		if collision.position.y == round(position.y):
+			position.x = collision.position.x - 32;
+			if motion.x > 0:
+				motion.x = 0;
 
 func _process(delta):
-	pass;
+	if inlava:
+		explode();
 #	label.text = str(onfloor);
 #	label.text = str(position.y);
 
@@ -89,16 +105,20 @@ func _physics_process(delta):
 		position.x = oldposition.x + relativeposition.x;
 
 func explode():
-	motion = Vector2(0,0);
-	oldposition = position;
-	died = true;
-	if global.timescale != 1:
-		global.resumetime();
-	$AnimationPlayer.play("deathanimation");
-	print_debug("I died.");
-
-func _on_jumptimer_timeout():
-	jumpheight = JUMPHEIGHT;
+	if invincible == false:
+		motion = Vector2(0,0);
+		oldposition = position;
+		died = true;
+		if global.timescale != 1:
+			global.resumetime();
+		$AnimationPlayer.play("deathanimation");
+		print_debug("I died.");
 
 func _on_timetimer_timeout():
 	global.resumetime();
+
+func _on_timer_timeout():
+	jumpheight = JUMPHEIGHT;
+
+func _on_supertimer_timeout():
+	invincible = false;

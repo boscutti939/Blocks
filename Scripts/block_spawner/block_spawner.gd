@@ -9,6 +9,7 @@ export (PackedScene) var blockToSpawn;
 export (PackedScene) var explodingBlockToSpawn;
 export (PackedScene) var yellowBlock;
 export (PackedScene) var timeBlock;
+export (PackedScene) var superBlock;
 export (PackedScene) var appearAnimation;
 onready var maxSpawnRate = global.maxSpawnRate;
 onready var initialSpawnRate = global.initialSpawnRate;
@@ -38,17 +39,20 @@ func timeout():
 	var block = null;
 	if get_parent().has_node("player"):
 		spawntimer = rand_range(0.0, maxtime);
-		var choice = round(rand_range(0, 100));
-		if choice in range(0, 89):
+		var choice = randi() % 101;
+		if choice in range(0, 90):
 			block = blockToSpawn.instance();
-		elif choice in range(90, 99):
+		elif choice in range(91, 99):
 			block = explodingBlockToSpawn.instance();
 		else:
-			choice = round(rand_range(0, 1));
-			if choice == 0:
-				block = yellowBlock.instance();
-			else:
-				block = timeBlock.instance();
+			choice = randi() % 3;
+			match choice:
+				0:
+					block = yellowBlock.instance();
+				1:
+					block = timeBlock.instance();
+				2:
+					block = superBlock.instance();
 
 		var blockappear = appearAnimation.instance();
 		if emptyLocations.size() <= blockLocationsSize:

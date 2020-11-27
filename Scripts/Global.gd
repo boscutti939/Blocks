@@ -23,6 +23,9 @@ var paused = false;
 var playerMaxBlockHeight = 0;
 var timescale = 1;
 
+export (AudioStream) var menuMusic = null;
+export (AudioStream) var gameMusic = null;
+
 var keys = {"LEFTKEY" : KEY_A, "RIGHTKEY" : KEY_D, "UPKEY" : KEY_W,
 			"DOWNKEY" : KEY_S, "JUMPKEY" : KEY_SPACE, "BACKKEY" : KEY_ESCAPE, "SELECTKEY" : KEY_ENTER,
 			"RESTARTKEY" : KEY_F5}
@@ -67,6 +70,10 @@ func _ready():
 
 func updateBlockHeight(x):
 	playerMaxBlockHeight = x;
+
+func changeMusic(music):
+	get_node("musicmanager").stream = music
+	get_node("musicmanager").play();
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

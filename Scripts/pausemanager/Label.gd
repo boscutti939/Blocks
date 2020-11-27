@@ -1,13 +1,17 @@
-extends RayCast2D
+extends Label
+
 
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
 
+onready var global = $"/root/Global";
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	cast_to = Vector2(0, 0);
+	pass # Replace with function body.
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta):
-	cast_to = Vector2(0, get_parent().motion.x * delta - 16);
+func _process(delta):
+	visible = global.paused;

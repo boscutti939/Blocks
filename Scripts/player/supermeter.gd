@@ -1,4 +1,4 @@
-extends RayCast2D
+extends ProgressBar
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -6,8 +6,12 @@ extends RayCast2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	cast_to = Vector2(0, 0);
+	visible = false;
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta):
-	cast_to = Vector2(0, get_parent().motion.x * delta - 16);
+func _process(delta):
+	if visible:
+		value = $timer.time_left / $timer.wait_time
+
+func _on_timer_timeout():
+	visible = false;

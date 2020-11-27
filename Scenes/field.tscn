@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://Scripts/field.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/player.tscn" type="PackedScene" id=2]
@@ -11,8 +11,8 @@
 [ext_resource path="res://Scripts/explosion_manager/explosion_manager.gd" type="Script" id=9]
 [ext_resource path="res://Scenes/explosion.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/sceneCamera.gd" type="Script" id=11]
-[ext_resource path="res://Sounds/music.ogg" type="AudioStream" id=12]
-[ext_resource path="res://Scripts/music.gd" type="Script" id=13]
+[ext_resource path="res://Scripts/pausemanager/Label.gd" type="Script" id=12]
+[ext_resource path="res://Scenes/Blocks/super_block.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Sprites/grid32x32tileset.tres" type="TileSet" id=14]
 [ext_resource path="res://Scenes/lava.gd" type="Script" id=15]
 [ext_resource path="res://Shaders/lava.shader" type="Shader" id=16]
@@ -111,6 +111,10 @@ extents = Vector2( 320, 232 )
 [sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 320, 384 )
 
+[sub_resource type="DynamicFont" id=12]
+size = 24
+font_data = ExtResource( 20 )
+
 [node name="field" type="Node2D"]
 script = ExtResource( 1 )
 __meta__ = {
@@ -143,6 +147,7 @@ blockToSpawn = ExtResource( 5 )
 explodingBlockToSpawn = ExtResource( 6 )
 yellowBlock = ExtResource( 7 )
 timeBlock = ExtResource( 23 )
+superBlock = ExtResource( 13 )
 appearAnimation = ExtResource( 8 )
 
 [node name="tween" type="Tween" parent="block_spawner"]
@@ -156,13 +161,6 @@ __meta__ = {
 "_edit_lock_": true
 }
 explosionScene = ExtResource( 10 )
-
-[node name="music" type="AudioStreamPlayer" parent="."]
-pause_mode = 2
-stream = ExtResource( 12 )
-autoplay = true
-bus = "Music"
-script = ExtResource( 13 )
 
 [node name="lava" type="Node2D" parent="."]
 position = Vector2( 320, 480 )
@@ -332,11 +330,30 @@ visible = false
 position = Vector2( 320, 384 )
 shape = SubResource( 11 )
 
-[node name="pausemanager" type="Node2D" parent="."]
+[node name="pausemanager" type="Node2D" parent="sceneCamera"]
 pause_mode = 2
+z_index = 10
 script = ExtResource( 18 )
+
+[node name="Label" type="Label" parent="sceneCamera/pausemanager"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 264.0
+margin_top = 208.0
+margin_right = 381.0
+margin_bottom = 233.0
+custom_fonts/font = SubResource( 12 )
+text = "Paused"
+script = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="item_rect_changed" from="lava/Sprite" to="lava/Sprite" method="calculate_aspect_ratio"]
 [connection signal="body_entered" from="lava/Area2D" to="lava" method="_on_Area2D_body_entered"]
+[connection signal="body_exited" from="lava/Area2D" to="lava" method="_on_Area2D_body_exited"]
 [connection signal="body_entered" from="sceneCamera/blockCheckArea" to="sceneCamera" method="_on_blockCheckArea_body_entered"]
 [connection signal="body_exited" from="sceneCamera/blockCheckArea" to="sceneCamera" method="_on_blockCheckArea_body_exited"]
 [connection signal="body_exited" from="sceneCamera/blockDestroyArea" to="sceneCamera" method="_on_blockDestroyArea_body_exited"]

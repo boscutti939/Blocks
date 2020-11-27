@@ -1,9 +1,22 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scripts/Global.gd" type="Script" id=1]
+[ext_resource path="res://Sounds/meanbean.wav" type="AudioStream" id=2]
+[ext_resource path="res://Sounds/music.ogg" type="AudioStream" id=3]
+[ext_resource path="res://Scripts/Global/musicmanager.gd" type="Script" id=4]
 
 [node name="Global" type="Node2D"]
+pause_mode = 2
 script = ExtResource( 1 )
+lavaEnabled = true
 secondsToMax = 300.0
+menuMusic = ExtResource( 2 )
+gameMusic = ExtResource( 3 )
 
 [node name="timescaletween" type="Tween" parent="."]
+
+[node name="musicmanager" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+autoplay = true
+bus = "Music"
+script = ExtResource( 4 )

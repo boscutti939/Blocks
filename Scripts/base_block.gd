@@ -38,13 +38,13 @@ func _physics_process(delta):
 #		$Label.text = str(position.y);
 	if blockunder.enabled == true:
 		if blockunder.is_colliding() and blockunder.get_collider().name != "player":
-			if velocity.y >= global.maxBlockFallSpeed * global.timescale:
+			if velocity.y >= global.maxBlockFallSpeed:
 				drop = true;
 			col = true;
 			position.y = blockunder.get_collision_point().y - 16;
 			velocity.y = 0;
 		elif (position.y + (velocity.y * delta)) >= ($"/root/field/sceneCamera".position.y + 480-16):
-			if velocity.y >= global.maxBlockFallSpeed * global.timescale:
+			if velocity.y >= global.maxBlockFallSpeed:
 				drop = true;
 			position.y = $"/root/field/sceneCamera".position.y + 480-16;
 			velocity.y = 0;
