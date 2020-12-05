@@ -15,8 +15,8 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if global.lavaEnabled == true:
-		speed += acceleration * delta;
-		offset += speed * delta;
+		speed += acceleration * delta * global.timescale;
+		offset += speed * delta * global.timescale;
 		position.y = 480 - offset;
 	else:
 		visible = false;

@@ -82,10 +82,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.7 ),
-"transitions": PoolRealArray( 2.82843, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.7 ),
+"transitions": PoolRealArray( 1, 2.82843, 1 ),
 "update": 0,
-"values": [ Color( 1, 0.490196, 0.490196, 1 ), Color( 1, 0, 0, 1 ) ]
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0.490196, 0.490196, 1 ), Color( 1, 0, 0, 1 ) ]
 }
 tracks/1/type = "method"
 tracks/1/path = NodePath(".")
@@ -135,7 +135,7 @@ tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
 "times": PoolRealArray( 0, 0.7 ),
-"transitions": PoolRealArray( 1, 1 ),
+"transitions": PoolRealArray( 0.594604, 1 ),
 "update": 0,
 "values": [ Vector2( 1, 1 ), Vector2( 2, 2 ) ]
 }
@@ -144,12 +144,24 @@ tracks/5/path = NodePath(".:rotation_degrees")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
-tracks/5/enabled = true
+tracks/5/enabled = false
 tracks/5/keys = {
 "times": PoolRealArray( 0, 0.7 ),
 "transitions": PoolRealArray( 0.637281, 1 ),
 "update": 0,
-"values": [ 0.0, 5.0 ]
+"values": [ 0.0, 360.0 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath(".:collision_layer")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 5, 0 ]
 }
 
 [sub_resource type="Gradient" id=15]
@@ -344,5 +356,5 @@ anims/explosionanimation = SubResource( 17 )
 [connection signal="timeout" from="jumpmeter/timer" to="jumpmeter" method="_on_timer_timeout"]
 [connection signal="timeout" from="timemeter/timer" to="." method="_on_timetimer_timeout"]
 [connection signal="timeout" from="timemeter/timer" to="timemeter" method="_on_timer_timeout"]
-[connection signal="timeout" from="supermeter/timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="supermeter/timer" to="." method="_on_supertimer_timeout"]
+[connection signal="timeout" from="supermeter/timer" to="." method="_on_timer_timeout"]

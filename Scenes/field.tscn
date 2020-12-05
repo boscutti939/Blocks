@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=45 format=2]
 
 [ext_resource path="res://Scripts/field.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/player.tscn" type="PackedScene" id=2]
@@ -23,6 +23,12 @@
 [ext_resource path="res://Scenes/restartlabel.gd" type="Script" id=21]
 [ext_resource path="res://Scenes/exitlabel.gd" type="Script" id=22]
 [ext_resource path="res://Scenes/Blocks/time_block.tscn" type="PackedScene" id=23]
+[ext_resource path="res://Scenes/Blocks/metal_block.tscn" type="PackedScene" id=24]
+[ext_resource path="res://Animations/blockspawner/lefttoright.tres" type="Animation" id=25]
+[ext_resource path="res://Sounds/sine.wav" type="AudioStream" id=26]
+[ext_resource path="res://Scripts/field/timelabel.gd" type="Script" id=27]
+[ext_resource path="res://Scripts/block_spawner/wave_animation.gd" type="Script" id=28]
+[ext_resource path="res://Fonts/menu_button.tres" type="DynamicFont" id=29]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 32 )
@@ -31,6 +37,7 @@ extents = Vector2( 32, 32 )
 shader = ExtResource( 16 )
 shader_param/tiled_factor = Vector2( 5, 5 )
 shader_param/aspect_ratio = 0.5
+shader_param/timescale = 1.0
 
 [sub_resource type="Gradient" id=3]
 colors = PoolColorArray( 1, 0.305882, 0, 1, 1, 0.305882, 0, 1 )
@@ -49,12 +56,15 @@ font_data = ExtResource( 20 )
 [sub_resource type="DynamicFont" id=7]
 font_data = ExtResource( 19 )
 
+[sub_resource type="DynamicFont" id=15]
+font_data = ExtResource( 19 )
+
 [sub_resource type="DynamicFont" id=8]
 font_data = ExtResource( 19 )
 
 [sub_resource type="Animation" id=9]
 resource_name = "gameoverappearanimation"
-length = 4.0
+length = 5.0
 step = 1.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -87,7 +97,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 2, 3 ),
+"times": PoolRealArray( 0, 3, 4 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
@@ -99,7 +109,19 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 3, 4 ),
+"times": PoolRealArray( 0, 4, 5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("timelabel:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 2, 3 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
@@ -114,6 +136,207 @@ extents = Vector2( 320, 384 )
 [sub_resource type="DynamicFont" id=12]
 size = 24
 font_data = ExtResource( 20 )
+
+[sub_resource type="DynamicFont" id=13]
+size = 48
+font_data = ExtResource( 20 )
+
+[sub_resource type="Animation" id=14]
+length = 7.0
+tracks/0/type = "method"
+tracks/0/path = NodePath("block_spawner")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [ 16 ],
+"method": "spawnAtLocation"
+}, {
+"args": [ 48 ],
+"method": "spawnAtLocation"
+}, {
+"args": [ 80 ],
+"method": "spawnAtLocation"
+}, {
+"args": [ 112 ],
+"method": "spawnAtLocation"
+}, {
+"args": [ 144 ],
+"method": "spawnAtLocation"
+}, {
+"args": [ 176 ],
+"method": "spawnAtLocation"
+}, {
+"args": [ 208 ],
+"method": "spawnAtLocation"
+}, {
+"args": [ 240 ],
+"method": "spawnAtLocation"
+}, {
+"args": [ 272 ],
+"method": "spawnAtLocation"
+}, {
+"args": [ 304 ],
+"method": "spawnAtLocation"
+}, {
+"args": [ 336 ],
+"method": "spawnAtLocation"
+}, {
+"args": [ 368 ],
+"method": "spawnAtLocation"
+}, {
+"args": [ 400 ],
+"method": "spawnAtLocation"
+}, {
+"args": [ 432 ],
+"method": "spawnAtLocation"
+}, {
+"args": [ 464 ],
+"method": "spawnAtLocation"
+}, {
+"args": [ 496 ],
+"method": "spawnAtLocation"
+}, {
+"args": [ 528 ],
+"method": "spawnAtLocation"
+}, {
+"args": [ 560 ],
+"method": "spawnAtLocation"
+}, {
+"args": [ 592 ],
+"method": "spawnAtLocation"
+}, {
+"args": [ 624 ],
+"method": "spawnAtLocation"
+} ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "startGame"
+} ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("player")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "activate"
+} ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("AudioStreamPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 2, 3, 4, 5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+}, {
+"args": [ 0.0 ],
+"method": "play"
+}, {
+"args": [ 0.0 ],
+"method": "play"
+}, {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("AudioStreamPlayer:pitch_scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 2, 5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 2.0, 4.0 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("sceneCamera/countdownlabel:text")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 2, 3, 4, 5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ "", "3", "2", "1", "START!" ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("sceneCamera/countdownlabel:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 6, 7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("sceneCamera/timelabel:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("sceneCamera/countdownlabel:rect_scale")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 5, 5.3 ),
+"transitions": PoolRealArray( 3.00388e+12, 0.353554, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 5, 5 ), Vector2( 1, 1 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("sceneCamera/countdownlabel:rect_position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 5, 5.3 ),
+"transitions": PoolRealArray( 2.31143e+11, 0.35, 2.31143e+11 ),
+"update": 0,
+"values": [ Vector2( 214.5, 196 ), Vector2( -192, 128 ), Vector2( 214.5, 196 ) ]
+}
 
 [node name="field" type="Node2D"]
 script = ExtResource( 1 )
@@ -148,11 +371,19 @@ explodingBlockToSpawn = ExtResource( 6 )
 yellowBlock = ExtResource( 7 )
 timeBlock = ExtResource( 23 )
 superBlock = ExtResource( 13 )
+metalBlock = ExtResource( 24 )
 appearAnimation = ExtResource( 8 )
 
 [node name="tween" type="Tween" parent="block_spawner"]
 
 [node name="start_blocks" type="Node2D" parent="block_spawner"]
+
+[node name="wave_animation" type="AnimationPlayer" parent="block_spawner"]
+pause_mode = 1
+anims/lefttoright = ExtResource( 25 )
+script = ExtResource( 28 )
+
+[node name="tween" type="Tween" parent="block_spawner/wave_animation"]
 
 [node name="explosion_manager" type="Node2D" parent="."]
 z_index = 5
@@ -242,6 +473,24 @@ grow_horizontal = 2
 grow_vertical = 2
 custom_fonts/font = SubResource( 7 )
 text = "Maximum blocks climbed: this many blocks"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="timelabel" type="Label" parent="sceneCamera/gameOverSplash"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = 24.5
+margin_right = 20.0
+margin_bottom = 49.5
+grow_horizontal = 2
+custom_fonts/font = SubResource( 15 )
 align = 1
 valign = 1
 __meta__ = {
@@ -351,6 +600,41 @@ script = ExtResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="countdownlabel" type="Label" parent="sceneCamera"]
+margin_left = 214.5
+margin_top = 196.0
+margin_right = 425.5
+margin_bottom = 247.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_fonts/font = SubResource( 13 )
+text = "START!"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="timelabel" type="Label" parent="sceneCamera"]
+margin_right = 128.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 29 )
+script = ExtResource( 27 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="fieldanimation" type="AnimationPlayer" parent="."]
+autoplay = "BeginAnimation"
+anims/BeginAnimation = SubResource( 14 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 26 )
+pitch_scale = 4.0
+bus = "SFX"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 [connection signal="item_rect_changed" from="lava/Sprite" to="lava/Sprite" method="calculate_aspect_ratio"]
 [connection signal="body_entered" from="lava/Area2D" to="lava" method="_on_Area2D_body_entered"]
 [connection signal="body_exited" from="lava/Area2D" to="lava" method="_on_Area2D_body_exited"]

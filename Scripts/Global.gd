@@ -15,13 +15,16 @@ export var lavaSpeed = 2.0;
 export var lavaAcceleration = 0.2;
 export var maxSpawnRate = 10.0;
 export var initialSpawnRate = 1.0;
-export var secondsToMax = 120.0;
+export var secondsToMax = 320.0;
 export var normalTimescale = 1.0;
 export var slowTimescale = 0.25;
+export var waveMaxSpeed = 2;
 var gameOver = false;
+var gameStarted = false;
 var paused = false;
 var playerMaxBlockHeight = 0;
 var timescale = 1;
+var time = 0.0;
 
 export (AudioStream) var menuMusic = null;
 export (AudioStream) var gameMusic = null;

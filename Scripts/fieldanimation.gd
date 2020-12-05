@@ -1,18 +1,16 @@
-extends Sprite
+extends AnimationPlayer
+
 
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
 
-onready var global = $"/root/Global";
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	play("BeginAnimation");
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass;
-
-func calculate_aspect_ratio():
-	material.set_shader_param("shader_ratio", scale.y / scale.x);
+#func _process(delta):
+#	pass

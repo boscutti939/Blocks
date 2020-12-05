@@ -11,7 +11,8 @@ onready var global = $"/root/Global";
 func _ready():
 	pass # Replace with function body.
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+#	visible = true;
+#	text = str(get_node("/root/field/block_spawner").blockedLocations);k
 	visible = global.paused;

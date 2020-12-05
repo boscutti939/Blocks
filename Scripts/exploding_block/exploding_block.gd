@@ -3,9 +3,13 @@ extends Node2D
 var exploding = false;
 var prevtime = 3;
 var slowed = false;
+var maxfusetime = 3.0;
+var fusetimer = 0;
+var fuseaudiotimer = 0;
+enum {STATE_IDLE, STATE_FUSE};
+var state = STATE_IDLE;
 
 onready var delaytime = $"../delay_time";
-onready var fusetime = $"../fuse_time";
 onready var fuseaudio = $"../fuse_audio"
 onready var rayUp = $"../rayUp";
 onready var rayDown = $"../rayDown";
@@ -24,23 +28,14 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if not fusetime.is_stopped():
-		if slowed == true and ceil(fusetime.time_left * global.slowTimescale) < prevtime:
-			prevtime = ceil(fusetime.time_left * global.slowTimescale);
+	if state == STATE_FUSE:
+		fusetimer += 1.0 * delta * global.timescale;
+		fuseaudiotimer += 1.0 * delta * global.timescale;
+		if fuseaudiotimer >= 1.0:
+			fuseaudiotimer = 0;
 			fuseaudio.play();
-		elif slowed == false and ceil(fusetime.time_left * global.normalTimescale) < prevtime:
-			prevtime = ceil(fusetime.time_left * global.normalTimescale);
-			fuseaudio.play();
-	if global.timescale != global.normalTimescale and not fusetime.is_stopped() and slowed == false:
-		slowed = true;
-		fusetime.wait_time = fusetime.time_left / global.slowTimescale;
-		fusetime.stop();
-		fusetime.start();
-	elif global.timescale == global.normalTimescale and not fusetime.is_stopped() and slowed == true:
-		slowed = false;
-		fusetime.wait_time = fusetime.time_left * global.slowTimescale;
-		fusetime.stop();
-		fusetime.start();
+		if fusetimer >= maxfusetime:
+			_on_delay_time_timeout();
 
 func _physics_process(delta):
 	pass;
@@ -53,12 +48,9 @@ func explode():
 		delaytime.start();
 	return false;
 
-func _on_fuse_time_timeout(): #If the fuse expires, blow up the block.
-	get_parent().explode();
-
 func _on_Area2D_body_entered(body):
-	if body.name == "player" and body.died == false and fusetime.is_stopped():
-		fusetime.start();
+	if body.name == "player" and body.died == false and state == STATE_IDLE:
+		state = STATE_FUSE;
 		fuseaudio.play();
 
 func _on_delay_time_timeout():
@@ -67,4 +59,4 @@ func _on_delay_time_timeout():
 			var collision = r.get_collider();
 			if collision != null:
 				collision.explode();
-	get_parent().justexplode();
+	get_parent().justexplode(null);

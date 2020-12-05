@@ -7,6 +7,7 @@ var drop = false;
 var justentered = false;
 var child = null;
 var blocktype = 0;
+var cleared = false;
 
 onready var blockunder = get_node("blockunder");
 
@@ -19,23 +20,31 @@ func leftScene():
 		get_node(i).enabled = false;
 
 func explode():
-	if get_node(child).has_method("explode"):
-		if get_node(child).explode() != false:
-			queue_free();
-	else:
-		justexplode();
+	if blocktype != 3:
+		if get_node(child).has_method("explode"):
+			if get_node(child).explode() != false:
+				queue_free();
+		else:
+			justexplode(null);
 
-func justexplode():
-	var explodesound = false;
-	if blocktype == 2:
-		explodesound = true;
-	get_node("/root/field/explosion_manager").explode(position, explodesound);
-	queue_free();
+func justexplode(snd):
+	if blocktype != 3:
+		if snd == null:
+			var explodesound = false;
+			if blocktype == 2:
+				explodesound = true;
+			get_node("/root/field/explosion_manager").explode(position, explodesound);
+		else:
+			var explodesound = snd;
+			get_node("/root/field/explosion_manager").explode(position, explodesound);
+		queue_free();
 
 func _physics_process(delta):
-	if get_node_or_null("Label") != null:
-		pass;
-#		$Label.text = str(position.y);
+	if position.y > get_node("/root/field/sceneCamera").position.y + 48 and cleared == false:
+		cleared = true;
+		get_node("/root/field/block_spawner").blockedLocations.erase(int((position.x + 16) / 32));
+#	if get_node_or_null("Label") != null:
+##		$Label.text = str((position.x + 16) / 32);
 	if blockunder.enabled == true:
 		if blockunder.is_colliding() and blockunder.get_collider().name != "player":
 			if velocity.y >= global.maxBlockFallSpeed:

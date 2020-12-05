@@ -8,8 +8,6 @@
 [node name="Global" type="Node2D"]
 pause_mode = 2
 script = ExtResource( 1 )
-lavaEnabled = true
-secondsToMax = 300.0
 menuMusic = ExtResource( 2 )
 gameMusic = ExtResource( 3 )
 

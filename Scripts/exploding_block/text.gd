@@ -12,8 +12,5 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if get_node("../fuse_time").is_stopped() == false:
-		if $"../exploding_block".slowed == true:
-			text = str(ceil(get_node("../fuse_time").time_left * global.slowTimescale));
-		else:
-			text = str(ceil(get_node("../fuse_time").time_left));
+	if $"../exploding_block".state == $"../exploding_block".STATE_FUSE:
+		text = str(ceil(get_node("../exploding_block").maxfusetime - get_node("../exploding_block").fusetimer));

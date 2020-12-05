@@ -1,4 +1,5 @@
-extends Sprite
+extends Label
+
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -10,9 +11,7 @@ onready var global = $"/root/Global";
 func _ready():
 	pass # Replace with function body.
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass;
-
-func calculate_aspect_ratio():
-	material.set_shader_param("shader_ratio", scale.y / scale.x);
+	text = str(stepify(get_node("/root/field").time, 0.001));

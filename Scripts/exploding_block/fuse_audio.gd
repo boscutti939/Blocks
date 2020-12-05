@@ -13,7 +13,6 @@ func _process(delta):
 	pitch_scale = global.timescale;
 	if get_tree().paused == true and global.gameOver == true:
 		stop();
-		$"../fuse_time".stop();
 		$"../delay_time".stop();
 
 func _on_Timer_timeout():

@@ -1,0 +1,89 @@
+[gd_resource type="Animation" format=2]
+
+[resource]
+resource_name = "lefttoright"
+length = 10.0
+step = 0.5
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [ 16, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 48, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 80, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 112, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 144, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 176, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 208, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 240, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 272, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 304, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 336, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 368, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 400, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 432, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 464, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 496, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 528, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 560, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 592, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 624, 0 ],
+"method": "spawnAtLocationBlock"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:spawnstate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 10 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
