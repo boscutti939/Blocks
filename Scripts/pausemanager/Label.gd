@@ -14,5 +14,5 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 #	visible = true;
-#	text = str(get_node("/root/field/block_spawner").blockedLocations);k
+#	text = str(get_tree().paused);
 	visible = global.paused;

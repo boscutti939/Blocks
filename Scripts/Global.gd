@@ -70,6 +70,7 @@ func _ready():
 		AudioServer.set_bus_mute(0, config.get_value("audio", "mastermuted", 0));
 		AudioServer.set_bus_mute(1, config.get_value("audio", "sfxmuted", 1));
 		AudioServer.set_bus_mute(2, config.get_value("audio", "musicmuted", 2));
+	$musicmanager.play();
 
 func updateBlockHeight(x):
 	playerMaxBlockHeight = x;

@@ -28,14 +28,15 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if state == STATE_FUSE:
-		fusetimer += 1.0 * delta * global.timescale;
-		fuseaudiotimer += 1.0 * delta * global.timescale;
-		if fuseaudiotimer >= 1.0:
-			fuseaudiotimer = 0;
-			fuseaudio.play();
-		if fusetimer >= maxfusetime:
-			_on_delay_time_timeout();
+	if not global.gameOver:
+		if state == STATE_FUSE:
+			fusetimer += 1.0 * delta * global.timescale;
+			fuseaudiotimer += 1.0 * delta * global.timescale;
+			if fuseaudiotimer >= 1.0:
+				fuseaudiotimer = 0;
+				fuseaudio.play();
+			if fusetimer >= maxfusetime:
+				_on_delay_time_timeout();
 
 func _physics_process(delta):
 	pass;

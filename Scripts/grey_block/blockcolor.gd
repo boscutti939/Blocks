@@ -12,7 +12,10 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	var opacityx = (global.blockOpacityRange - global_position.distance_to(get_node("/root/field/player").global_position) + 32) / global.blockOpacityRange;
-	opacityx = clamp(opacityx, 0.0, 1.0)
-	var opacityy = opacityx * opacityx;
-	modulate.a = clamp(opacityy, 0.2, 1.0)
+	if global.gameOver == false:
+		var opacityx = (global.blockOpacityRange - global_position.distance_to(get_node("/root/field/player").global_position) + 32) / global.blockOpacityRange;
+		opacityx = clamp(opacityx, 0.0, 1.0)
+		var opacityy = opacityx * opacityx;
+		modulate.a = clamp(opacityy, 0.2, 1.0)
+	elif modulate.a > 0.2:
+			modulate.a -= 1.0 * delta;

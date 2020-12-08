@@ -21,12 +21,12 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if position == newdest and global.paused == false:
-		get_tree().set_pause(false);
 	offset = Vector2(0,0);
 	if global.gameOver == true:
 		pass;
 	else:
+		if position == newdest and global.paused == false:
+			get_tree().set_pause(false);
 		if get_parent().has_node("player") and get_node("../player").died == false:
 			if get_parent().get_node("player").position.y < newdest.y + 480-192+16 and get_parent().get_node("player").onfloor and get_parent().get_node("player").is_on_floor():
 				olddest = newdest;

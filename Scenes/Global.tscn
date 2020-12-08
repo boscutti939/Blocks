@@ -8,6 +8,8 @@
 [node name="Global" type="Node2D"]
 pause_mode = 2
 script = ExtResource( 1 )
+normalTimescale = 1.0
+slowTimescale = 4.0
 menuMusic = ExtResource( 2 )
 gameMusic = ExtResource( 3 )
 
@@ -15,6 +17,5 @@ gameMusic = ExtResource( 3 )
 
 [node name="musicmanager" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
-autoplay = true
 bus = "Music"
 script = ExtResource( 4 )

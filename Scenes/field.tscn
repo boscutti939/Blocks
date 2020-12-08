@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=2]
+[gd_scene load_steps=49 format=2]
 
 [ext_resource path="res://Scripts/field.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/player.tscn" type="PackedScene" id=2]
@@ -26,9 +26,10 @@
 [ext_resource path="res://Scenes/Blocks/metal_block.tscn" type="PackedScene" id=24]
 [ext_resource path="res://Animations/blockspawner/lefttoright.tres" type="Animation" id=25]
 [ext_resource path="res://Sounds/sine.wav" type="AudioStream" id=26]
-[ext_resource path="res://Scripts/field/timelabel.gd" type="Script" id=27]
+[ext_resource path="res://Scripts/field/hud.gd" type="Script" id=27]
 [ext_resource path="res://Scripts/block_spawner/wave_animation.gd" type="Script" id=28]
 [ext_resource path="res://Fonts/menu_button.tres" type="DynamicFont" id=29]
+[ext_resource path="res://Sprites/blockoutline.png" type="Texture" id=30]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 32 )
@@ -56,14 +57,13 @@ font_data = ExtResource( 20 )
 [sub_resource type="DynamicFont" id=7]
 font_data = ExtResource( 19 )
 
-[sub_resource type="DynamicFont" id=15]
-font_data = ExtResource( 19 )
-
 [sub_resource type="DynamicFont" id=8]
 font_data = ExtResource( 19 )
 
-[sub_resource type="Animation" id=9]
-resource_name = "gameoverappearanimation"
+[sub_resource type="DynamicFont" id=9]
+font_data = ExtResource( 19 )
+
+[sub_resource type="Animation" id=10]
 length = 5.0
 step = 1.0
 tracks/0/type = "value"
@@ -127,21 +127,33 @@ tracks/4/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=10]
+[sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 320, 232 )
 
-[sub_resource type="RectangleShape2D" id=11]
+[sub_resource type="RectangleShape2D" id=12]
 extents = Vector2( 320, 384 )
 
-[sub_resource type="DynamicFont" id=12]
+[sub_resource type="DynamicFont" id=13]
 size = 24
 font_data = ExtResource( 20 )
 
-[sub_resource type="DynamicFont" id=13]
+[sub_resource type="Gradient" id=14]
+offsets = PoolRealArray( 0 )
+colors = PoolColorArray( 0, 0.414063, 1, 1 )
+
+[sub_resource type="GradientTexture" id=15]
+gradient = SubResource( 14 )
+width = 32
+
+[sub_resource type="Animation" id=16]
+resource_name = "startwaveanim"
+length = 5.0
+
+[sub_resource type="DynamicFont" id=17]
 size = 48
 font_data = ExtResource( 20 )
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=18]
 length = 7.0
 tracks/0/type = "method"
 tracks/0/path = NodePath("block_spawner")
@@ -302,7 +314,7 @@ tracks/6/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 tracks/7/type = "value"
-tracks/7/path = NodePath("sceneCamera/timelabel:visible")
+tracks/7/path = NodePath("sceneCamera/hud/time/timelabel:visible")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
@@ -320,10 +332,10 @@ tracks/8/loop_wrap = true
 tracks/8/imported = false
 tracks/8/enabled = true
 tracks/8/keys = {
-"times": PoolRealArray( 0, 5, 5.3 ),
-"transitions": PoolRealArray( 3.00388e+12, 0.353554, 1 ),
+"times": PoolRealArray( 0, 4.9, 5, 5.3 ),
+"transitions": PoolRealArray( 1, 1, 0.353554, 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 5, 5 ), Vector2( 1, 1 ) ]
+"values": [ Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 5, 5 ), Vector2( 1, 1 ) ]
 }
 tracks/9/type = "value"
 tracks/9/path = NodePath("sceneCamera/countdownlabel:rect_position")
@@ -332,10 +344,10 @@ tracks/9/loop_wrap = true
 tracks/9/imported = false
 tracks/9/enabled = true
 tracks/9/keys = {
-"times": PoolRealArray( 0, 5, 5.3 ),
-"transitions": PoolRealArray( 2.31143e+11, 0.35, 2.31143e+11 ),
+"times": PoolRealArray( 0, 4.9, 5, 5.3 ),
+"transitions": PoolRealArray( 1, 1, 0.35, 2.31143e+11 ),
 "update": 0,
-"values": [ Vector2( 214.5, 196 ), Vector2( -192, 128 ), Vector2( 214.5, 196 ) ]
+"values": [ Vector2( 214.5, 196 ), Vector2( 214.5, 196 ), Vector2( -192, 128 ), Vector2( 214.5, 196 ) ]
 }
 
 [node name="field" type="Node2D"]
@@ -491,7 +503,7 @@ margin_top = 24.5
 margin_right = 20.0
 margin_bottom = 49.5
 grow_horizontal = 2
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 8 )
 align = 1
 valign = 1
 __meta__ = {
@@ -510,7 +522,7 @@ margin_right = 97.0
 margin_bottom = 104.953
 grow_horizontal = 2
 grow_vertical = 2
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 text = "Press F5 to restart"
 align = 1
 valign = 1
@@ -531,7 +543,7 @@ margin_right = 103.0
 margin_bottom = 162.953
 grow_horizontal = 2
 grow_vertical = 2
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 text = "Or press KEY to exit."
 align = 1
 valign = 1
@@ -541,7 +553,7 @@ __meta__ = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="sceneCamera/gameOverSplash"]
-anims/gameoverappearanimation = SubResource( 9 )
+anims/gameoverappearanimation = SubResource( 10 )
 
 [node name="shakeTime" type="Timer" parent="sceneCamera"]
 wait_time = 0.5
@@ -564,7 +576,7 @@ collision_mask = 16
 
 [node name="collisionShape" type="CollisionShape2D" parent="sceneCamera/blockCheckArea"]
 position = Vector2( 320, 240 )
-shape = SubResource( 10 )
+shape = SubResource( 11 )
 
 [node name="blockDestroyArea" type="Area2D" parent="sceneCamera"]
 pause_mode = 2
@@ -578,7 +590,7 @@ collision_mask = 16
 [node name="collisionShape" type="CollisionShape2D" parent="sceneCamera/blockDestroyArea"]
 visible = false
 position = Vector2( 320, 384 )
-shape = SubResource( 11 )
+shape = SubResource( 12 )
 
 [node name="pausemanager" type="Node2D" parent="sceneCamera"]
 pause_mode = 2
@@ -595,12 +607,74 @@ margin_left = 264.0
 margin_top = 208.0
 margin_right = 381.0
 margin_bottom = 233.0
-custom_fonts/font = SubResource( 12 )
+custom_fonts/font = SubResource( 13 )
 text = "Paused"
 script = ExtResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="hud" type="Control" parent="sceneCamera"]
+margin_right = 640.0
+margin_bottom = 480.0
+script = ExtResource( 27 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="time" type="HBoxContainer" parent="sceneCamera/hud"]
+margin_right = 224.0
+margin_bottom = 32.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="timecontrol" type="Control" parent="sceneCamera/hud/time"]
+margin_right = 32.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+rect_clip_content = true
+
+[node name="timesprite" type="Sprite" parent="sceneCamera/hud/time/timecontrol"]
+position = Vector2( 16, 16 )
+texture = SubResource( 15 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 32, 32 )
+
+[node name="minuteline" type="Line2D" parent="sceneCamera/hud/time/timecontrol/timesprite"]
+points = PoolVector2Array( 0, 0, 0, -32 )
+width = 2.0
+default_color = Color( 0, 0, 0, 1 )
+
+[node name="hourline" type="Line2D" parent="sceneCamera/hud/time/timecontrol/timesprite"]
+points = PoolVector2Array( 0, 0, 0, -32 )
+width = 2.0
+default_color = Color( 0, 0, 0, 1 )
+
+[node name="outline" type="Sprite" parent="sceneCamera/hud/time/timecontrol/timesprite"]
+texture = ExtResource( 30 )
+hframes = 15
+
+[node name="middledot" type="Line2D" parent="sceneCamera/hud/time/timecontrol/timesprite"]
+points = PoolVector2Array( 0, 0, 0.001, 0 )
+width = 2.0
+default_color = Color( 0, 0, 0, 1 )
+begin_cap_mode = 1
+end_cap_mode = 1
+
+[node name="timelabel" type="Label" parent="sceneCamera/hud/time"]
+margin_left = 36.0
+margin_top = 3.0
+margin_right = 93.0
+margin_bottom = 28.0
+custom_fonts/font = ExtResource( 29 )
+text = "time"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="sceneCamera/hud"]
+anims/startwaveanim = SubResource( 16 )
 
 [node name="countdownlabel" type="Label" parent="sceneCamera"]
 margin_left = 214.5
@@ -609,26 +683,16 @@ margin_right = 425.5
 margin_bottom = 247.0
 grow_horizontal = 2
 grow_vertical = 2
-custom_fonts/font = SubResource( 13 )
-text = "START!"
+custom_fonts/font = SubResource( 17 )
 align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="timelabel" type="Label" parent="sceneCamera"]
-margin_right = 128.0
-margin_bottom = 33.0
-custom_fonts/font = ExtResource( 29 )
-script = ExtResource( 27 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="fieldanimation" type="AnimationPlayer" parent="."]
 autoplay = "BeginAnimation"
-anims/BeginAnimation = SubResource( 14 )
+anims/BeginAnimation = SubResource( 18 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 26 )
@@ -636,6 +700,7 @@ pitch_scale = 4.0
 bus = "SFX"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[connection signal="died" from="player" to="." method="_on_player_died"]
 [connection signal="item_rect_changed" from="lava/Sprite" to="lava/Sprite" method="calculate_aspect_ratio"]
 [connection signal="body_entered" from="lava/Area2D" to="lava" method="_on_Area2D_body_entered"]
 [connection signal="body_exited" from="lava/Area2D" to="lava" method="_on_Area2D_body_exited"]

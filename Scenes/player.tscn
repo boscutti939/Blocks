@@ -163,6 +163,17 @@ tracks/6/keys = {
 "update": 1,
 "values": [ 5, 0 ]
 }
+tracks/7/type = "method"
+tracks/7/path = NodePath(".")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"values": [  ]
+}
 
 [sub_resource type="Gradient" id=15]
 offsets = PoolRealArray( 0 )
@@ -356,5 +367,5 @@ anims/explosionanimation = SubResource( 17 )
 [connection signal="timeout" from="jumpmeter/timer" to="jumpmeter" method="_on_timer_timeout"]
 [connection signal="timeout" from="timemeter/timer" to="." method="_on_timetimer_timeout"]
 [connection signal="timeout" from="timemeter/timer" to="timemeter" method="_on_timer_timeout"]
-[connection signal="timeout" from="supermeter/timer" to="." method="_on_supertimer_timeout"]
 [connection signal="timeout" from="supermeter/timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="supermeter/timer" to="." method="_on_supertimer_timeout"]

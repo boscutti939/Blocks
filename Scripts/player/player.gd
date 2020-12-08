@@ -1,14 +1,14 @@
 extends KinematicBody2D
 
 var motion = Vector2(0, 0);
-
+signal died;
 const speed = 250;
 const JUMPHEIGHT = 2.25;
 var active = false;
 var jumpheight = JUMPHEIGHT;
 var maxBlockHeight = 0;
 var died = false;
-var invincible = false;
+export var invincible = false;
 var oldposition = Vector2(0,0);
 var inlava = false;
 export var relativeposition = Vector2(0,0);
@@ -116,6 +116,7 @@ func explode():
 		motion = Vector2(0,0);
 		oldposition = position;
 		died = true;
+		emit_signal("died");
 		if global.timescale != 1:
 			global.resumetime();
 		$AnimationPlayer.play("deathanimation");
