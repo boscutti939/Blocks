@@ -30,13 +30,14 @@ func _process(delta):
 		if get_parent().has_node("player") and get_node("../player").died == false:
 			if get_parent().get_node("player").position.y < newdest.y + 480-192+16 and get_parent().get_node("player").onfloor and get_parent().get_node("player").is_on_floor():
 				olddest = newdest;
-				newdest.y -= olddest.y + 480 - round($"../player".position.y) - 16 - 32;
+				newdest.y -= olddest.y + 480 - stepify($"../player".position.y, 16) - 16 - 32;
 				updatePosition();
 			elif get_parent().get_node("player").position.y > newdest.y + 480 and newdest.y < 0:
 				olddest = newdest;
-				newdest.y += 128;
+				newdest.y += 5 * 32;
 				if newdest.y > 0:
 					newdest.y = 0;
+				get_node("/root/field/block_spawner").blockedLocations.erase(int(($"../player".position.x + 16) / 32))
 				updatePosition();
 		if not $shakeTime.is_stopped() and get_parent().has_node("player"):
 			var shakeratio = $shakeTime.time_left / $shakeTime.wait_time;

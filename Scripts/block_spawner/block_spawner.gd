@@ -2,6 +2,8 @@ extends Node2D
 
 onready var global = get_node("/root/Global");
 onready var blockLocationsSize = 20 - (global.flatteningPercentage * 20)
+var blockFallSpeed = 100;
+var blockGravity = 100;
 export (PackedScene) var blockToSpawn;
 export (PackedScene) var explodingBlockToSpawn;
 export (PackedScene) var yellowBlock;
@@ -27,15 +29,21 @@ export var spawnstate = STATE_NORMAL;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	blockFallSpeed = global.blockFallSpeed;
+	blockGravity = global.blockGravity;
 	emptyLocations += BLOCK_LOCATIONS;
 	maxtime = 1.0/initialSpawnRate;
-	$tween.interpolate_property(self, "maxtime", 1.0/initialSpawnRate, 1.0/maxSpawnRate, secondsToMax,Tween.TRANS_CUBIC, Tween.EASE_OUT);
+	$tween.interpolate_property(self, "maxtime", 1.0/initialSpawnRate, 1.0/maxSpawnRate, secondsToMax, Tween.TRANS_CUBIC, Tween.EASE_OUT);
 	$tween.start();
+	$blockfalltween.interpolate_property(self, "blockFallSpeed", global.blockFallSpeed, global.maxBlockFallSpeed, secondsToMax, Tween.TRANS_LINEAR, Tween.EASE_OUT);
+	$blockfalltween.start();
+	$gravitytween.interpolate_property(self, "blockGravity", global.blockGravity, global.maxBlockGravity, secondsToMax, Tween.TRANS_LINEAR, Tween.EASE_OUT);
+	$gravitytween.start();
 	randomize();
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if global.gameStarted:
+	if global.gameStarted and not global.gameOver:
 #		if Input.is_key_pressed(KEY_L):
 #			timeout();
 		if spawnstate == STATE_NORMAL:
@@ -46,7 +54,8 @@ func _process(delta):
 			wavetimer += 1.0 * delta * global.timescale;
 			if wavetimer >= maxwavetime:
 				spawnstate = STATE_WAVE;
-				$wave_animation.play("lefttoright");
+				$waveintroanimation.play("waveintro");
+				$"../sceneCamera/hud/warning/middletext".text = "WAVE INCOMING";
 				wavetimer = 0;
 
 func timeout():
@@ -83,15 +92,19 @@ func timeout():
 		var blockpos = Vector2(spawnLocation*32 - 16, get_parent().get_node("sceneCamera").position.y + 16);
 		
 		block.position = blockpos;
+		block.fallspeed = blockFallSpeed;
+		block.gravity = blockGravity;
 		blockappear.position = blockpos;
 		blockappear.position.y += 16;
 		add_child(blockappear);
 		add_child(block);
 
-func spawnAtLocation(x):
+func spawnIntro(x):
 	var blockappear = appearAnimation.instance();
 	var block = metalBlock.instance();
 	var blockpos = Vector2(x, get_parent().get_node("sceneCamera").position.y + 16);
+	block.fallspeed = 700;
+	block.gravity = 700;
 	block.position = blockpos;
 	blockappear.position = blockpos;
 	blockappear.position.y += 16;
@@ -107,8 +120,13 @@ func spawnAtLocationBlock(x, b):
 			block = explodingBlockToSpawn.instance();
 	var blockappear = appearAnimation.instance();
 	var blockpos = Vector2(x, get_parent().get_node("sceneCamera").position.y + 16);
+	block.fallspeed = blockFallSpeed;
+	block.gravity = blockGravity;
 	block.position = blockpos;
 	blockappear.position = blockpos;
 	blockappear.position.y += 16;
 	add_child(blockappear);
 	add_child(block);
+
+func startRandomWave():
+	$waveanimation.play("lefttoright");

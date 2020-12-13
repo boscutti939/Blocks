@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=2]
+[gd_scene load_steps=61 format=2]
 
 [ext_resource path="res://Scripts/field.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/player.tscn" type="PackedScene" id=2]
@@ -25,45 +25,229 @@
 [ext_resource path="res://Scenes/Blocks/time_block.tscn" type="PackedScene" id=23]
 [ext_resource path="res://Scenes/Blocks/metal_block.tscn" type="PackedScene" id=24]
 [ext_resource path="res://Animations/blockspawner/lefttoright.tres" type="Animation" id=25]
-[ext_resource path="res://Sounds/sine.wav" type="AudioStream" id=26]
+[ext_resource path="res://Sounds/alert.wav" type="AudioStream" id=26]
 [ext_resource path="res://Scripts/field/hud.gd" type="Script" id=27]
-[ext_resource path="res://Scripts/block_spawner/wave_animation.gd" type="Script" id=28]
+[ext_resource path="res://Scripts/block_spawner/waveintroanimation.gd" type="Script" id=28]
 [ext_resource path="res://Fonts/menu_button.tres" type="DynamicFont" id=29]
-[ext_resource path="res://Sprites/blockoutline.png" type="Texture" id=30]
+[ext_resource path="res://Scripts/hud/warning/toptext.gd" type="Script" id=30]
+[ext_resource path="res://Animations/hud/waveintro.tres" type="Animation" id=31]
+[ext_resource path="res://Sounds/fart.wav" type="AudioStream" id=32]
+[ext_resource path="res://Scripts/hud/warning/bottomtext.gd" type="Script" id=33]
+[ext_resource path="res://Scripts/hud/warning/warning.gd" type="Script" id=34]
+[ext_resource path="res://Sounds/beep.wav" type="AudioStream" id=35]
+[ext_resource path="res://Scripts/block_spawner/wave_animation.gd" type="Script" id=36]
+[ext_resource path="res://Scripts/field/alertsound.gd" type="Script" id=37]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 32 )
 
-[sub_resource type="ShaderMaterial" id=2]
+[sub_resource type="Animation" id=2]
+resource_name = "lefttoright"
+length = 10.0
+step = 0.5
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [ 16, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 48, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 80, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 112, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 144, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 176, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 208, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 240, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 272, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 304, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 336, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 368, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 400, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 432, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 464, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 496, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 528, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 560, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 592, 0 ],
+"method": "spawnAtLocationBlock"
+}, {
+"args": [ 624, 0 ],
+"method": "spawnAtLocationBlock"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:spawnstate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 10 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "waveintro"
+length = 5.0
+step = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("../sceneCamera/hud/warning:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 4.5, 5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../sceneCamera/hud/warning/redoverlay:modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0.196078 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0.196078 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0.196078 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0.196078 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0.196078 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/2/type = "audio"
+tracks/2/path = NodePath("../alertsound")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"clips": [ {
+"end_offset": 2.97,
+"start_offset": 0.0,
+"stream": ExtResource( 26 )
+}, {
+"end_offset": 2.97,
+"start_offset": 0.0,
+"stream": ExtResource( 26 )
+}, {
+"end_offset": 2.97,
+"start_offset": 0.0,
+"stream": ExtResource( 26 )
+} ],
+"times": PoolRealArray( -0.06, 1.5, 3 )
+}
+tracks/3/type = "audio"
+tracks/3/path = NodePath("../AudioStreamPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 35 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 35 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 35 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 35 )
+} ],
+"times": PoolRealArray( 1, 2, 3, 4 )
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("../AudioStreamPlayer:pitch_scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 1, 4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 1.0, 1.5 ]
+}
+
+[sub_resource type="ShaderMaterial" id=4]
 shader = ExtResource( 16 )
 shader_param/tiled_factor = Vector2( 5, 5 )
 shader_param/aspect_ratio = 0.5
 shader_param/timescale = 1.0
 
-[sub_resource type="Gradient" id=3]
+[sub_resource type="Gradient" id=5]
 colors = PoolColorArray( 1, 0.305882, 0, 1, 1, 0.305882, 0, 1 )
 
-[sub_resource type="GradientTexture" id=4]
-gradient = SubResource( 3 )
+[sub_resource type="GradientTexture" id=6]
+gradient = SubResource( 5 )
 width = 720
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 320, 240 )
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=8]
 size = 48
 font_data = ExtResource( 20 )
-
-[sub_resource type="DynamicFont" id=7]
-font_data = ExtResource( 19 )
-
-[sub_resource type="DynamicFont" id=8]
-font_data = ExtResource( 19 )
 
 [sub_resource type="DynamicFont" id=9]
 font_data = ExtResource( 19 )
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="DynamicFont" id=10]
+font_data = ExtResource( 19 )
+
+[sub_resource type="DynamicFont" id=11]
+font_data = ExtResource( 19 )
+
+[sub_resource type="Animation" id=12]
 length = 5.0
 step = 1.0
 tracks/0/type = "value"
@@ -127,33 +311,44 @@ tracks/4/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=11]
+[sub_resource type="RectangleShape2D" id=13]
 extents = Vector2( 320, 232 )
 
-[sub_resource type="RectangleShape2D" id=12]
+[sub_resource type="RectangleShape2D" id=14]
 extents = Vector2( 320, 384 )
 
-[sub_resource type="DynamicFont" id=13]
+[sub_resource type="DynamicFont" id=15]
 size = 24
 font_data = ExtResource( 20 )
 
-[sub_resource type="Gradient" id=14]
+[sub_resource type="Gradient" id=16]
 offsets = PoolRealArray( 0 )
-colors = PoolColorArray( 0, 0.414063, 1, 1 )
+colors = PoolColorArray( 1, 1, 1, 1 )
 
-[sub_resource type="GradientTexture" id=15]
-gradient = SubResource( 14 )
+[sub_resource type="GradientTexture" id=17]
+gradient = SubResource( 16 )
 width = 32
 
-[sub_resource type="Animation" id=16]
-resource_name = "startwaveanim"
-length = 5.0
-
-[sub_resource type="DynamicFont" id=17]
+[sub_resource type="DynamicFont" id=18]
 size = 48
 font_data = ExtResource( 20 )
 
-[sub_resource type="Animation" id=18]
+[sub_resource type="DynamicFont" id=19]
+size = 48
+font_data = ExtResource( 20 )
+
+[sub_resource type="DynamicFont" id=20]
+size = 24
+font_data = ExtResource( 19 )
+
+[sub_resource type="StyleBoxFlat" id=21]
+bg_color = Color( 1, 0, 0, 1 )
+
+[sub_resource type="DynamicFont" id=22]
+size = 48
+font_data = ExtResource( 20 )
+
+[sub_resource type="Animation" id=23]
 length = 7.0
 tracks/0/type = "method"
 tracks/0/path = NodePath("block_spawner")
@@ -166,64 +361,64 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "values": [ {
 "args": [ 16 ],
-"method": "spawnAtLocation"
+"method": "spawnIntro"
 }, {
 "args": [ 48 ],
-"method": "spawnAtLocation"
+"method": "spawnIntro"
 }, {
 "args": [ 80 ],
-"method": "spawnAtLocation"
+"method": "spawnIntro"
 }, {
 "args": [ 112 ],
-"method": "spawnAtLocation"
+"method": "spawnIntro"
 }, {
 "args": [ 144 ],
-"method": "spawnAtLocation"
+"method": "spawnIntro"
 }, {
 "args": [ 176 ],
-"method": "spawnAtLocation"
+"method": "spawnIntro"
 }, {
 "args": [ 208 ],
-"method": "spawnAtLocation"
+"method": "spawnIntro"
 }, {
 "args": [ 240 ],
-"method": "spawnAtLocation"
+"method": "spawnIntro"
 }, {
 "args": [ 272 ],
-"method": "spawnAtLocation"
+"method": "spawnIntro"
 }, {
 "args": [ 304 ],
-"method": "spawnAtLocation"
+"method": "spawnIntro"
 }, {
 "args": [ 336 ],
-"method": "spawnAtLocation"
+"method": "spawnIntro"
 }, {
 "args": [ 368 ],
-"method": "spawnAtLocation"
+"method": "spawnIntro"
 }, {
 "args": [ 400 ],
-"method": "spawnAtLocation"
+"method": "spawnIntro"
 }, {
 "args": [ 432 ],
-"method": "spawnAtLocation"
+"method": "spawnIntro"
 }, {
 "args": [ 464 ],
-"method": "spawnAtLocation"
+"method": "spawnIntro"
 }, {
 "args": [ 496 ],
-"method": "spawnAtLocation"
+"method": "spawnIntro"
 }, {
 "args": [ 528 ],
-"method": "spawnAtLocation"
+"method": "spawnIntro"
 }, {
 "args": [ 560 ],
-"method": "spawnAtLocation"
+"method": "spawnIntro"
 }, {
 "args": [ 592 ],
-"method": "spawnAtLocation"
+"method": "spawnIntro"
 }, {
 "args": [ 624 ],
-"method": "spawnAtLocation"
+"method": "spawnIntro"
 } ]
 }
 tracks/1/type = "method"
@@ -287,7 +482,7 @@ tracks/4/keys = {
 "times": PoolRealArray( 2, 5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ 2.0, 4.0 ]
+"values": [ 2.0, 3.0 ]
 }
 tracks/5/type = "value"
 tracks/5/path = NodePath("sceneCamera/countdownlabel:text")
@@ -314,40 +509,40 @@ tracks/6/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 tracks/7/type = "value"
-tracks/7/path = NodePath("sceneCamera/hud/time/timelabel:visible")
+tracks/7/path = NodePath("sceneCamera/countdownlabel:rect_scale")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
 tracks/7/enabled = true
 tracks/7/keys = {
-"times": PoolRealArray( 0, 5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ false, true ]
+"times": PoolRealArray( 0, 4.9, 5, 5.3 ),
+"transitions": PoolRealArray( 1, 1e+09, 0.353554, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 5, 5 ), Vector2( 1, 1 ) ]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("sceneCamera/countdownlabel:rect_scale")
+tracks/8/path = NodePath("sceneCamera/countdownlabel:rect_position")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
 tracks/8/enabled = true
 tracks/8/keys = {
 "times": PoolRealArray( 0, 4.9, 5, 5.3 ),
-"transitions": PoolRealArray( 1, 1, 0.353554, 1 ),
+"transitions": PoolRealArray( 1, 1e+09, 0.35, 2.31143e+11 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 5, 5 ), Vector2( 1, 1 ) ]
+"values": [ Vector2( 214.5, 196 ), Vector2( 214.5, 196 ), Vector2( -192, 128 ), Vector2( 214.5, 196 ) ]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("sceneCamera/countdownlabel:rect_position")
-tracks/9/interp = 1
+tracks/9/path = NodePath("sceneCamera/hud/time:rect_position")
+tracks/9/interp = 2
 tracks/9/loop_wrap = true
 tracks/9/imported = false
 tracks/9/enabled = true
 tracks/9/keys = {
-"times": PoolRealArray( 0, 4.9, 5, 5.3 ),
-"transitions": PoolRealArray( 1, 1, 0.35, 2.31143e+11 ),
+"times": PoolRealArray( 0, 5, 5.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 214.5, 196 ), Vector2( 214.5, 196 ), Vector2( -192, 128 ), Vector2( 214.5, 196 ) ]
+"values": [ Vector2( -128, 0 ), Vector2( -128, 0 ), Vector2( 0, 0 ) ]
 }
 
 [node name="field" type="Node2D"]
@@ -388,14 +583,25 @@ appearAnimation = ExtResource( 8 )
 
 [node name="tween" type="Tween" parent="block_spawner"]
 
+[node name="gravitytween" type="Tween" parent="block_spawner"]
+
+[node name="blockfalltween" type="Tween" parent="block_spawner"]
+
 [node name="start_blocks" type="Node2D" parent="block_spawner"]
 
-[node name="wave_animation" type="AnimationPlayer" parent="block_spawner"]
+[node name="waveintroanimation" type="AnimationPlayer" parent="block_spawner"]
 pause_mode = 1
 anims/lefttoright = ExtResource( 25 )
+anims/waveintro = ExtResource( 31 )
 script = ExtResource( 28 )
 
-[node name="tween" type="Tween" parent="block_spawner/wave_animation"]
+[node name="waveanimation" type="AnimationPlayer" parent="block_spawner"]
+pause_mode = 1
+anims/lefttoright = SubResource( 2 )
+anims/waveintro = SubResource( 3 )
+script = ExtResource( 36 )
+
+[node name="tween" type="Tween" parent="block_spawner/waveanimation"]
 
 [node name="explosion_manager" type="Node2D" parent="."]
 z_index = 5
@@ -414,11 +620,11 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="lava"]
-material = SubResource( 2 )
+material = SubResource( 4 )
 position = Vector2( -1.47239e-05, 608.843 )
 rotation = 1.5708
 scale = Vector2( 1.69253, 702 )
-texture = SubResource( 4 )
+texture = SubResource( 6 )
 script = ExtResource( 17 )
 
 [node name="Area2D" type="Area2D" parent="lava"]
@@ -429,7 +635,7 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="lava/Area2D"]
 position = Vector2( 0, 272 )
-shape = SubResource( 5 )
+shape = SubResource( 7 )
 
 [node name="sceneCamera" type="Camera2D" parent="."]
 pause_mode = 2
@@ -464,7 +670,7 @@ margin_right = 174.5
 margin_bottom = -103.256
 grow_horizontal = 2
 grow_vertical = 2
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 8 )
 text = "Game Over"
 align = 1
 valign = 1
@@ -484,7 +690,7 @@ margin_right = 21.5
 margin_bottom = 10.0
 grow_horizontal = 2
 grow_vertical = 2
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 9 )
 text = "Maximum blocks climbed: this many blocks"
 align = 1
 valign = 1
@@ -503,7 +709,7 @@ margin_top = 24.5
 margin_right = 20.0
 margin_bottom = 49.5
 grow_horizontal = 2
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 10 )
 align = 1
 valign = 1
 __meta__ = {
@@ -522,7 +728,7 @@ margin_right = 97.0
 margin_bottom = 104.953
 grow_horizontal = 2
 grow_vertical = 2
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 11 )
 text = "Press F5 to restart"
 align = 1
 valign = 1
@@ -543,7 +749,7 @@ margin_right = 103.0
 margin_bottom = 162.953
 grow_horizontal = 2
 grow_vertical = 2
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 11 )
 text = "Or press KEY to exit."
 align = 1
 valign = 1
@@ -552,8 +758,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="sceneCamera/gameOverSplash"]
-anims/gameoverappearanimation = SubResource( 10 )
+[node name="splashAnimation" type="AnimationPlayer" parent="sceneCamera/gameOverSplash"]
+anims/gameoverappearanimation = SubResource( 12 )
 
 [node name="shakeTime" type="Timer" parent="sceneCamera"]
 wait_time = 0.5
@@ -576,7 +782,7 @@ collision_mask = 16
 
 [node name="collisionShape" type="CollisionShape2D" parent="sceneCamera/blockCheckArea"]
 position = Vector2( 320, 240 )
-shape = SubResource( 11 )
+shape = SubResource( 13 )
 
 [node name="blockDestroyArea" type="Area2D" parent="sceneCamera"]
 pause_mode = 2
@@ -590,7 +796,7 @@ collision_mask = 16
 [node name="collisionShape" type="CollisionShape2D" parent="sceneCamera/blockDestroyArea"]
 visible = false
 position = Vector2( 320, 384 )
-shape = SubResource( 12 )
+shape = SubResource( 14 )
 
 [node name="pausemanager" type="Node2D" parent="sceneCamera"]
 pause_mode = 2
@@ -607,23 +813,20 @@ margin_left = 264.0
 margin_top = 208.0
 margin_right = 381.0
 margin_bottom = 233.0
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 15 )
 text = "Paused"
 script = ExtResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="hud" type="Control" parent="sceneCamera"]
-margin_right = 640.0
-margin_bottom = 480.0
+[node name="hud" type="Node2D" parent="sceneCamera"]
+z_index = 10
 script = ExtResource( 27 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="time" type="HBoxContainer" parent="sceneCamera/hud"]
-margin_right = 224.0
+margin_left = -108.544
+margin_right = 115.456
 margin_bottom = 32.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -637,23 +840,21 @@ rect_clip_content = true
 
 [node name="timesprite" type="Sprite" parent="sceneCamera/hud/time/timecontrol"]
 position = Vector2( 16, 16 )
-texture = SubResource( 15 )
+texture = SubResource( 17 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 32, 32 )
 
 [node name="minuteline" type="Line2D" parent="sceneCamera/hud/time/timecontrol/timesprite"]
-points = PoolVector2Array( 0, 0, 0, -32 )
+points = PoolVector2Array( 0, 0, 0, -16 )
 width = 2.0
 default_color = Color( 0, 0, 0, 1 )
+antialiased = true
 
 [node name="hourline" type="Line2D" parent="sceneCamera/hud/time/timecontrol/timesprite"]
-points = PoolVector2Array( 0, 0, 0, -32 )
+points = PoolVector2Array( 0, 0, 0, -8 )
 width = 2.0
 default_color = Color( 0, 0, 0, 1 )
-
-[node name="outline" type="Sprite" parent="sceneCamera/hud/time/timecontrol/timesprite"]
-texture = ExtResource( 30 )
-hframes = 15
+antialiased = true
 
 [node name="middledot" type="Line2D" parent="sceneCamera/hud/time/timecontrol/timesprite"]
 points = PoolVector2Array( 0, 0, 0.001, 0 )
@@ -661,6 +862,11 @@ width = 2.0
 default_color = Color( 0, 0, 0, 1 )
 begin_cap_mode = 1
 end_cap_mode = 1
+
+[node name="outline" type="Line2D" parent="sceneCamera/hud/time/timecontrol/timesprite"]
+points = PoolVector2Array( -16, -16, 16, -16, 16, 16, -16, 16, -16, -16 )
+width = 4.0
+default_color = Color( 0, 0, 0, 1 )
 
 [node name="timelabel" type="Label" parent="sceneCamera/hud/time"]
 margin_left = 36.0
@@ -673,17 +879,78 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="sceneCamera/hud"]
-anims/startwaveanim = SubResource( 16 )
+[node name="warning" type="Control" parent="sceneCamera/hud"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 34 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="countdownlabel" type="Label" parent="sceneCamera"]
-margin_left = 214.5
-margin_top = 196.0
-margin_right = 425.5
-margin_bottom = 247.0
+[node name="toptext" type="Label" parent="sceneCamera/hud/warning"]
+margin_left = -568.0
+margin_right = 643.0
+margin_bottom = 64.0
+custom_fonts/font = SubResource( 18 )
+text = "WARNING WARNING WARNING WARNING"
+max_lines_visible = 1
+script = ExtResource( 30 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bottomtext" type="Label" parent="sceneCamera/hud/warning"]
+margin_left = -568.0
+margin_top = 416.0
+margin_right = 643.0
+margin_bottom = 480.0
+custom_fonts/font = SubResource( 19 )
+text = "WARNING WARNING WARNING WARNING"
+valign = 2
+max_lines_visible = 1
+script = ExtResource( 33 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="middletext" type="Label" parent="sceneCamera/hud/warning"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 108.0
+margin_top = 108.0
+margin_right = 504.0
+margin_bottom = 133.0
 grow_horizontal = 2
 grow_vertical = 2
-custom_fonts/font = SubResource( 17 )
+custom_fonts/font = SubResource( 20 )
+text = "either a wave or something"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="redoverlay" type="Panel" parent="sceneCamera/hud/warning"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 640.0
+margin_bottom = 480.0
+custom_styles/panel = SubResource( 21 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="countdownlabel" type="Label" parent="sceneCamera"]
+margin_left = 86.8727
+margin_top = 174.65
+margin_right = 297.873
+margin_bottom = 225.65
+grow_horizontal = 2
+grow_vertical = 2
+rect_scale = Vector2( 2.27058, 2.27058 )
+custom_fonts/font = SubResource( 22 )
 align = 1
 valign = 1
 __meta__ = {
@@ -692,14 +959,16 @@ __meta__ = {
 
 [node name="fieldanimation" type="AnimationPlayer" parent="."]
 autoplay = "BeginAnimation"
-anims/BeginAnimation = SubResource( 18 )
+anims/BeginAnimation = SubResource( 23 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 26 )
-pitch_scale = 4.0
+stream = ExtResource( 32 )
 bus = "SFX"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="alertsound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 26 )
+bus = "SFX"
+script = ExtResource( 37 )
 [connection signal="died" from="player" to="." method="_on_player_died"]
 [connection signal="item_rect_changed" from="lava/Sprite" to="lava/Sprite" method="calculate_aspect_ratio"]
 [connection signal="body_entered" from="lava/Area2D" to="lava" method="_on_Area2D_body_entered"]

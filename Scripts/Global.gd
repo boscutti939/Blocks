@@ -6,8 +6,10 @@ extends Node2D
 
 var config = ConfigFile.new();
 
-export var maxBlockFallSpeed = 720;
-export var blockGravity = 720;
+export var blockFallSpeed = 200;
+export var maxBlockFallSpeed = 1200;
+export var blockGravity = 200;
+export var maxBlockGravity = 1200;
 export var blockOpacityRange = 256.0;
 export var flatteningPercentage = 0.5;
 export var lavaEnabled = false;
@@ -18,7 +20,7 @@ export var initialSpawnRate = 1.0;
 export var secondsToMax = 320.0;
 export var normalTimescale = 1.0;
 export var slowTimescale = 0.25;
-export var waveMaxSpeed = 2;
+export var waveMaxSpeed = 4;
 var gameOver = false;
 var gameStarted = false;
 var paused = false;

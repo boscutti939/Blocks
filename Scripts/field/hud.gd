@@ -1,4 +1,4 @@
-extends Control
+extends Node2D
 
 
 # Declare member variables here. Examples:
@@ -15,9 +15,9 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	var milliseconds = str(stepify(get_node("/root/field").time, 0.001)).split(".");
-	var seconds = str(int(floor(get_node("/root/field").time)) % 60);
-	var minutes = str(floor(get_node("/root/field").time / 60));
+	var seconds = str(int(floor(get_node("/root/field").time)) % 60).pad_zeros(2);
+	var minutes = str(floor(get_node("/root/field").time / 60)).pad_zeros(2);
 	if milliseconds.size() == 2:
-		$time/timelabel.text = minutes + ":" + seconds + "." + milliseconds[1];
+		$time/timelabel.text = minutes + ":" + seconds + "." + milliseconds[1].pad_zeros(3);
 	$time/timecontrol/timesprite/minuteline.rotation_degrees += 360 * delta;
 	$time/timecontrol/timesprite/hourline.rotation_degrees += 360 * delta / 12;

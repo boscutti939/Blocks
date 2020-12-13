@@ -20,7 +20,7 @@ func _process(delta):
 		if not global.gameOver:
 			time += 1.0 * delta;
 			maxheightlabel.text = "Maximum height climbed: " + str(global.playerMaxBlockHeight) + " blocks";
-			timelabel.text = "Time survived: " + str(stepify(time, 0.001)) + " seconds.";
+			timelabel.text = "Time survived: " + $sceneCamera/hud/time/timelabel.text;
 		else:
 			if Input.is_key_pressed(global.keys["RESTARTKEY"]):
 				get_tree().reload_current_scene();
@@ -34,5 +34,6 @@ func startGame():
 
 func _on_player_died():
 	global.gameOver = true;
-	$sceneCamera/gameOverSplash/AnimationPlayer.play("gameoverappearanimation");
-	$block_spawner/wave_animation.stop(true);
+	$sceneCamera/gameOverSplash/splashAnimation.play("gameoverappearanimation");
+	$block_spawner/waveintroanimation.stop(true);
+	$block_spawner/waveanimation.stop(true);

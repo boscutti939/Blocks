@@ -8,6 +8,8 @@ var justentered = false;
 var child = null;
 var blocktype = 0;
 var cleared = false;
+var fallspeed = 100;
+var gravity = 100;
 
 onready var blockunder = get_node("blockunder");
 
@@ -40,26 +42,26 @@ func justexplode(snd):
 		queue_free();
 
 func _physics_process(delta):
-	if position.y > get_node("/root/field/sceneCamera").position.y + 48 and cleared == false:
+	if position.y >= get_node("/root/field/sceneCamera").position.y + 48 and cleared == false:
 		cleared = true;
 		get_node("/root/field/block_spawner").blockedLocations.erase(int((position.x + 16) / 32));
 #	if get_node_or_null("Label") != null:
 ##		$Label.text = str((position.x + 16) / 32);
 	if blockunder.enabled == true:
 		if blockunder.is_colliding() and blockunder.get_collider().name != "player":
-			if velocity.y >= global.maxBlockFallSpeed:
+			if velocity.y >= fallspeed:
 				drop = true;
 			col = true;
 			position.y = blockunder.get_collision_point().y - 16;
 			velocity.y = 0;
-		elif (position.y + (velocity.y * delta)) >= ($"/root/field/sceneCamera".position.y + 480-16):
-			if velocity.y >= global.maxBlockFallSpeed:
+		elif (position.y + (velocity.y * delta)) >= ($"/root/field/sceneCamera".position.y + 480-16) and position.y + (velocity.y * delta) <= ($"/root/field/sceneCamera".position.y + 480 - 8):
+			if velocity.y >= fallspeed:
 				drop = true;
 			position.y = $"/root/field/sceneCamera".position.y + 480-16;
 			velocity.y = 0;
 			col = true;
 		if col == false:
-			velocity.y += global.blockGravity * delta * global.timescale;
-			velocity.y = clamp(velocity.y, 0.0, global.maxBlockFallSpeed * global.timescale);
+			velocity.y += gravity * delta * global.timescale;
+			velocity.y = clamp(velocity.y, 0.0, fallspeed * global.timescale);
 			position.y += velocity.y * delta;
 	col = false;
