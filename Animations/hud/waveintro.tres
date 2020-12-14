@@ -42,20 +42,8 @@ tracks/2/keys = {
 "end_offset": 2.97,
 "start_offset": 0.07,
 "stream": ExtResource( 1 )
-}, {
-"end_offset": 2.97,
-"start_offset": 0.07,
-"stream": ExtResource( 1 )
-}, {
-"end_offset": 2.97,
-"start_offset": 0.07,
-"stream": ExtResource( 1 )
-}, {
-"end_offset": 2.97,
-"start_offset": 0.07,
-"stream": ExtResource( 1 )
 } ],
-"times": PoolRealArray( 0, 1.5, 3, 4.5 )
+"times": PoolRealArray( 0 )
 }
 tracks/3/type = "audio"
 tracks/3/path = NodePath("../AudioStreamPlayer")
@@ -93,7 +81,7 @@ tracks/4/keys = {
 "times": PoolRealArray( 2, 5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ 1.0, 1.5 ]
+"values": [ 2.0, 3.0 ]
 }
 tracks/5/type = "method"
 tracks/5/path = NodePath(".")

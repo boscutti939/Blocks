@@ -54,7 +54,7 @@ func _physics_process(delta):
 			col = true;
 			position.y = blockunder.get_collision_point().y - 16;
 			velocity.y = 0;
-		elif (position.y + (velocity.y * delta)) >= ($"/root/field/sceneCamera".position.y + 480-16) and position.y + (velocity.y * delta) <= ($"/root/field/sceneCamera".position.y + 480 - 8):
+		elif (position.y + (velocity.y * delta)) >= ($"/root/field/sceneCamera".position.y + 480-16) and position.y <= ($"/root/field/sceneCamera".position.y + 480 -16):
 			if velocity.y >= fallspeed:
 				drop = true;
 			position.y = $"/root/field/sceneCamera".position.y + 480-16;

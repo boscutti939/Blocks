@@ -31,7 +31,7 @@
 [ext_resource path="res://Fonts/menu_button.tres" type="DynamicFont" id=29]
 [ext_resource path="res://Scripts/hud/warning/toptext.gd" type="Script" id=30]
 [ext_resource path="res://Animations/hud/waveintro.tres" type="Animation" id=31]
-[ext_resource path="res://Sounds/fart.wav" type="AudioStream" id=32]
+[ext_resource path="res://Sounds/sine.wav" type="AudioStream" id=32]
 [ext_resource path="res://Scripts/hud/warning/bottomtext.gd" type="Script" id=33]
 [ext_resource path="res://Scripts/hud/warning/warning.gd" type="Script" id=34]
 [ext_resource path="res://Sounds/beep.wav" type="AudioStream" id=35]
@@ -825,8 +825,8 @@ z_index = 10
 script = ExtResource( 27 )
 
 [node name="time" type="HBoxContainer" parent="sceneCamera/hud"]
-margin_left = -108.544
-margin_right = 115.456
+margin_left = -128.0
+margin_right = 96.0
 margin_bottom = 32.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -943,13 +943,12 @@ __meta__ = {
 }
 
 [node name="countdownlabel" type="Label" parent="sceneCamera"]
-margin_left = 86.8727
-margin_top = 174.65
-margin_right = 297.873
-margin_bottom = 225.65
+margin_left = 214.5
+margin_top = 196.0
+margin_right = 425.5
+margin_bottom = 247.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_scale = Vector2( 2.27058, 2.27058 )
 custom_fonts/font = SubResource( 22 )
 align = 1
 valign = 1
@@ -963,6 +962,7 @@ anims/BeginAnimation = SubResource( 23 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 32 )
+pitch_scale = 2.0
 bus = "SFX"
 
 [node name="alertsound" type="AudioStreamPlayer" parent="."]
