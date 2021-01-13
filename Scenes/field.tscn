@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=2]
+[gd_scene load_steps=62 format=2]
 
 [ext_resource path="res://Scripts/field.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/player.tscn" type="PackedScene" id=2]
@@ -11,7 +11,7 @@
 [ext_resource path="res://Scripts/explosion_manager/explosion_manager.gd" type="Script" id=9]
 [ext_resource path="res://Scenes/explosion.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/sceneCamera.gd" type="Script" id=11]
-[ext_resource path="res://Scripts/pausemanager/Label.gd" type="Script" id=12]
+[ext_resource path="res://Scenes/PauseItems.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Scenes/Blocks/super_block.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Sprites/grid32x32tileset.tres" type="TileSet" id=14]
 [ext_resource path="res://Scenes/lava.gd" type="Script" id=15]
@@ -37,6 +37,7 @@
 [ext_resource path="res://Sounds/beep.wav" type="AudioStream" id=35]
 [ext_resource path="res://Scripts/block_spawner/wave_animation.gd" type="Script" id=36]
 [ext_resource path="res://Scripts/field/alertsound.gd" type="Script" id=37]
+[ext_resource path="res://Scenes/powerupeffect.tscn" type="PackedScene" id=38]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 32 )
@@ -234,12 +235,12 @@ width = 720
 [sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 320, 240 )
 
-[sub_resource type="DynamicFont" id=8]
-size = 48
-font_data = ExtResource( 20 )
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0, 0, 0, 0.752941 )
 
 [sub_resource type="DynamicFont" id=9]
-font_data = ExtResource( 19 )
+size = 48
+font_data = ExtResource( 20 )
 
 [sub_resource type="DynamicFont" id=10]
 font_data = ExtResource( 19 )
@@ -247,9 +248,12 @@ font_data = ExtResource( 19 )
 [sub_resource type="DynamicFont" id=11]
 font_data = ExtResource( 19 )
 
-[sub_resource type="Animation" id=12]
-length = 5.0
-step = 1.0
+[sub_resource type="DynamicFont" id=12]
+font_data = ExtResource( 19 )
+
+[sub_resource type="Animation" id=13]
+length = 6.0
+step = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
 tracks/0/interp = 1
@@ -257,10 +261,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("maxheightlabel:modulate")
@@ -269,7 +273,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 1, 2 ),
+"times": PoolRealArray( 0, 2, 3 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
@@ -281,7 +285,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 3, 4 ),
+"times": PoolRealArray( 0, 4, 5 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
@@ -293,7 +297,7 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 4, 5 ),
+"times": PoolRealArray( 0, 5, 6 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
@@ -305,21 +309,29 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 2, 3 ),
+"times": PoolRealArray( 0, 3, 4 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
-
-[sub_resource type="RectangleShape2D" id=13]
-extents = Vector2( 320, 232 )
+tracks/5/type = "value"
+tracks/5/path = NodePath("../hud/time:rect_position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1.5, 1.5 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( -256, 0 ) ]
+}
 
 [sub_resource type="RectangleShape2D" id=14]
-extents = Vector2( 320, 384 )
+extents = Vector2( 320, 240 )
 
-[sub_resource type="DynamicFont" id=15]
-size = 24
-font_data = ExtResource( 20 )
+[sub_resource type="RectangleShape2D" id=15]
+extents = Vector2( 320, 384 )
 
 [sub_resource type="Gradient" id=16]
 offsets = PoolRealArray( 0 )
@@ -542,7 +554,7 @@ tracks/9/keys = {
 "times": PoolRealArray( 0, 5, 5.5 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( -128, 0 ), Vector2( -128, 0 ), Vector2( 0, 0 ) ]
+"values": [ Vector2( -128, 0 ), Vector2( -256, 0 ), Vector2( 0, 0 ) ]
 }
 
 [node name="field" type="Node2D"]
@@ -610,6 +622,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 explosionScene = ExtResource( 10 )
+powerupScene = ExtResource( 38 )
 
 [node name="lava" type="Node2D" parent="."]
 position = Vector2( 320, 480 )
@@ -659,6 +672,16 @@ modulate = Color( 1, 1, 1, 0 )
 position = Vector2( 320, 240 )
 z_index = 10
 
+[node name="backgroundpanel" type="Panel" parent="sceneCamera/gameOverSplash"]
+margin_left = -320.0
+margin_top = -240.0
+margin_right = 320.0
+margin_bottom = 240.0
+custom_styles/panel = SubResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="gameoverlabel" type="Label" parent="sceneCamera/gameOverSplash"]
 anchor_left = 0.5
 anchor_top = 1.0
@@ -670,7 +693,7 @@ margin_right = 174.5
 margin_bottom = -103.256
 grow_horizontal = 2
 grow_vertical = 2
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 text = "Game Over"
 align = 1
 valign = 1
@@ -690,7 +713,7 @@ margin_right = 21.5
 margin_bottom = 10.0
 grow_horizontal = 2
 grow_vertical = 2
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 10 )
 text = "Maximum blocks climbed: this many blocks"
 align = 1
 valign = 1
@@ -709,7 +732,7 @@ margin_top = 24.5
 margin_right = 20.0
 margin_bottom = 49.5
 grow_horizontal = 2
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 11 )
 align = 1
 valign = 1
 __meta__ = {
@@ -728,7 +751,7 @@ margin_right = 97.0
 margin_bottom = 104.953
 grow_horizontal = 2
 grow_vertical = 2
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 text = "Press F5 to restart"
 align = 1
 valign = 1
@@ -749,7 +772,7 @@ margin_right = 103.0
 margin_bottom = 162.953
 grow_horizontal = 2
 grow_vertical = 2
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 text = "Or press KEY to exit."
 align = 1
 valign = 1
@@ -759,7 +782,7 @@ __meta__ = {
 }
 
 [node name="splashAnimation" type="AnimationPlayer" parent="sceneCamera/gameOverSplash"]
-anims/gameoverappearanimation = SubResource( 12 )
+anims/gameoverappearanimation = SubResource( 13 )
 
 [node name="shakeTime" type="Timer" parent="sceneCamera"]
 wait_time = 0.5
@@ -782,7 +805,8 @@ collision_mask = 16
 
 [node name="collisionShape" type="CollisionShape2D" parent="sceneCamera/blockCheckArea"]
 position = Vector2( 320, 240 )
-shape = SubResource( 13 )
+scale = Vector2( 1, 0.994 )
+shape = SubResource( 14 )
 
 [node name="blockDestroyArea" type="Area2D" parent="sceneCamera"]
 pause_mode = 2
@@ -796,37 +820,14 @@ collision_mask = 16
 [node name="collisionShape" type="CollisionShape2D" parent="sceneCamera/blockDestroyArea"]
 visible = false
 position = Vector2( 320, 384 )
-shape = SubResource( 14 )
-
-[node name="pausemanager" type="Node2D" parent="sceneCamera"]
-pause_mode = 2
-z_index = 10
-script = ExtResource( 18 )
-
-[node name="Label" type="Label" parent="sceneCamera/pausemanager"]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = 264.0
-margin_top = 208.0
-margin_right = 381.0
-margin_bottom = 233.0
-custom_fonts/font = SubResource( 15 )
-text = "Paused"
-script = ExtResource( 12 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+shape = SubResource( 15 )
 
 [node name="hud" type="Node2D" parent="sceneCamera"]
 z_index = 10
 script = ExtResource( 27 )
 
 [node name="time" type="HBoxContainer" parent="sceneCamera/hud"]
-margin_left = -128.0
-margin_right = 96.0
+margin_right = 224.0
 margin_bottom = 32.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -955,6 +956,13 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="pausemanager" type="Node2D" parent="sceneCamera"]
+pause_mode = 2
+z_index = 10
+script = ExtResource( 18 )
+
+[node name="Items" parent="sceneCamera/pausemanager" instance=ExtResource( 12 )]
 
 [node name="fieldanimation" type="AnimationPlayer" parent="."]
 autoplay = "BeginAnimation"

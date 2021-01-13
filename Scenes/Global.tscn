@@ -8,6 +8,7 @@
 [node name="Global" type="Node2D"]
 pause_mode = 2
 script = ExtResource( 1 )
+waveMaxSpeed = 6
 menuMusic = ExtResource( 2 )
 gameMusic = ExtResource( 3 )
 

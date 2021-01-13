@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Scripts/player/player.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/blockoutline.png" type="Texture" id=2]
@@ -6,13 +6,9 @@
 [ext_resource path="res://Scripts/player/rayUp.gd" type="Script" id=4]
 [ext_resource path="res://Scripts/player/rayLeft.gd" type="Script" id=5]
 [ext_resource path="res://Scripts/player/rayRight.gd" type="Script" id=6]
-[ext_resource path="res://Scripts/player/timemeter.gd" type="Script" id=7]
-[ext_resource path="res://Scripts/player/ProgressBar.gd" type="Script" id=8]
-[ext_resource path="res://Scripts/player/jumptimer.gd" type="Script" id=9]
 [ext_resource path="res://Sounds/jump.wav" type="AudioStream" id=10]
 [ext_resource path="res://Sounds/powerup.wav" type="AudioStream" id=11]
 [ext_resource path="res://Sounds/death.wav" type="AudioStream" id=12]
-[ext_resource path="res://Scripts/player/supermeter.gd" type="Script" id=13]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0.516129 )
@@ -25,55 +21,136 @@ width = 32
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 15.3674, 15.642 )
 
-[sub_resource type="Gradient" id=4]
-colors = PoolColorArray( 0, 1, 0, 1, 0, 1, 0, 1 )
+[sub_resource type="Animation" id=4]
+resource_name = "timer"
+length = 10.0
+step = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 9.5, 10 ),
+"transitions": PoolRealArray( 0.5, 1, 2, 1 ),
+"update": 0,
+"values": [ Vector2( 1e-05, 1e-05 ), Vector2( 4, 4 ), Vector2( 1, 1 ), Vector2( 1e-05, 1e-05 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 10 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_on_timer_timeout"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:width")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.001, 0.002, 0.2, 9.5, 10 ),
+"transitions": PoolRealArray( 0.5, 1, 0.5, 1, 2, 1 ),
+"update": 0,
+"values": [ 2.0, 1.0, 2.0, 0.5, 2.0, 8.0 ]
+}
 
-[sub_resource type="GradientTexture" id=5]
-gradient = SubResource( 4 )
-width = 32
+[sub_resource type="Animation" id=5]
+resource_name = "timer"
+length = 10.0
+step = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 9.5, 10 ),
+"transitions": PoolRealArray( 0.5, 1, 2, 1 ),
+"update": 0,
+"values": [ Vector2( 1e-05, 1e-05 ), Vector2( 4, 4 ), Vector2( 1, 1 ), Vector2( 1e-05, 1e-05 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 10 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_on_timetimer_timeout"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:width")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2, 9.5, 10 ),
+"transitions": PoolRealArray( 0.5, 1, 2, 1 ),
+"update": 0,
+"values": [ 2.0, 0.5, 2.0, 8.0 ]
+}
 
-[sub_resource type="StyleBoxTexture" id=6]
-texture = SubResource( 5 )
-region_rect = Rect2( 0, 0, 2048, 1 )
-margin_left = 1.0
-margin_right = 1.0
-margin_top = 1.0
-margin_bottom = 1.0
+[sub_resource type="Animation" id=6]
+resource_name = "timer"
+length = 10.0
+step = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 9.5, 10 ),
+"transitions": PoolRealArray( 0.5, 1, 2, 1 ),
+"update": 0,
+"values": [ Vector2( 1e-05, 1e-05 ), Vector2( 4, 4 ), Vector2( 1, 1 ), Vector2( 1e-05, 1e-05 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 10 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_on_supertimer_timeout"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:width")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2, 9.5, 10 ),
+"transitions": PoolRealArray( 0.5, 1, 2, 1 ),
+"update": 0,
+"values": [ 2.0, 0.5, 2.0, 8.0 ]
+}
 
-[sub_resource type="StyleBoxFlat" id=7]
-bg_color = Color( 0.278431, 0.278431, 0.278431, 1 )
-draw_center = false
-border_color = Color( 0, 0, 0, 1 )
-expand_margin_left = 2.0
-expand_margin_right = 2.0
-expand_margin_top = 2.0
-expand_margin_bottom = 2.0
-
-[sub_resource type="Gradient" id=8]
-offsets = PoolRealArray( 0.307692 )
-colors = PoolColorArray( 0, 0, 1, 1 )
-
-[sub_resource type="GradientTexture" id=9]
-gradient = SubResource( 8 )
-width = 32
-
-[sub_resource type="StyleBoxTexture" id=10]
-texture = SubResource( 9 )
-region_rect = Rect2( 0, 0, 2048, 1 )
-
-[sub_resource type="Gradient" id=11]
-offsets = PoolRealArray( 0.643357 )
-colors = PoolColorArray( 1, 0.498039, 0, 1 )
-
-[sub_resource type="GradientTexture" id=12]
-gradient = SubResource( 11 )
-width = 32
-
-[sub_resource type="StyleBoxTexture" id=13]
-texture = SubResource( 12 )
-region_rect = Rect2( 0, 0, 2048, 1 )
-
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=7]
 length = 0.7
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -175,15 +252,15 @@ tracks/7/keys = {
 "values": [  ]
 }
 
-[sub_resource type="Gradient" id=15]
+[sub_resource type="Gradient" id=8]
 offsets = PoolRealArray( 0 )
 colors = PoolColorArray( 0, 0, 1, 1 )
 
-[sub_resource type="GradientTexture" id=16]
-gradient = SubResource( 15 )
+[sub_resource type="GradientTexture" id=9]
+gradient = SubResource( 8 )
 width = 32
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=10]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:visible")
 tracks/0/interp = 1
@@ -280,65 +357,38 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="jumpmeter" type="ProgressBar" parent="."]
-margin_left = -15.0
-margin_top = -15.0
-margin_right = 15.0
-margin_bottom = 15.0
-custom_styles/fg = SubResource( 6 )
-custom_styles/bg = SubResource( 7 )
-max_value = 1.0
-step = 0.0
-percent_visible = false
-script = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="jumpbox" type="Line2D" parent="."]
+scale = Vector2( 1e-05, 1e-05 )
+points = PoolVector2Array( -16, -16, 16, -16, 16, 16, -16, 16, -16, -16 )
+width = 2.0
+default_color = Color( 0, 1, 0, 1 )
+begin_cap_mode = 1
+end_cap_mode = 1
 
-[node name="timer" type="Timer" parent="jumpmeter"]
-wait_time = 10.0
-one_shot = true
-script = ExtResource( 9 )
+[node name="AnimationPlayer" type="AnimationPlayer" parent="jumpbox"]
+anims/timer = SubResource( 4 )
 
-[node name="timemeter" type="ProgressBar" parent="."]
-margin_left = -15.0
-margin_top = -15.0
-margin_right = 15.0
-margin_bottom = 15.0
-custom_styles/fg = SubResource( 10 )
-custom_styles/bg = SubResource( 7 )
-max_value = 1.0
-step = 0.0
-percent_visible = false
-script = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="timebox" type="Line2D" parent="."]
+scale = Vector2( 1e-05, 1e-05 )
+points = PoolVector2Array( -16, -16, 16, -16, 16, 16, -16, 16, -16, -16 )
+width = 8.0
+default_color = Color( 0, 0, 1, 1 )
+begin_cap_mode = 1
+end_cap_mode = 1
 
-[node name="timer" type="Timer" parent="timemeter"]
-wait_time = 10.0
-one_shot = true
-script = ExtResource( 9 )
+[node name="AnimationPlayer" type="AnimationPlayer" parent="timebox"]
+anims/timer = SubResource( 5 )
 
-[node name="supermeter" type="ProgressBar" parent="."]
-margin_left = -15.0
-margin_top = -15.0
-margin_right = 15.0
-margin_bottom = 15.0
-custom_styles/fg = SubResource( 13 )
-custom_styles/bg = SubResource( 7 )
-max_value = 1.0
-step = 0.0
-percent_visible = false
-script = ExtResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="superbox" type="Line2D" parent="."]
+scale = Vector2( 1e-05, 1e-05 )
+points = PoolVector2Array( -16, -16, 16, -16, 16, 16, -16, 16, -16, -16 )
+width = 2.0
+default_color = Color( 1, 0.501961, 0, 1 )
+begin_cap_mode = 1
+end_cap_mode = 1
 
-[node name="timer" type="Timer" parent="supermeter"]
-wait_time = 10.0
-one_shot = true
-script = ExtResource( 9 )
+[node name="AnimationPlayer" type="AnimationPlayer" parent="superbox"]
+anims/timer = SubResource( 6 )
 
 [node name="jumpsound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 10 )
@@ -355,17 +405,11 @@ stream = ExtResource( 12 )
 bus = "SFX"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/deathanimation = SubResource( 14 )
+anims/deathanimation = SubResource( 7 )
 
 [node name="timeexplosionsprite" type="Sprite" parent="."]
 scale = Vector2( 1e-05, 1 )
-texture = SubResource( 16 )
+texture = SubResource( 9 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="timeexplosionsprite"]
-anims/explosionanimation = SubResource( 17 )
-[connection signal="timeout" from="jumpmeter/timer" to="." method="_on_timer_timeout"]
-[connection signal="timeout" from="jumpmeter/timer" to="jumpmeter" method="_on_timer_timeout"]
-[connection signal="timeout" from="timemeter/timer" to="." method="_on_timetimer_timeout"]
-[connection signal="timeout" from="timemeter/timer" to="timemeter" method="_on_timer_timeout"]
-[connection signal="timeout" from="supermeter/timer" to="." method="_on_timer_timeout"]
-[connection signal="timeout" from="supermeter/timer" to="." method="_on_supertimer_timeout"]
+anims/explosionanimation = SubResource( 10 )

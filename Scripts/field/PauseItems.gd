@@ -105,86 +105,89 @@ func _input(event):
 		setKey(event.scancode);
 
 func _process(delta):
-	if settingkey == false:
-		if Input.is_key_pressed(global.keys["LEFTKEY"]):
-			if currnode.name == "OptionsItems" and left == false:
-				optionsSubtract();
-			left = true;
-		else:
-			left = false;
-		if Input.is_key_pressed(global.keys["RIGHTKEY"]):
-			if currnode.name == "OptionsItems" and right == false:
-				optionsAdd();
-			right = true;
-		else:
-			right = false;
-		if Input.is_key_pressed(global.keys["UPKEY"]):
-			if up == false:
-				if curr > 0:
-					curr -= 1;
-				else:
-					curr = options - 1;
-				navTweenStart();
+	if global.paused == true and get_tree().is_paused() == true:
+		visible = true;
+		if settingkey == false:
+			if Input.is_key_pressed(global.keys["LEFTKEY"]):
+				if currnode.name == "OptionsItems" and left == false:
+					optionsSubtract();
+				left = true;
+			else:
+				left = false;
+			if Input.is_key_pressed(global.keys["RIGHTKEY"]):
+				if currnode.name == "OptionsItems" and right == false:
+					optionsAdd();
+				right = true;
+			else:
+				right = false;
+			if Input.is_key_pressed(global.keys["UPKEY"]):
+				if up == false:
+					if curr > 0:
+						curr -= 1;
+					else:
+						curr = options - 1;
+					navTweenStart();
+					$uibeep.play()
+				up = true;
+			else:
+				up = false;
+			if Input.is_key_pressed(global.keys["DOWNKEY"]):
+				if down == false:
+					if curr < options - 1:
+						curr += 1;
+					else:
+						curr = 0;
+					navTweenStart();
+					$uibeep.play()
+				down = true;
+			else:
+				down = false;
+			if Input.is_key_pressed(global.keys["SELECTKEY"]) and enter == false:
 				$uibeep.play()
-			up = true;
-		else:
-			up = false;
-		if Input.is_key_pressed(global.keys["DOWNKEY"]):
-			if down == false:
-				if curr < options - 1:
-					curr += 1;
-				else:
-					curr = 0;
-				navTweenStart();
-				$uibeep.play()
-			down = true;
-		else:
-			down = false;
-		if Input.is_key_pressed(global.keys["SELECTKEY"]) and enter == false:
-			$uibeep.play()
-			enter = true;
-			$Sprite/AnimationPlayer.play("Flash Animation");
-			if currnode.name == "MainItems":
-				match curr:
-					0:
-						switchItems($MainItems, $PlayItems);
-					1:
-						switchItems($MainItems, $OptionsItems);
-					2:
-						get_tree().quit();
-			elif currnode.name == "PlayItems":
-				match curr:
-					0:
-						global.changeMusic(global.gameMusic);
-						get_tree().change_scene("res://Scenes/field.tscn");
-					1:
-						pass #Survival
-					2:
-						pass #Extreme
-			elif currnode.name == "OptionsItems":
-				if curr == 3:
-					switchItems($OptionsItems, $KeysItems);
-			elif currnode.name == "KeysItems":
-				settingkey = true;
-		elif not Input.is_key_pressed(global.keys["SELECTKEY"]):
-			enter = false;
+				enter = true;
+				$Sprite/AnimationPlayer.play("Flash Animation");
+				if currnode.name == "MainItems":
+					match curr:
+						0:
+							AudioServer.set_bus_effect_enabled(2, 0, false);
+							get_tree().set_pause(false);
+							global.paused = false;
+						1:
+							switchItems($MainItems, $OptionsItems);
+						2:
+							AudioServer.set_bus_effect_enabled(2, 0, false);
+							get_tree().set_pause(false);
+							global.paused = false;
+							global.changeMusic(global.menuMusic);
+							get_tree().change_scene("res://Scenes/Menu.tscn");
+				elif currnode.name == "OptionsItems":
+					if curr == 3:
+						switchItems($OptionsItems, $KeysItems);
+				elif currnode.name == "KeysItems":
+					settingkey = true;
+			elif not Input.is_key_pressed(global.keys["SELECTKEY"]):
+				enter = false;
+			
+			if Input.is_key_pressed(global.keys["BACKKEY"]) and esc == false:
+				esc = true;
+				if currnode.name == "OptionsItems":
+					global.saveConfig();
+					switchItems($OptionsItems, $MainItems);
+				elif currnode.name == "KeysItems":
+						switchItems($KeysItems, $OptionsItems);
+				elif currnode.name == "MainItems" and get_parent().pausedkey == false:
+					AudioServer.set_bus_effect_enabled(2, 0, false);
+					get_tree().set_pause(false);
+					global.paused = false;
+					get_parent().pausedkey = true;
+			elif not Input.is_key_pressed(global.keys["BACKKEY"]):
+				esc = false;
+			if currnode.name == "KeysItems" and settingkey == true:
+				$KeysItems/Control/VBoxContainer.get_child(curr).get_node("keylabel").text = "Press a key!";
 		
-		if Input.is_key_pressed(global.keys["BACKKEY"]) and esc == false:
-			esc = true;
-			if currnode.name == "PlayItems":
-				switchItems($PlayItems, $MainItems);
-			elif currnode.name == "OptionsItems":
-				global.saveConfig();
-				switchItems($OptionsItems, $MainItems);
-			elif currnode.name == "KeysItems":
-					switchItems($KeysItems, $OptionsItems);
-			elif currnode.name == "MainItems":
-				get_tree().quit();
-		elif not Input.is_key_pressed(global.keys["BACKKEY"]):
-			esc = false;
-		if currnode.name == "KeysItems" and settingkey == true:
-			$KeysItems/Control/VBoxContainer.get_child(curr).get_node("keylabel").text = "Press a key!";
-	
-	$OptionsItems/Control/VBoxContainer/mastervolume/MarginContainer/ProgressBar.value = AudioServer.get_bus_volume_db(0);
-	$OptionsItems/Control/VBoxContainer/sfxvolume/MarginContainer/ProgressBar.value = AudioServer.get_bus_volume_db(1);
-	$OptionsItems/Control/VBoxContainer/musicvolume/MarginContainer/ProgressBar.value = AudioServer.get_bus_volume_db(2);
+		$OptionsItems/Control/VBoxContainer/mastervolume/MarginContainer/ProgressBar.value = AudioServer.get_bus_volume_db(0);
+		$OptionsItems/Control/VBoxContainer/sfxvolume/MarginContainer/ProgressBar.value = AudioServer.get_bus_volume_db(1);
+		$OptionsItems/Control/VBoxContainer/musicvolume/MarginContainer/ProgressBar.value = AudioServer.get_bus_volume_db(2);
+	else:
+		visible = false;
+		curr = 0;
