@@ -51,12 +51,14 @@ func _physics_process(delta):
 		if blockunder.is_colliding() and blockunder.get_collider().name != "player":
 			if velocity.y >= fallspeed:
 				drop = true;
+				get_node("/root/field/explosion_manager").smoke(position + (velocity * delta));
 			col = true;
 			position.y = blockunder.get_collision_point().y - 16;
 			velocity.y = 0;
 		elif (position.y + (velocity.y * delta)) >= ($"/root/field/sceneCamera".position.y + 480-16) and position.y <= ($"/root/field/sceneCamera".position.y + 480 -16):
 			if velocity.y >= fallspeed:
 				drop = true;
+				get_node("/root/field/explosion_manager").smoke(position + (velocity * delta));
 			position.y = $"/root/field/sceneCamera".position.y + 480-16;
 			velocity.y = 0;
 			col = true;

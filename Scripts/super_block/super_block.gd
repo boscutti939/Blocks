@@ -20,5 +20,6 @@ func _on_Area2D_body_entered(body):
 		get_node("/root/field/player").invincible = true;
 		get_node("/root/field/player/powerupsound").play();
 		get_node("/root/field/player/superbox/AnimationPlayer").play("timer");
+		get_node("/root/field/player/superbox/AnimationPlayer").seek(0.0, true);
 		get_node("/root/field/explosion_manager").powerup(get_parent().position, Color(1.0, 0.5, 0.0, 1.0), "Invincible!");
 		get_parent().queue_free();

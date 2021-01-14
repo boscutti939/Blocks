@@ -160,6 +160,6 @@ stream = ExtResource( 10 )
 volume_db = -10.0
 bus = "Drops"
 script = ExtResource( 11 )
-[connection signal="timeout" from="delay_time" to="exploding_block" method="_on_delay_time_timeout"]
 [connection signal="timeout" from="delay_time" to="exploding_block" method="_on_fuse_time_timeout"]
+[connection signal="timeout" from="delay_time" to="exploding_block" method="_on_delay_time_timeout"]
 [connection signal="body_entered" from="Area2D" to="exploding_block" method="_on_Area2D_body_entered"]

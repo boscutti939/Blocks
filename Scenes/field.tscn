@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=2]
+[gd_scene load_steps=63 format=2]
 
 [ext_resource path="res://Scripts/field.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/player.tscn" type="PackedScene" id=2]
@@ -38,6 +38,7 @@
 [ext_resource path="res://Scripts/block_spawner/wave_animation.gd" type="Script" id=36]
 [ext_resource path="res://Scripts/field/alertsound.gd" type="Script" id=37]
 [ext_resource path="res://Scenes/powerupeffect.tscn" type="PackedScene" id=38]
+[ext_resource path="res://Scenes/smoke.tscn" type="PackedScene" id=39]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 32 )
@@ -623,6 +624,7 @@ __meta__ = {
 }
 explosionScene = ExtResource( 10 )
 powerupScene = ExtResource( 38 )
+smokeScene = ExtResource( 39 )
 
 [node name="lava" type="Node2D" parent="."]
 position = Vector2( 320, 480 )

@@ -19,17 +19,13 @@ curve = SubResource( 3 )
 
 [sub_resource type="ParticlesMaterial" id=5]
 emission_shape = 2
-emission_box_extents = Vector3( 1, 1, 1 )
+emission_box_extents = Vector3( 32, 32, 1 )
 flag_disable_z = true
 spread = 180.0
 flatness = 1.0
 gravity = Vector3( 0, 0, 0 )
-initial_velocity = 720.0
-initial_velocity_random = 0.9
-angular_velocity = 1.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
-damping = 6400.0
 scale = 32.0
 scale_random = 0.2
 scale_curve = SubResource( 4 )
@@ -50,7 +46,7 @@ one_shot = true
 speed_scale = 1.5
 explosiveness = 1.0
 randomness = 0.25
-visibility_rect = Rect2( -640, -480, 640, 480 )
+visibility_rect = Rect2( -32, -32, 64, 64 )
 process_material = SubResource( 5 )
 
 [node name="explosion_sound" type="AudioStreamPlayer2D" parent="."]

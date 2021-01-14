@@ -6,6 +6,7 @@ extends Node2D
 
 export (PackedScene) var explosionScene;
 export (PackedScene) var powerupScene;
+export (PackedScene) var smokeScene;
 onready var shakeTime = get_node("../sceneCamera/shakeTime");
 
 # Called when the node enters the scene tree for the first time.
@@ -29,3 +30,8 @@ func powerup(pos, color, txt):
 	powerupeffect.modulate = color;
 	powerupeffect.txt = txt;
 	add_child(powerupeffect);
+
+func smoke(pos):
+	var smokeeffect = smokeScene.instance();
+	smokeeffect.position = pos;
+	add_child(smokeeffect);
